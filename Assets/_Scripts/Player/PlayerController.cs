@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private InputManager _inputManager;
 
-    [SerializeField] private float walkSpeed = 4f;
+    [SerializeField] private float walkSpeed = 10f;
+    [SerializeField] private float runSpeed = 20f;
     [SerializeField] private float jumpStrength = 260f;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private float distanceToGround = 0.8f;
+    private float _currentSpeed;
 
     private bool _grounded;
 
@@ -31,13 +33,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /*    private void Move()
-        {
-            Vector3 direction = new Vector3(_inputManager.Move.x, 0, _inputManager.Move.y);
-            Vector3 move = transform.right * direction.x + transform.forward * direction.z;
-            _rb.velocity = new Vector3(move.x * walkSpeed, _rb.velocity.y, move.z * walkSpeed);
-        }*/
-
     private void Move()
     {
         if (!_inputManager) return;
@@ -48,21 +43,36 @@ public class PlayerController : MonoBehaviour
 
         if (move.magnitude >= 0.1f)
         {
-            float targetSpeed = walkSpeed;
-            Vector3 velocity = move * targetSpeed;
-            velocity.y = _rb.velocity.y; // Preserve the existing y velocity (e.g., gravity)
+            _currentSpeed = _inputManager.Run ? runSpeed : walkSpeed;
 
-            _rb.velocity = velocity;
+            Vector3 targetVelocity = move * _currentSpeed;
         }
-        else
-        {
-            _rb.velocity = new Vector3(0, _rb.velocity.y, 0); // Maintain vertical velocity
-        }
+        Vector3 velocity = move * _currentSpeed;
+        _rb.velocity = new Vector3(velocity.x, _rb.velocity.y, velocity.z);
+        /*        if (!_inputManager) return;
+
+                Vector2 input = _inputManager.Move;
+                Vector3 move = new Vector3(input.x, 0, input.y).normalized;
+                move = transform.TransformDirection(move);
+
+                if (move.magnitude >= 0.1f)
+                {
+                    _currentSpeed = _inputManager.Run ? runSpeed : walkSpeed;
+
+                    Vector3 targetVelocity = move * _currentSpeed;
+                    _rb.MovePosition(_rb.position + targetVelocity * Time.fixedDeltaTime);
+                }*/
     }
 
     private void Jump()
     {
-        _rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
+        if (_grounded)
+        {
+            //_rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
+            Vector3 jumpVelocity = _rb.velocity;
+            jumpVelocity.y = Mathf.Sqrt(2f * jumpStrength * -Physics.gravity.y); // Calculate jump velocity using physics formula
+            _rb.velocity = jumpVelocity;
+        }
     }
 
     private void CheckGround()
@@ -70,5 +80,13 @@ public class PlayerController : MonoBehaviour
         Debug.DrawLine(transform.position, transform.position + Vector3.down * distanceToGround, Color.red);
         _grounded = Physics.Raycast(transform.position, Vector3.down, distanceToGround, groundMask);
 
+    }
+
+    public float GetCurrentSpeed()
+    {
+        Vector3 horizontalVelocity = _rb.velocity;
+        horizontalVelocity.y = 0; // Ignore vertical velocity for speed calculation
+        return horizontalVelocity.magnitude;
+        //return _currentSpeed;
     }
 }
