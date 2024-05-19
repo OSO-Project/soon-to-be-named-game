@@ -45,22 +45,34 @@ public class PlayerController : MonoBehaviour
         {
             _currentSpeed = _inputManager.Run ? runSpeed : walkSpeed;
 
-            Debug.Log("Speed: " + _currentSpeed);
-
-            Vector3 velocity = move * _currentSpeed;
-            velocity.y = _rb.velocity.y; // Preserve the existing y velocity (e.g., gravity)
-
-            _rb.velocity = velocity;
+            Vector3 targetVelocity = move * _currentSpeed;
         }
-        else
-        {
-            _rb.velocity = new Vector3(0, _rb.velocity.y, 0); // Maintain vertical velocity
-        }
+        Vector3 velocity = move * _currentSpeed;
+        _rb.velocity = new Vector3(velocity.x, _rb.velocity.y, velocity.z);
+        /*        if (!_inputManager) return;
+
+                Vector2 input = _inputManager.Move;
+                Vector3 move = new Vector3(input.x, 0, input.y).normalized;
+                move = transform.TransformDirection(move);
+
+                if (move.magnitude >= 0.1f)
+                {
+                    _currentSpeed = _inputManager.Run ? runSpeed : walkSpeed;
+
+                    Vector3 targetVelocity = move * _currentSpeed;
+                    _rb.MovePosition(_rb.position + targetVelocity * Time.fixedDeltaTime);
+                }*/
     }
 
     private void Jump()
     {
-        _rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
+        if (_grounded)
+        {
+            //_rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
+            Vector3 jumpVelocity = _rb.velocity;
+            jumpVelocity.y = Mathf.Sqrt(2f * jumpStrength * -Physics.gravity.y); // Calculate jump velocity using physics formula
+            _rb.velocity = jumpVelocity;
+        }
     }
 
     private void CheckGround()
