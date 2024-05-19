@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private InputManager _inputManager;
 
-    [SerializeField] private float walkSpeed = 4f;
+    [SerializeField] private float walkSpeed = 10f;
+    [SerializeField] private float runSpeed = 20f;
     [SerializeField] private float jumpStrength = 260f;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private float distanceToGround = 0.8f;
+    private float _currentSpeed;
 
     private bool _grounded;
 
@@ -31,13 +33,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /*    private void Move()
-        {
-            Vector3 direction = new Vector3(_inputManager.Move.x, 0, _inputManager.Move.y);
-            Vector3 move = transform.right * direction.x + transform.forward * direction.z;
-            _rb.velocity = new Vector3(move.x * walkSpeed, _rb.velocity.y, move.z * walkSpeed);
-        }*/
-
     private void Move()
     {
         if (!_inputManager) return;
@@ -48,8 +43,11 @@ public class PlayerController : MonoBehaviour
 
         if (move.magnitude >= 0.1f)
         {
-            float targetSpeed = walkSpeed;
-            Vector3 velocity = move * targetSpeed;
+            _currentSpeed = _inputManager.Run ? runSpeed : walkSpeed;
+
+            Debug.Log("Speed: " + _currentSpeed);
+
+            Vector3 velocity = move * _currentSpeed;
             velocity.y = _rb.velocity.y; // Preserve the existing y velocity (e.g., gravity)
 
             _rb.velocity = velocity;
@@ -70,5 +68,13 @@ public class PlayerController : MonoBehaviour
         Debug.DrawLine(transform.position, transform.position + Vector3.down * distanceToGround, Color.red);
         _grounded = Physics.Raycast(transform.position, Vector3.down, distanceToGround, groundMask);
 
+    }
+
+    public float GetCurrentSpeed()
+    {
+        Vector3 horizontalVelocity = _rb.velocity;
+        horizontalVelocity.y = 0; // Ignore vertical velocity for speed calculation
+        return horizontalVelocity.magnitude;
+        //return _currentSpeed;
     }
 }
