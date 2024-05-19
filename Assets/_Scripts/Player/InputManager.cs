@@ -15,24 +15,17 @@ public class InputManager : MonoBehaviour
     public InputAction MoveAction;
     public InputAction JumpAction;
     public InputAction RunAction;
-    private void Awake()
-    {
-        current = this;
 
         _playerInput = GetComponent<PlayerInput>();
         _currentMap = _playerInput.currentActionMap;
 
         InitialiseActions();
-    }
 
     private void InitialiseActions()
     {
         MoveAction = _currentMap.FindAction("Move");
         JumpAction = _currentMap.FindAction("Jump");
         RunAction = _currentMap.FindAction("Run");
-        MoveAction.performed += OnMove;
-        MoveAction.canceled += OnMove;
-        JumpAction.performed += OnJump;
         JumpAction.canceled += OnJump;
         RunAction.performed += OnRun;
         RunAction.canceled += OnRun;
