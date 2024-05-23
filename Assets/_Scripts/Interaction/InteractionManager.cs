@@ -18,7 +18,7 @@ public class InteractionManager : MonoBehaviour
 	{
 		Instance = this;
 		_mainCamera = Camera.main;
-		InputManager.current.InteractAction.performed += PressInteract;
+		//InputManager.current.InteractAction.performed += PressInteract;
 		
 	}
 
@@ -36,11 +36,11 @@ public class InteractionManager : MonoBehaviour
 		RaycastHit cameraHit;
 		Ray r = new Ray(_mainCamera.transform.position, _mainCamera.transform.forward);
 
-		if(!Physics.Raycast(ray, out cameraHit, range)) 
+		if(!Physics.Raycast(r, out cameraHit, range)) 
 		{
-			setInterfaceToNull();
+			FinishLooking();
 		}
-		else if(cameraHit.transorm.CompareTag("Interactable")) 
+		else if(cameraHit.transform.CompareTag("Interactable")) 
 		{
 			Collider selectedObject = cameraHit.collider;
 			if(_current != selectedObject && _current != null && _interactionInterface != null)
@@ -68,9 +68,9 @@ public class InteractionManager : MonoBehaviour
 
 	private void FinishLooking()
 	{
-		if(_interactionInterface = null)
+		if(_interactionInterface == null)
 			return;
-		_currentTarget=null;
+		_current=null;
 		_interactionInterface.OnFinishLooking();
 		_interactionInterface = null;
 	}
