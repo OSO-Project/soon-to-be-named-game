@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,8 +18,11 @@ public class PlayerController : MonoBehaviour
 
     private bool _grounded;
 
+    public bool CanMove;
+
     private void Start()
     {
+        CanMove = true;
         _rb = GetComponent<Rigidbody>();
         _inputManager = GetComponent<InputManager>();
     }
@@ -26,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        if (!CanMove) return;
         CheckGround();
         if (_inputManager.Jump && _grounded)
         {
@@ -36,32 +41,26 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         if (!_inputManager) return;
-
-        Vector2 input = _inputManager.Move;
-        Vector3 move = new Vector3(input.x, 0, input.y).normalized;
-        move = transform.TransformDirection(move);
-
-        if (move.magnitude >= 0.1f)
+        if (!CanMove)
         {
-            _currentSpeed = _inputManager.Run ? runSpeed : walkSpeed;
-
-            Vector3 targetVelocity = move * _currentSpeed;
+            _rb.velocity = new Vector3(0, _rb.velocity.y, 0);
         }
-        Vector3 velocity = move * _currentSpeed;
-        _rb.velocity = new Vector3(velocity.x, _rb.velocity.y, velocity.z);
-        /*        if (!_inputManager) return;
+        else
+        {
+            Vector2 input = _inputManager.Move;
+            Vector3 move = new Vector3(input.x, 0, input.y).normalized;
+            move = transform.TransformDirection(move);
 
-                Vector2 input = _inputManager.Move;
-                Vector3 move = new Vector3(input.x, 0, input.y).normalized;
-                move = transform.TransformDirection(move);
+            if (move.magnitude >= 0.1f)
+            {
+                _currentSpeed = _inputManager.Run ? runSpeed : walkSpeed;
 
-                if (move.magnitude >= 0.1f)
-                {
-                    _currentSpeed = _inputManager.Run ? runSpeed : walkSpeed;
-
-                    Vector3 targetVelocity = move * _currentSpeed;
-                    _rb.MovePosition(_rb.position + targetVelocity * Time.fixedDeltaTime);
-                }*/
+                Vector3 targetVelocity = move * _currentSpeed;
+                _rb.velocity = new Vector3(targetVelocity.x, _rb.velocity.y, targetVelocity.z);
+            }
+            Vector3 velocity = move * _currentSpeed;
+            _rb.velocity = new Vector3(velocity.x, _rb.velocity.y, velocity.z);
+        }
     }
 
     private void Jump()
