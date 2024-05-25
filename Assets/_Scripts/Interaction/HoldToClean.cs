@@ -2,30 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class HoldToClean : MonoBehaviour
+public class HoldToClean : MonoBehaviour, Interactable
 {
-    [SerializeField] private Camera playerCamera;
-    public float InteractionDistance = 5f;
     [SerializeField] private Color targetColor = Color.red;
     [SerializeField] private float timeToClean = 3f;
 
     private static Image progressBar;
     private static TMP_Text hintText;
     private Renderer _objectRenderer;
-    private Color _originalColor;
     private static HoldToClean currentTarget = null;
     private float _lookDuration = 0f;
     private bool _isCleaned = false;
-    private PlayerController _playerController;
+
+    private HighlightObject _highlight;
 
     void Start()
     {
         _objectRenderer = GetComponent<Renderer>();
-        _originalColor = _objectRenderer.material.color;
-        _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        // Initialize static UI elements if not already set
+        _highlight = GetComponent<HighlightObject>();
+        //Initialize static UI elements if not already set
         if (progressBar == null)
         {
             progressBar = GameObject.Find("ProgressBar").GetComponent<Image>();
@@ -39,35 +37,32 @@ public class HoldToClean : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
-        DetectObject();
         HandleInteraction();
     }
 
-    void DetectObject()
+    public void OnBeginLooking()
     {
         if (_isCleaned) return;
+        _highlight.SetIsHighlighted(true);
+        currentTarget = this;
+        hintText.gameObject.SetActive(true);
+        _highlight.Highlight();
+    }
 
-        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+    public void OnFinishLooking()
+    {
+        _highlight.SetIsHighlighted(false);
+        currentTarget = null;
+        hintText.gameObject.SetActive(false);
+        ResetProgress();
+        _highlight.Highlight();
+    }
 
-        if (Physics.Raycast(ray, out hit, InteractionDistance))
-        {
-            if (hit.transform == transform)
-            {
-                currentTarget = this;
-                hintText.gameObject.SetActive(true);
-                return;
-            }
-        }
-
-        if (currentTarget == this)
-        {
-            currentTarget = null;
-            hintText.gameObject.SetActive(false);
-            ResetProgress();
-        }
+    public void OnPressInteract(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("OnPressInteract");
     }
 
     void HandleInteraction()
@@ -76,11 +71,6 @@ public class HoldToClean : MonoBehaviour
 
         if (currentTarget == this && Input.GetMouseButton(0))
         {
-            if (_playerController != null)
-            {
-                _playerController.CanMove = true; // Disable player movement
-            }
-
             _lookDuration += Time.deltaTime;
             progressBar.fillAmount = _lookDuration / timeToClean;
 
@@ -104,11 +94,11 @@ public class HoldToClean : MonoBehaviour
 
         if (_isCleaned)
         {
+            _highlight.SetIsHighlighted(false);
             hintText.gameObject.SetActive(false);
-        }
-        if (_playerController != null)
-        {
-            _playerController.CanMove = true; // Disable player movement
+            _highlight.Highlight();
         }
     }
+
 }
+

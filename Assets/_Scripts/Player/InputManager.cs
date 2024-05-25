@@ -12,9 +12,13 @@ public class InputManager : MonoBehaviour
     public bool Run { get; private set; }
     public bool Jump { get; private set; }
 
+    public bool Interact { get; private set; }
+
     public InputAction MoveAction;
     public InputAction JumpAction;
     public InputAction RunAction;
+
+    public InputAction InteractAction;
 
     private void Awake()
     {
@@ -31,12 +35,15 @@ public class InputManager : MonoBehaviour
         MoveAction = _currentMap.FindAction("Move");
         JumpAction = _currentMap.FindAction("Jump");
         RunAction = _currentMap.FindAction("Run");
+        InteractAction = _currentMap.FindAction("Interact");
         MoveAction.performed += OnMove;
         MoveAction.canceled += OnMove;
         JumpAction.performed += OnJump;
         JumpAction.canceled += OnJump;
         RunAction.performed += OnRun;
         RunAction.canceled += OnRun;
+        InteractAction.performed += OnInteract;
+        InteractAction.canceled += OnInteract;
     }
 
     private void OnMove(InputAction.CallbackContext context)
@@ -52,6 +59,11 @@ public class InputManager : MonoBehaviour
     private void OnRun(InputAction.CallbackContext context)
     {
         Run = context.ReadValueAsButton();
+    }
+
+    private void OnInteract(InputAction.CallbackContext context)
+    {
+        Interact = context.ReadValueAsButton();
     }
 
     private void OnEnable()
