@@ -23,6 +23,14 @@ public class PlayerController : MonoBehaviour
         _inputManager = GetComponent<InputManager>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameEventManager.Instance.HandleEncounterStart();
+        }
+    }
+
     private void FixedUpdate()
     {
         Move();
