@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
         _inputManager = GetComponent<InputManager>();
     }
 
+    // For testing earthquake encounter
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))

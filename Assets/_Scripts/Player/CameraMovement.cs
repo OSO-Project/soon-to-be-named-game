@@ -19,6 +19,8 @@ public class CameraMovement : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        originalPos = transform.localPosition;
+
         GameEventManager.Instance.OnEarthquakeEncounterStart += TriggerShake;
     }
 
@@ -45,6 +47,7 @@ public class CameraMovement : MonoBehaviour
         currentShakeDuration = duration;
     }
 
+    // Camera shake for earthquake encounter
     private void HandleCameraShake()
     {
         if (currentShakeDuration > 0)

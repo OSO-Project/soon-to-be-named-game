@@ -16,6 +16,7 @@ public abstract class Encounter : MonoBehaviour
 
     protected virtual void EncounterStart()
     {
+        // start only if encounter is not alredy playing
         if(encounter == null)
         {
             encounter = StartCoroutine(EncounterPlay());

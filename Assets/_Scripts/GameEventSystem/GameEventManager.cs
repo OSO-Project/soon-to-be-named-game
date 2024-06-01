@@ -89,6 +89,7 @@ public class GameEventManager : MonoBehaviour
 
     //Group of methods for managing encounters
     #region Encounters
+    // General methods
     public void HandleEncounterStart()
     {
         OnEncounterStart?.Invoke();
@@ -98,6 +99,7 @@ public class GameEventManager : MonoBehaviour
         OnEncounterEnd?.Invoke();
     }
 
+    // Earthquake
     public void HandleEarthquakeEncounterStart(float duration)
     {
         OnEarthquakeEncounterStart?.Invoke(duration);
