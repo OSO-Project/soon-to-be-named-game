@@ -18,7 +18,7 @@ public class InteractionManager : MonoBehaviour
 	{
 		Instance = this;
 		_mainCamera = Camera.main;
-		InputManager.current.InteractAction.performed += PressInteract;
+		InputManager.Instance.InteractAction.performed += PressInteract;
 	}
 
 	private void Update()

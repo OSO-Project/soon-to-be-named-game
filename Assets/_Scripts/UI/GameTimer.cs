@@ -8,7 +8,6 @@ public class GameTimer : MonoBehaviour
 {
     public float StartTimeInSeconds = 300f; // 5 minutes in seconds
     private float _remainingTime;
-    [SerializeField] private TMP_Text timerText;
     private bool _isRunning = true;
 
     void Start()
@@ -38,7 +37,7 @@ public class GameTimer : MonoBehaviour
     {
         int minutes = Mathf.FloorToInt(_remainingTime / 60);
         int seconds = Mathf.FloorToInt(_remainingTime % 60);
-        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        UIManager.Instance.TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void PauseTimer()

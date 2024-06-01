@@ -3,9 +3,8 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    public static InputManager current;
-
-    private PlayerInput _playerInput;
+    public static InputManager Instance { get; private set; }
+    public PlayerInput _playerInput;
     private InputActionMap _currentMap;
 
     public Vector2 Move { get; private set; }
@@ -22,7 +21,13 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        current = this;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
 
         _playerInput = GetComponent<PlayerInput>();
         _currentMap = _playerInput.currentActionMap;
@@ -63,7 +68,14 @@ public class InputManager : MonoBehaviour
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        Interact = context.ReadValueAsButton();
+        if (context.performed)
+        {
+            Interact = true;
+        }
+        else if (context.canceled)
+        {
+            Interact = false;
+        }
     }
 
     private void OnEnable()

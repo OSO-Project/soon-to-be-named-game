@@ -7,14 +7,15 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody _rb;
-    private InputManager _inputManager;
 
     [SerializeField] private float walkSpeed = 10f;
     [SerializeField] private float runSpeed = 20f;
-    [SerializeField] private float jumpStrength = 260f;
+    [SerializeField] private float jumpStrength = 100f;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private float distanceToGround = 0.8f;
-    private float _currentSpeed;
+    [SerializeField] private float acceleration = 10f;
+    [SerializeField] private float deceleration = 10f;
+    [SerializeField] private float additionalFallGravity = 20f;
 
     private bool _grounded;
 
@@ -24,7 +25,6 @@ public class PlayerController : MonoBehaviour
     {
         CanMove = true;
         _rb = GetComponent<Rigidbody>();
-        _inputManager = GetComponent<InputManager>();
     }
 
     private void FixedUpdate()
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         Move();
         if (!CanMove) return;
         CheckGround();
-        if (_inputManager.Jump && _grounded)
+        if (InputManager.Instance.Jump && _grounded)
         {
             Jump();
         }
@@ -40,26 +40,29 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        if (!_inputManager) return;
+        if (!InputManager.Instance) return;
         if (!CanMove)
         {
             _rb.velocity = new Vector3(0, _rb.velocity.y, 0);
         }
         else
         {
-            Vector2 input = _inputManager.Move;
-            Vector3 move = new Vector3(input.x, 0, input.y).normalized;
-            move = transform.TransformDirection(move);
+            Vector2 input = InputManager.Instance.Move;
+            Vector3 targetVelocity = new Vector3(input.x, 0, input.y).normalized;
+            targetVelocity = transform.TransformDirection(targetVelocity) * (InputManager.Instance.Run ? runSpeed : walkSpeed);
 
-            if (move.magnitude >= 0.1f)
+            Vector3 velocity = _rb.velocity;
+            Vector3 velocityChange = (targetVelocity - velocity);
+            velocityChange.y = 0;
+
+            if (targetVelocity.magnitude > 0)
             {
-                _currentSpeed = _inputManager.Run ? runSpeed : walkSpeed;
-
-                Vector3 targetVelocity = move * _currentSpeed;
-                _rb.velocity = new Vector3(targetVelocity.x, _rb.velocity.y, targetVelocity.z);
+                _rb.AddForce(velocityChange * acceleration, ForceMode.Acceleration);
             }
-            Vector3 velocity = move * _currentSpeed;
-            _rb.velocity = new Vector3(velocity.x, _rb.velocity.y, velocity.z);
+            else
+            {
+                _rb.AddForce(velocityChange * deceleration, ForceMode.Acceleration);
+            }
         }
     }
 
@@ -67,10 +70,16 @@ public class PlayerController : MonoBehaviour
     {
         if (_grounded)
         {
-            //_rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
-            Vector3 jumpVelocity = _rb.velocity;
-            jumpVelocity.y = Mathf.Sqrt(2f * jumpStrength * -Physics.gravity.y); // Calculate jump velocity using physics formula
-            _rb.velocity = jumpVelocity;
+            Vector3 jumpForce = Vector3.up * jumpStrength;
+            _rb.AddForce(jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    private void ApplyAdditionalGravity()
+    {
+        if (!_grounded)
+        {
+            _rb.AddForce(Vector3.down * additionalFallGravity, ForceMode.Acceleration);
         }
     }
 
@@ -78,14 +87,12 @@ public class PlayerController : MonoBehaviour
     {
         Debug.DrawLine(transform.position, transform.position + Vector3.down * distanceToGround, Color.red);
         _grounded = Physics.Raycast(transform.position, Vector3.down, distanceToGround, groundMask);
-
     }
 
     public float GetCurrentSpeed()
     {
         Vector3 horizontalVelocity = _rb.velocity;
-        horizontalVelocity.y = 0; // Ignore vertical velocity for speed calculation
+        horizontalVelocity.y = 0;
         return horizontalVelocity.magnitude;
-        //return _currentSpeed;
     }
 }
