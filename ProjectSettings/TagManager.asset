@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Object
   - Interactable
   layers:
   - Default
@@ -13,7 +12,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
+  - CarriableLayer
   - 
   - 
   - 
