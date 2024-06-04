@@ -27,6 +27,15 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
+    // For testing earthquake encounter
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameEventManager.Instance.HandleEncounterStart();
+        }
+    }
+
     private void FixedUpdate()
     {
         Move();
