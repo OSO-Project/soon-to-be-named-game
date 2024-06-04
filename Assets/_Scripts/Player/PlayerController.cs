@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     // For testing earthquake encounter
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             GameEventManager.Instance.HandleEncounterStart();
         }

@@ -9,10 +9,26 @@ public class CameraController : MonoBehaviour
 
     private Vector3 _offset; // Offset between camera and camera holder
 
+    [Header("Earthquake Camera Shake Settings")]
+    [SerializeField] private float shakeAmount = 0.7f;
+    [SerializeField] private float decreaseFactor = 1.0f;
+
+    private Vector3 originalPos;
+    private float currentShakeDuration = 0f;
+
     void Start()
     {
         // Calculate initial offset
         _offset = transform.position - cameraHolder.position;
+
+        originalPos = transform.localPosition;
+
+        GameEventManager.Instance.OnEarthquakeEncounterStart += TriggerShake;
+    }
+
+    private void Update()
+    {
+        HandleCameraShake();
     }
 
     void LateUpdate()
@@ -22,5 +38,25 @@ public class CameraController : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 
         transform.rotation = Quaternion.Lerp(transform.rotation, cameraHolder.rotation, smoothSpeed);
+    }
+
+    public void TriggerShake(float duration)
+    {
+        currentShakeDuration = duration;
+    }
+
+    // Camera shake for earthquake encounter
+    private void HandleCameraShake()
+    {
+        if (currentShakeDuration > 0)
+        {
+            transform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+            currentShakeDuration -= Time.deltaTime * decreaseFactor;
+        }
+        else
+        {
+            currentShakeDuration = 0f;
+            transform.localPosition = originalPos;
+        }
     }
 }
