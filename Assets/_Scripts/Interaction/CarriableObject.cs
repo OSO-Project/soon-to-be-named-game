@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+[RequireComponent (typeof(Rigidbody))]
 public class CarriableObject : MonoBehaviour, Interactable
 {
 	[SerializeField] private float xOffset,yOffset,zOffset;
 	[SerializeField] private float startAngleX, startAngleY, startAngleZ;
+	[SerializeField] private float colliderScaleFactor;
 	private Camera _mainCam;
 	private Rigidbody _rb;
 	private Collider _col;
 	private bool _isBeingCarried = false;
 	private Transform _prevParent;
+	private int _prevLayer;
 
 	public void Start()
 	{
@@ -19,6 +23,7 @@ public class CarriableObject : MonoBehaviour, Interactable
 		_rb = GetComponent<Rigidbody>();
 		_col = GetComponent<BoxCollider>();
 		_prevParent = gameObject.transform.parent;
+		_prevLayer = gameObject.layer;
 	}
 
     public void OnBeginLooking()
@@ -43,6 +48,8 @@ public class CarriableObject : MonoBehaviour, Interactable
 			//_col.enabled = false;
 			_col.isTrigger = true;
 			_isBeingCarried = true;
+			//_col.size *= new Vector3 (colliderScaleFactor, colliderScaleFactor, colliderScaleFactor);
+			gameObject.layer = LayerMask.NameToLayer("Carriable");
 			return;
 		}
 
@@ -52,6 +59,8 @@ public class CarriableObject : MonoBehaviour, Interactable
 		//_col.enabled = true;
 		_col.isTrigger=false;
 		_isBeingCarried = false;
+		//_col.size /= colliderScaleFactor;
+		gameObject.layer = _prevLayer; 
     }
 
 }
