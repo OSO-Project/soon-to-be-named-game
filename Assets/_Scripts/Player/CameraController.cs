@@ -26,10 +26,10 @@ public class CameraController : MonoBehaviour
         GameEventManager.Instance.OnEarthquakeEncounterStart += TriggerShake;
     }
 
-    private void Update()
+    /*private void Update()
     {
         HandleCameraShake();
-    }
+    }*/
 
     void LateUpdate()
     {
