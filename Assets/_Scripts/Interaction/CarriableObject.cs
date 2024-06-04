@@ -21,7 +21,7 @@ public class CarriableObject : MonoBehaviour, Interactable
 	{
 		_mainCam = Camera.main;
 		_rb = GetComponent<Rigidbody>();
-		_col = GetComponent<BoxCollider>();
+		_col = GetComponent<Collider>();
 		_prevParent = gameObject.transform.parent;
 		_prevLayer = gameObject.layer;
 	}
