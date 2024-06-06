@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class HoldToClean : MonoBehaviour, Interactable
 {
@@ -16,7 +18,9 @@ public class HoldToClean : MonoBehaviour, Interactable
     private bool _isCleaned = false;
 
     private HighlightObject _highlight;
-    private Coroutine cleanCoroutine;
+    private Coroutine _cleanCoroutine;
+    [SerializeField] private Material dirtyMat;
+
     void Start()
     {
         _objectRenderer = GetComponent<Renderer>();
@@ -49,9 +53,9 @@ public class HoldToClean : MonoBehaviour, Interactable
         {
             if (ctx.performed)
             {
-                if (cleanCoroutine == null)
+                if (_cleanCoroutine == null)
                 {
-                    cleanCoroutine = StartCoroutine(CleaningProcess());
+                    _cleanCoroutine = StartCoroutine(CleaningProcess());
                 }
             }
             else if (ctx.canceled)
@@ -76,7 +80,15 @@ public class HoldToClean : MonoBehaviour, Interactable
 
             if (_lookDuration >= timeToClean)
             {
-                _objectRenderer.material.color = targetColor;
+                Material[] currentMaterials = _objectRenderer.materials;
+                if (currentMaterials.Length > 1)
+                {
+                    // Remove the last material by resizing the array
+                    Array.Resize(ref currentMaterials, currentMaterials.Length - 3);
+
+                    // Assign the updated array back to the MeshRenderer
+                    _objectRenderer.materials = currentMaterials;
+                }
                 _isCleaned = true;
                 StopAndResetProgress();
                 yield break;
@@ -88,10 +100,10 @@ public class HoldToClean : MonoBehaviour, Interactable
 
     private void StopAndResetProgress()
     {
-        if (cleanCoroutine != null)
+        if (_cleanCoroutine != null)
         {
-            StopCoroutine(cleanCoroutine);
-            cleanCoroutine = null;
+            StopCoroutine(_cleanCoroutine);
+            _cleanCoroutine = null;
         }
 
         _lookDuration = 0f;
