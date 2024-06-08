@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 3035260817340936063}
   - component: {fileID: 8203109624662487485}
   - component: {fileID: 5746439211136941478}
-  - component: {fileID: 8049785418148348187}
   m_Layer: 3
   m_Name: Armchair2
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
@@ -108,15 +107,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8980343054347784445, guid: 02ad78cca7f19f843b49a2e580791919, type: 3}
---- !u!114 &8049785418148348187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5089241877578361006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a044e45716ec7c0408897e2973b63602, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

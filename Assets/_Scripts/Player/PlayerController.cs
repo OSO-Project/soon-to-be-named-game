@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,6 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody _rb;
     private CapsuleCollider _capsule;
+    private BoxCollider _ceilingChecker;
 
     [SerializeField] private float walkSpeed = 10f;
     [SerializeField] private float runSpeed = 20f;
@@ -25,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     private bool _grounded;
     public bool _canStandUp;
-    private bool _crouching;
+    public bool _crouching;
     private float _startHeight;
     private Vector3 _startCenter;
     private float _startRadius;
@@ -39,7 +41,7 @@ public class PlayerController : MonoBehaviour
         CanMove = true;
         _rb = GetComponent<Rigidbody>();
         _capsule = GetComponentInChildren<CapsuleCollider>();
-
+        _ceilingChecker = GetComponentInChildren<BoxCollider>();
         _startHeight = _capsule.height;
         _startCenter = _capsule.center;
         _startRadius = _capsule.radius;
@@ -116,24 +118,42 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGround()
     {
-        
+        // Define the size of the box cast
+        Vector3 boxSize = new Vector3(0.45f, 0.1f, 0.45f);
+
+        // Calculate the center of the box based on crouching or standing
+        Vector3 boxCenter;
+        float castDistance;
+
         if (_crouching)
         {
-            _grounded = Physics.Raycast(transform.position, Vector3.down, crouchDistanceToGround, groundMask);
-            Debug.DrawLine(transform.position, transform.position + Vector3.down * crouchDistanceToGround, Color.red);
+            boxCenter = transform.position + Vector3.down * crouchDistanceToGround;
+            castDistance = crouchDistanceToGround;
         }
         else
         {
-            _grounded = Physics.Raycast(transform.position, Vector3.down, distanceToGround, groundMask);
-            Debug.DrawLine(transform.position, transform.position + Vector3.down * distanceToGround, Color.red);
+            boxCenter = transform.position + Vector3.down * distanceToGround;
+            castDistance = distanceToGround;
         }
-        
+
+        _grounded = Physics.BoxCast(transform.position, boxSize, Vector3.down, out RaycastHit hit, Quaternion.identity, castDistance, groundMask);
     }
 
     private void CheckCanStandUp()
     {
-        Debug.DrawLine(_rb.worldCenterOfMass, _rb.worldCenterOfMass + Vector3.up * distanceToCrouchCeiling, Color.blue);
-        _canStandUp = !Physics.Raycast(_rb.worldCenterOfMass, Vector3.up, distanceToCrouchCeiling);
+        // Get the position and size of the box collider
+        Vector3 boxCenter = _ceilingChecker.transform.position;
+        Vector3 boxSize = _ceilingChecker.transform.localScale;
+
+        // Calculate the half extents of the box collider
+        Vector3 halfExtents = boxSize / 2;
+
+        // Perform the OverlapBox to check for collisions with other objects
+        Collider[] colliders = Physics.OverlapBox(boxCenter, halfExtents, Quaternion.identity);
+
+        // Check if any colliders were found and if their layer is not Ignore Raycast
+        _canStandUp = ! (colliders.Length == 0 || colliders.Any(collider => collider.gameObject.layer != LayerMask.NameToLayer("Ignore Raycast")));
+        Debug.Log(_canStandUp);
     }
 
     private void CrouchHandling()
@@ -145,14 +165,42 @@ public class PlayerController : MonoBehaviour
             _capsule.height = crouchScale * _startHeight;
             _capsule.center = crouchScale * _startCenter;
         }
-        else if (_canStandUp)
+        else if (_crouching)
         {
-            _crouching = false;
-            _capsule.radius = _startRadius;
-            _capsule.height = Mathf.SmoothDamp(_capsule.height, _startHeight, ref _uncrouchHeightVelocity, 0.1f);
-            _capsule.center = Vector3.SmoothDamp(_capsule.center, _startCenter, ref _uncrouchCenterVelocity, 0.1f);
+            // If there is enough space, complete the uncrouching process
+            if (_canStandUp)
+            {
+                _crouching = false;
+                StartCoroutine(StandUp());
+            }
         }
     }
+
+    private IEnumerator StandUp()
+    {
+        // Get the target height and center
+        float targetHeight = _startHeight;
+        Vector3 targetCenter = _startCenter;
+
+        // Smoothly adjust the height and center of the capsule collider
+        while ((_capsule.height != targetHeight || _capsule.center != targetCenter) && !_crouching)
+        {
+            // Update the height and center gradually
+            _capsule.height = Mathf.SmoothDamp(_capsule.height, targetHeight, ref _uncrouchHeightVelocity, 0.1f);
+            _capsule.center = Vector3.SmoothDamp(_capsule.center, targetCenter, ref _uncrouchCenterVelocity, 0.1f);
+
+            // Log the progress
+            Debug.Log("Standing up...");
+
+            yield return null;
+        }
+
+        _capsule.height = targetHeight;
+        _capsule.center = targetCenter;
+
+        Debug.Log("StandUp finished");
+    }
+
 
     public float GetCurrentSpeed()
     {
