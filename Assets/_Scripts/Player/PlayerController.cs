@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider _capsule;
     private BoxCollider _ceilingChecker;
 
+    private float _currentSpeed;
     [SerializeField] private float walkSpeed = 10f;
     [SerializeField] private float runSpeed = 20f;
     [SerializeField] private float crouchSpeed = 2f;
@@ -26,8 +27,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float additionalFallGravity = 20f;
 
     private bool _grounded;
-    public bool _canStandUp;
-    public bool _crouching;
+    private bool _wasGrounded;
+    private bool _canStandUp;
+    private bool _crouching;
     private float _startHeight;
     private Vector3 _startCenter;
     private float _startRadius;
@@ -35,6 +37,8 @@ public class PlayerController : MonoBehaviour
     private float _uncrouchHeightVelocity = 0;
 
     public bool CanMove;
+
+    public event System.Action OnLand;
 
     private void Start()
     {
@@ -61,6 +65,7 @@ public class PlayerController : MonoBehaviour
         Move();
         if (!CanMove) return;
         CheckGround();
+        DetectLanding();
         CheckCanStandUp();
         HandleJump();
         ApplyAdditionalGravity();
@@ -77,11 +82,11 @@ public class PlayerController : MonoBehaviour
         else
         {
             Vector2 input = InputManager.Instance.Move;
-            float targetSpeed = _crouching ? crouchSpeed : (InputManager.Instance.Run ? runSpeed : walkSpeed);
+            _currentSpeed = _crouching ? crouchSpeed : (InputManager.Instance.Run ? runSpeed : walkSpeed);
 
-            if (input == Vector2.zero) targetSpeed = 0;
+            if (input == Vector2.zero) _currentSpeed = 0;
 
-            Vector3 targetVelocity = new Vector3(input.x, 0, input.y).normalized * targetSpeed;
+            Vector3 targetVelocity = new Vector3(input.x, 0, input.y).normalized * _currentSpeed;
             targetVelocity = transform.TransformDirection(targetVelocity);
 
             Vector3 velocity = _rb.velocity;
@@ -137,6 +142,17 @@ public class PlayerController : MonoBehaviour
         }
 
         _grounded = Physics.BoxCast(transform.position, boxSize, Vector3.down, out RaycastHit hit, Quaternion.identity, castDistance, groundMask);
+    }
+
+    private void DetectLanding()
+    {
+
+        if (!_wasGrounded && _grounded)
+        {
+            Debug.Log("Landed! DetectLanding Player");
+            OnLand?.Invoke();
+        }
+        _wasGrounded = _grounded;
     }
 
     private void CheckCanStandUp()
@@ -207,5 +223,25 @@ public class PlayerController : MonoBehaviour
         Vector3 horizontalVelocity = _rb.velocity;
         horizontalVelocity.y = 0;
         return horizontalVelocity.magnitude;
+    }
+
+    public bool IsGrounded()
+    {
+        return _grounded;
+    }
+
+    public bool IsWalking()
+    {
+        return _currentSpeed > 0 && _currentSpeed <= walkSpeed && !_crouching;
+    }
+
+    public bool IsRunning()
+    {
+        return _currentSpeed > walkSpeed && _currentSpeed <= runSpeed && !_crouching;
+    }
+
+    public bool IsCrouching()
+    {
+        return _crouching && _currentSpeed > 0;
     }
 }

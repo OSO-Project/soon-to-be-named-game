@@ -5737,9 +5737,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraHolder: {fileID: 705510575}
-  smoothSpeed: 0.5
+  smoothSpeed: 0.25
+  playerController: {fileID: 2107746522}
   shakeAmount: 0.7
   decreaseFactor: 1
+  walkBobAmount: 0.05
+  runBobAmount: 0.1
+  crouchBobAmount: 0.03
+  walkBobSpeed: 14
+  runBobSpeed: 18
+  crouchBobSpeed: 8
+  landingOffset: 0.1
+  landingSmoothTime: 0.1
 --- !u!81 &1043503252
 AudioListener:
   m_ObjectHideFlags: 0
@@ -7401,7 +7410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 56e8e40af2b3b904cb444d0971d15682, type: 3}
       propertyPath: m_LocalScale.z
-      value: 105
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 56e8e40af2b3b904cb444d0971d15682, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10939,7 +10948,6 @@ MonoBehaviour:
   acceleration: 10
   deceleration: 10
   additionalFallGravity: 10
-  _canStandUp: 0
   CanMove: 1
 --- !u!114 &2107746523
 MonoBehaviour:
