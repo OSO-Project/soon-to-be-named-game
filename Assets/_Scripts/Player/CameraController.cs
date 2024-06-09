@@ -21,15 +21,10 @@ public class CameraController : MonoBehaviour
         // Calculate initial offset
         _offset = transform.position - cameraHolder.position;
 
-        originalPos = transform.localPosition;
+        //originalPos = transform.localPosition;
 
         GameEventManager.Instance.OnEarthquakeEncounterStart += TriggerShake;
     }
-
-    /*private void Update()
-    {
-        HandleCameraShake();
-    }*/
 
     void LateUpdate()
     {
@@ -38,6 +33,7 @@ public class CameraController : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 
         transform.rotation = Quaternion.Lerp(transform.rotation, cameraHolder.rotation, smoothSpeed);
+        //HandleCameraShake();
     }
 
     public void TriggerShake(float duration)

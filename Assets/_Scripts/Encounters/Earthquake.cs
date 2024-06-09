@@ -20,6 +20,7 @@ public class Earthquake : Encounter
     protected override void EncounterEnd()
     {
         Debug.Log("Earthquake end!");
+        GameEventManager.Instance.HandleEarthquakeEncounterEnd();
         base.EncounterEnd();
     }
 }
