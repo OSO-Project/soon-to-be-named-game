@@ -99,20 +99,40 @@ public class Outline : MonoBehaviour {
     needsUpdate = true;
   }
 
-  void OnEnable() {
-    foreach (var renderer in renderers) {
+/*    void OnEnable()
+    {
+        foreach (var renderer in renderers)
+        {
 
-      // Append outline shaders
-      var materials = renderer.sharedMaterials.ToList();
+            Append outline shaders
+           var materials = renderer.sharedMaterials.ToList();
 
-      materials.Add(outlineMaskMaterial);
-      materials.Add(outlineFillMaterial);
+            materials.Add(outlineMaskMaterial);
+            materials.Add(outlineFillMaterial);
 
-      renderer.materials = materials.ToArray();
+            renderer.materials = materials.ToArray();
+        }
+    }*/
+
+    void OnEnable()
+    {
+        foreach (var renderer in renderers)
+        {
+            // Skip renderers with ParticleSystem component
+            if (renderer.GetComponent<ParticleSystem>() != null)
+            {
+                continue;
+            }
+
+            // Append outline shaders
+            var materials = renderer.sharedMaterials.ToList();
+            materials.Add(outlineMaskMaterial);
+            materials.Add(outlineFillMaterial);
+            renderer.materials = materials.ToArray();
+        }
     }
-  }
 
-  void OnValidate() {
+    void OnValidate() {
 
     // Update material properties
     needsUpdate = true;
@@ -137,7 +157,7 @@ public class Outline : MonoBehaviour {
     }
   }
 
-  void OnDisable() {
+/*  void OnDisable() {
     foreach (var renderer in renderers) {
 
       // Remove outline shaders
@@ -148,9 +168,28 @@ public class Outline : MonoBehaviour {
 
       renderer.materials = materials.ToArray();
     }
-  }
+  }*/
 
-  void OnDestroy() {
+
+    void OnDisable()
+    {
+        foreach (var renderer in renderers)
+        {
+            // Skip renderers with ParticleSystem component
+            if (renderer.GetComponent<ParticleSystem>() != null)
+            {
+                continue;
+            }
+
+            // Remove outline shaders
+            var materials = renderer.sharedMaterials.ToList();
+            materials.Remove(outlineMaskMaterial);
+            materials.Remove(outlineFillMaterial);
+            renderer.materials = materials.ToArray();
+        }
+    }
+
+    void OnDestroy() {
 
     // Destroy material instances
     Destroy(outlineMaskMaterial);
