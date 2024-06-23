@@ -20,11 +20,13 @@ public class HoldToClean : MonoBehaviour, Interactable
     private HighlightObject _highlight;
     private Coroutine _cleanCoroutine;
     [SerializeField] private Material dirtyMat;
+    private ParticleSystem _dustParticle;
 
     void Start()
     {
         _objectRenderer = GetComponent<Renderer>();
         _highlight = GetComponent<HighlightObject>();
+        _dustParticle = GetComponentInChildren<ParticleSystem>();
     }
 
     public void OnBeginLooking()
@@ -83,6 +85,7 @@ public class HoldToClean : MonoBehaviour, Interactable
                 Material[] currentMaterials = _objectRenderer.materials;
                 if (currentMaterials.Length > 1)
                 {
+                    _dustParticle.Stop();
                     // Remove the last material by resizing the array
                     Array.Resize(ref currentMaterials, currentMaterials.Length - 3);
 

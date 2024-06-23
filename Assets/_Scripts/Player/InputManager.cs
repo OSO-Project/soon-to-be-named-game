@@ -10,12 +10,14 @@ public class InputManager : MonoBehaviour
     public Vector2 Move { get; private set; }
     public bool Run { get; private set; }
     public bool Jump { get; private set; }
+    public bool Crouch { get; private set; }
 
     public bool Interact { get; private set; }
 
     public InputAction MoveAction;
     public InputAction JumpAction;
     public InputAction RunAction;
+    public InputAction CrouchAction;
 
     public InputAction InteractAction;
 
@@ -40,6 +42,7 @@ public class InputManager : MonoBehaviour
         MoveAction = _currentMap.FindAction("Move");
         JumpAction = _currentMap.FindAction("Jump");
         RunAction = _currentMap.FindAction("Run");
+        CrouchAction = _currentMap.FindAction("Crouch");
         InteractAction = _currentMap.FindAction("Interact");
         MoveAction.performed += OnMove;
         MoveAction.canceled += OnMove;
@@ -47,6 +50,8 @@ public class InputManager : MonoBehaviour
         JumpAction.canceled += OnJump;
         RunAction.performed += OnRun;
         RunAction.canceled += OnRun;
+        CrouchAction.performed += OnCrouch;
+        CrouchAction.canceled += OnCrouch;
         InteractAction.performed += OnInteract;
         InteractAction.canceled += OnInteract;
     }
@@ -64,6 +69,11 @@ public class InputManager : MonoBehaviour
     private void OnRun(InputAction.CallbackContext context)
     {
         Run = context.ReadValueAsButton();
+    }
+
+    private void OnCrouch(InputAction.CallbackContext context)
+    {
+        Crouch = context.ReadValueAsButton();
     }
 
     private void OnInteract(InputAction.CallbackContext context)

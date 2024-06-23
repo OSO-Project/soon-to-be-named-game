@@ -19,7 +19,7 @@ public class CarriableObject : MonoBehaviour, Interactable
 	private Camera _mainCam;
 	private Rigidbody _rb;
 	private Collider _col;
-	private bool _isBeingCarried = false;
+	public bool _isBeingCarried = false;
 	private Transform _prevParent;
 	private int _prevLayer;
 	private bool _useGravity, _isKinematic, _isTrigger;
@@ -56,7 +56,7 @@ public class CarriableObject : MonoBehaviour, Interactable
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
     {
-		if(_isBeingCarried)
+        if (_isBeingCarried)
 		{
 			return;
 		}

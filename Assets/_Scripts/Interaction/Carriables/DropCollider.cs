@@ -28,7 +28,7 @@ public class DropCollider : MonoBehaviour, Interactable
 	}
 	private void ItemPickedUp(GameObject go)
 	{
-		gameObject.SetActive(true);
+        gameObject.SetActive(true);
 		_carriedItemRef = go;
 	}
 
