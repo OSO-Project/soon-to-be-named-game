@@ -105,8 +105,12 @@ public class PlayerController : MonoBehaviour
     {
         if (InputManager.Instance.Jump && _grounded && _canStandUp)
         {
+            // Preserve the horizontal velocity
+            Vector3 horizontalVelocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
+            // Calculate the jump velocity
             Vector3 jumpVelocity = Vector3.up * Mathf.Sqrt(2 * jumpStrength * Mathf.Abs(Physics.gravity.y));
-            _rb.velocity = jumpVelocity;
+            // Apply the jump while preserving horizontal speed
+            _rb.velocity = horizontalVelocity + jumpVelocity;
         }
     }
 
