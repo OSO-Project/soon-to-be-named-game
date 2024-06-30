@@ -12,13 +12,11 @@ public class PlayerRotation : MonoBehaviour
 
     [Header("Mouse sensitivity")]
     [SerializeField] private SettingsInfo settingsInfo;
-    void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
 
     private void LateUpdate()
     {
+        if (PauseUIManager.Instance.IsGamePaused) return;
+
         Rotate();
     }
     public virtual void Rotate()

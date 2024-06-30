@@ -59,8 +59,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
         if (!CanMove) return;
+        Move();
         CheckGround();
         DetectLanding();
         CheckCanStandUp();

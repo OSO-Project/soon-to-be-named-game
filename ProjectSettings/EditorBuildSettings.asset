@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/dev/Alex/level0 1.unity
-    guid: 35638755657c0fa4186fc7e719513e0e
+    path: Assets/Scenes/dev/Alex/Menu.unity
+    guid: bf28c43932949444fb8ec2f0b28cf577
+  - enabled: 1
+    path: Assets/Scenes/dev/Alex/WorkingScene.unity
+    guid: dc84d5078f8888345a645eae83cc3af1
   m_configObjects: {}
