@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd81e8f37040f474590f4ada7d96dbd4, type: 3}
+  m_Name: drawer
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6211369582517326102, guid: ef8f5a544af6046449fe05c53628d71f, type: 3}
+  area: {x: 1, y: 1}
+  zone: 1
+  chances: 0.491
+  randomRotation: 0
+  minObjNum: 2
+  maxObjNum: 6

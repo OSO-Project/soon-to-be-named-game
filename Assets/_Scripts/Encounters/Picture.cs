@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Picture : MonoBehaviour
+public class Picture : MonoBehaviour, IPhysics
 {
-    private Rigidbody rb;
+    private Rigidbody _rb;
 
-    void Start()
+    public Rigidbody Rigidbody => _rb;
+
+    void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
+
+    /*void Start()
     {
         rb = GetComponent<Rigidbody>();
 
@@ -40,6 +47,6 @@ public class Picture : MonoBehaviour
             Debug.Log("xdd");
             rb.isKinematic = true;
         }
-    }
+    }*/
 
 }

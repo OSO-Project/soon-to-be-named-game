@@ -9,22 +9,18 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class HoldToClean : MonoBehaviour, Interactable
 {
-    [SerializeField] private Color targetColor = Color.red;
     [SerializeField] private float timeToClean = 3f;
 
-    private Renderer _objectRenderer;
     private static HoldToClean currentTarget = null;
     private float _lookDuration = 0f;
     private bool _isCleaned = false;
 
     private HighlightObject _highlight;
     private Coroutine _cleanCoroutine;
-    [SerializeField] private Material dirtyMat;
     private ParticleSystem _dustParticle;
 
     void Start()
     {
-        _objectRenderer = GetComponent<Renderer>();
         _highlight = GetComponent<HighlightObject>();
         _dustParticle = GetComponentInChildren<ParticleSystem>();
     }
@@ -82,16 +78,7 @@ public class HoldToClean : MonoBehaviour, Interactable
 
             if (_lookDuration >= timeToClean)
             {
-                Material[] currentMaterials = _objectRenderer.materials;
-                if (currentMaterials.Length > 1)
-                {
-                    _dustParticle.Stop();
-                    // Remove the last material by resizing the array
-                    Array.Resize(ref currentMaterials, currentMaterials.Length - 3);
-
-                    // Assign the updated array back to the MeshRenderer
-                    _objectRenderer.materials = currentMaterials;
-                }
+                _dustParticle.Stop();
                 _isCleaned = true;
                 StopAndResetProgress();
                 yield break;

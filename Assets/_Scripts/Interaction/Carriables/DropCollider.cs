@@ -4,33 +4,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DropCollider : MonoBehaviour, Interactable
+public class DropCollider : MonoBehaviour
 {
 
-	public static event Action<GameObject> OnDropObject;
+    public static event Action<GameObject> OnDropObject;
 
-	private GameObject _carriedItemRef;
+    private GameObject _carriedItemRef;
 
-	public void Start()
-	{
-		CarriableObject.OnPickUpObject += ItemPickedUp;
-	}
+    public void Start()
+    {
+        CarriableObject.OnPickUpObject += ItemPickedUp;
+        InputManager.Instance.InteractAction.started += DropObject;
+    }
 
-	public void OnBeginLooking(){
-	}
-	public void OnFinishLooking(){
-	}
-
-	public void OnPressInteract(InputAction.CallbackContext ctx)
-	{
-		OnDropObject?.Invoke(_carriedItemRef);
-		gameObject.SetActive(false);
-	}
-	private void ItemPickedUp(GameObject go)
-	{
-        gameObject.SetActive(true);
-		_carriedItemRef = go;
-	}
+    public void DropObject(InputAction.CallbackContext ctx)
+    {
+        if (_carriedItemRef == null)
+            return;
+        OnDropObject?.Invoke(_carriedItemRef);
+        _carriedItemRef = null;
+    }
+    private void ItemPickedUp(GameObject go)
+    {
+        _carriedItemRef = go;
+    }
 
 
 }

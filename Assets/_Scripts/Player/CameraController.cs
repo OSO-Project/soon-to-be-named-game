@@ -3,20 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using EZCameraShake;
 
-public class CameraController : MonoBehaviour
+public class CameraController : MonoBehaviour, IShake
 {
     [SerializeField] private Transform cameraHolder; // Reference to the CameraHolder
     [SerializeField] private float smoothSpeed = 0.125f;
     [SerializeField] private PlayerController playerController;
     private Vector3 _offset; // Offset between camera and camera holder
 
-    [Header("Earthquake Camera Shake Settings")]
-    [SerializeField] private float shakeAmount = 0.7f;
-    [SerializeField] private float decreaseFactor = 1.0f;
-
-    private Vector3 originalPos;
     private Vector3 cameraHolderOriginalPos;
-    private float currentShakeDuration = 0f;
 
     [Header("Head Bobbing Settings")]
     [SerializeField] private float walkBobAmount = 0.05f;
@@ -35,29 +29,15 @@ public class CameraController : MonoBehaviour
     private bool isLanding = false;
     private float landingVelocity = 0f;
 
-    public static CameraShakeInstance EarthquakeCustom
-    {
-        get
-        {
-            CameraShakeInstance c = new CameraShakeInstance(0.6f, 3.5f, 2f, 10f);
-            c.PositionInfluence = Vector3.one * 0.25f;
-            c.RotationInfluence = new Vector3(1, 1, 4);
-            return c;
-        }
-    }
-
-    CameraShakeInstance shake;
-
 
     void Start()
     {
+        gameObject.transform.position = cameraHolder.transform.position;
         // Calculate initial offset
         _offset = transform.position - cameraHolder.position;
-
-        originalPos = transform.localPosition;
         cameraHolderOriginalPos = cameraHolder.localPosition;
 
-        GameEventManager.Instance.OnEarthquakeEncounterStart += HandleCameraShake;
+        //GameEventManager.Instance.OnEarthquakeEncounterStart += HandleCameraShake;
 
         playerController.OnLand += StartLandingEffect;
     }
@@ -73,9 +53,9 @@ public class CameraController : MonoBehaviour
         HandleHeadBobbing();
     }
 
-    public void TriggerShake(float duration)
+    public void Shake(float duration)
     {
-        currentShakeDuration = duration;
+        CameraShaker.Instance.Shake(CameraShakePresets.EarthquakeCustom);
     }
 
     // Camera shake for earthquake encounter
@@ -92,10 +72,12 @@ public class CameraController : MonoBehaviour
             transform.localPosition = originalPos;
         }*/
         //shake = CameraShaker.Instance.StartShake(0.6f, 3.5f, 2f);
-        CameraShaker.Instance.Shake(EarthquakeCustom);
+        //CameraShaker.Instance.Shake(EarthquakeCustom);
         //shake.StartFadeOut(duration);
         //;
     }
+
+
 
     private void HandleHeadBobbing()
     {

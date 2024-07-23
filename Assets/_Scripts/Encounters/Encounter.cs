@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,4 +37,16 @@ public abstract class Encounter : MonoBehaviour
     {
         encounter = null;
     }
+}
+*/
+
+using UnityEngine;
+
+public abstract class Encounter : MonoBehaviour
+{
+    public float duration;
+
+    public abstract bool CanStart();
+    public abstract void StartEncounter();
+    public abstract void StopEncounter();
 }

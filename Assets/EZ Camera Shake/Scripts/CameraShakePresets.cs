@@ -102,5 +102,19 @@ namespace EZCameraShake
                 return c;
             }
         }
+
+        /// <summary>
+        /// [Sustained] A continuous, rough shake. Custom project earthquake shake.
+        /// </summary>
+        public static CameraShakeInstance EarthquakeCustom
+        {
+            get
+            {
+                CameraShakeInstance c = new CameraShakeInstance(0.6f, 3.5f, 2f, 10f);
+                c.PositionInfluence = Vector3.one * 0.25f;
+                c.RotationInfluence = new Vector3(1, 1, 4);
+                return c;
+            }
+        }
     }
 }

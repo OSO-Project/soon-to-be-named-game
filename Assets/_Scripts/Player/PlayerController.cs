@@ -59,8 +59,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
         if (!CanMove) return;
+        Move();
         CheckGround();
         DetectLanding();
         CheckCanStandUp();
@@ -105,8 +105,12 @@ public class PlayerController : MonoBehaviour
     {
         if (InputManager.Instance.Jump && _grounded && _canStandUp)
         {
+            // Preserve the horizontal velocity
+            Vector3 horizontalVelocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
+            // Calculate the jump velocity
             Vector3 jumpVelocity = Vector3.up * Mathf.Sqrt(2 * jumpStrength * Mathf.Abs(Physics.gravity.y));
-            _rb.velocity = jumpVelocity;
+            // Apply the jump while preserving horizontal speed
+            _rb.velocity = horizontalVelocity + jumpVelocity;
         }
     }
 
@@ -140,11 +144,6 @@ public class PlayerController : MonoBehaviour
 
         // Check if any colliders were found and set grounded accordingly
         _grounded = colliders.Length > 0;
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            Debug.Log(colliders[i].name);
-        }
-        Debug.Log("Number of colliders detected: " + colliders.Length);
         Vector3[] points = new Vector3[8];
 
         // Calculate the 8 corners of the box
@@ -199,7 +198,6 @@ public class PlayerController : MonoBehaviour
 
         // Check if any colliders were found and if their layer is not Ignore Raycast
         _canStandUp = !_crouching || !(colliders.Length == 0 || colliders.Any(collider => collider.gameObject.layer != LayerMask.NameToLayer("Ignore Raycast")));
-        Debug.Log(_canStandUp);
 
 
         Vector3[] points = new Vector3[8];
