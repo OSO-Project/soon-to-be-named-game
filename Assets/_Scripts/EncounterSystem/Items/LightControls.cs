@@ -16,6 +16,11 @@ public class LightControls : MonoBehaviour, Interactable
     private void Start()
     {
         _highlight = GetComponent<HighlightObject>();
+        InputManager.Instance.CleanAction.performed += OnPressInteract;
+    }
+    private void OnDestroy()
+    {
+        InputManager.Instance.CleanAction.performed -= OnPressInteract;
     }
     public void OnBeginLooking()
     {
@@ -64,7 +69,7 @@ public class LightControls : MonoBehaviour, Interactable
     {
         while (true)
         {
-            if (currentTarget == this && InputManager.Instance.InteractAction.ReadValue<float>() == 0f)
+            if (currentTarget == this && InputManager.Instance.CleanAction.ReadValue<float>() == 0f)
             {
                 StopAndResetProgress();
                 yield break;
