@@ -109,11 +109,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5677b495a0318d94caabb456feb75941, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5677b495a0318d94caabb456feb75941, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5677b495a0318d94caabb456feb75941, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -192,7 +192,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &5706642789365040272
@@ -207,11 +207,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 50
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!65 &7055703830442086637
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -298,8 +300,12 @@ PrefabInstance:
       value: keyboard
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 03d8f02ea2ae3874cafc0ffbda04733b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 03d8f02ea2ae3874cafc0ffbda04733b, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 03d8f02ea2ae3874cafc0ffbda04733b, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -378,7 +384,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &8537164604325001330
@@ -393,11 +399,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 300
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!65 &1975431067148274278
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -596,8 +604,12 @@ PrefabInstance:
       value: Mouse
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1eb995e37b34a7a4295e0fdae9bbbe8f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1eb995e37b34a7a4295e0fdae9bbbe8f, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1eb995e37b34a7a4295e0fdae9bbbe8f, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -671,7 +683,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &7468167845356690515
@@ -686,11 +698,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 400
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!65 &1245128085205983965
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -782,8 +796,12 @@ PrefabInstance:
       value: Computer Chair
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 09e749c06481a384fb35ba60d3604058, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 09e749c06481a384fb35ba60d3604058, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 09e749c06481a384fb35ba60d3604058, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -857,7 +875,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!65 &1583664750722954537
@@ -893,11 +911,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 40
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!4 &3079191679121140861 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 09e749c06481a384fb35ba60d3604058, type: 3}
@@ -969,11 +989,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ebe53f8413d81f49b516fbc02f0ba54, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ebe53f8413d81f49b516fbc02f0ba54, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ebe53f8413d81f49b516fbc02f0ba54, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1047,7 +1067,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &2124385073155543692
@@ -1062,11 +1082,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 50
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!65 &8653673897194962890
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1158,8 +1180,12 @@ PrefabInstance:
       value: Game Controller
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f5265c3bda091d941b936804fa456a82, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f5265c3bda091d941b936804fa456a82, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f5265c3bda091d941b936804fa456a82, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1233,7 +1259,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &202469248398176118
@@ -1248,11 +1274,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 400
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!65 &1514573641398184834
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1345,11 +1373,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ebe53f8413d81f49b516fbc02f0ba54, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ebe53f8413d81f49b516fbc02f0ba54, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4ebe53f8413d81f49b516fbc02f0ba54, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1428,7 +1456,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &5483098747603028542
@@ -1443,11 +1471,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 50
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!65 &7573430557850772898
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1534,8 +1564,12 @@ PrefabInstance:
       value: Plant 02
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6e73dfdb311338439355075fd10be55, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6e73dfdb311338439355075fd10be55, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6e73dfdb311338439355075fd10be55, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1614,7 +1648,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &8908607633766380370
@@ -1629,11 +1663,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 400
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!65 &4709711550741196480
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1721,11 +1757,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c3ae0d0d749f5e24d8a2184608f1c5fd, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c3ae0d0d749f5e24d8a2184608f1c5fd, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c3ae0d0d749f5e24d8a2184608f1c5fd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1825,7 +1861,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &4291531758145008207
@@ -1840,11 +1876,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 100
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!1001 &8710350068856746785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1911,11 +1949,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5ba947b8466a9d84c9b85936e17a0f7b, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5ba947b8466a9d84c9b85936e17a0f7b, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5ba947b8466a9d84c9b85936e17a0f7b, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1989,7 +2027,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &7067158510493721309
@@ -2004,11 +2042,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 300
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!65 &6508999222778742544
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2100,8 +2140,12 @@ PrefabInstance:
       value: Mug
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 224a5f777eb545945b6866f3beec63eb, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 224a5f777eb545945b6866f3beec63eb, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 224a5f777eb545945b6866f3beec63eb, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2175,7 +2219,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &2120691528616035881
@@ -2190,11 +2234,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 600
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!65 &1590758768297380997
 BoxCollider:
   m_ObjectHideFlags: 0

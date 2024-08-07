@@ -65,8 +65,12 @@ PrefabInstance:
       value: SockPair
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b8e536d6cd91b9a4190951a940912d01, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b8e536d6cd91b9a4190951a940912d01, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -111,7 +115,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &3314342522455769019
@@ -126,11 +130,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 225
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!135 &6505599991820473811
 SphereCollider:
   m_ObjectHideFlags: 0

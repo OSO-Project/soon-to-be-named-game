@@ -19,3 +19,10 @@ MonoBehaviour:
   randomRotation: 0
   minObjNum: 1
   maxObjNum: 7
+  canSpawnTrash: 1
+  trashObjects:
+  - {fileID: 11400000, guid: 263f6e4cc46f7644cb5b68f15ec74bd1, type: 2}
+  - {fileID: 11400000, guid: e21636c1df98a2242bdbf046531933fe, type: 2}
+  - {fileID: 11400000, guid: 05368c153be447d438d5f1fc62b0bb0f, type: 2}
+  - {fileID: 11400000, guid: b9346f559c0454845bd66ce2d396b8a5, type: 2}
+  - {fileID: 11400000, guid: c4c4f3b851106b1468e226b7ccd43084, type: 2}

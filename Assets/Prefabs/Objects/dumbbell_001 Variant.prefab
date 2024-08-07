@@ -17,12 +17,16 @@ PrefabInstance:
       value: dumbbell_001 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4668012554734224365, guid: f556d04045a305d4d8c954744120bad6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668012554734224365, guid: f556d04045a305d4d8c954744120bad6, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4668012554734224365, guid: f556d04045a305d4d8c954744120bad6, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5441417088743709015, guid: f556d04045a305d4d8c954744120bad6, type: 3}
       propertyPath: m_LocalScale.x
@@ -120,7 +124,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &2827960008608131637
@@ -135,11 +139,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 200
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!65 &1654644837157398091
 BoxCollider:
   m_ObjectHideFlags: 0

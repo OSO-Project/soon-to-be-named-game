@@ -19,6 +19,6 @@ public class MainMenuManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("LastMerge 06.07.2024");
+        SceneManager.LoadScene("LastMerge 24.07.2024");
     }
 }

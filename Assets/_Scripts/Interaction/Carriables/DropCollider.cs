@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class DropCollider : MonoBehaviour
 {
-
+/*
     public static event Action<GameObject> OnDropObject;
 
     private GameObject _carriedItemRef;
@@ -28,6 +28,6 @@ public class DropCollider : MonoBehaviour
     {
         _carriedItemRef = go;
     }
-
+*/
 
 }

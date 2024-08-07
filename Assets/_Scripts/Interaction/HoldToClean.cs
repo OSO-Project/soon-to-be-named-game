@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -23,6 +24,12 @@ public class HoldToClean : MonoBehaviour, Interactable
     {
         _highlight = GetComponent<HighlightObject>();
         _dustParticle = GetComponentInChildren<ParticleSystem>();
+        InputManager.Instance.CleanAction.performed += OnPressInteract;
+    }
+
+    private void OnDestroy()
+    {
+        InputManager.Instance.CleanAction.performed -= OnPressInteract;
     }
 
     public void OnBeginLooking()
@@ -36,6 +43,7 @@ public class HoldToClean : MonoBehaviour, Interactable
 
     public void OnFinishLooking()
     {
+        if (_isCleaned) return;
         _highlight.SetIsHighlighted(false);
         currentTarget = null;
         UIManager.Instance.HintText.gameObject.SetActive(false);
@@ -45,7 +53,7 @@ public class HoldToClean : MonoBehaviour, Interactable
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
     {
-        if (_isCleaned) return;
+        if (_isCleaned) return; 
 
         if (currentTarget == this)
         {
@@ -67,7 +75,7 @@ public class HoldToClean : MonoBehaviour, Interactable
     {
         while (true)
         {
-            if (currentTarget == this && InputManager.Instance.InteractAction.ReadValue<float>() == 0f)
+            if (currentTarget == this && InputManager.Instance.CleanAction.ReadValue<float>() == 0f)
             {
                 StopAndResetProgress();
                 yield break;
@@ -80,6 +88,10 @@ public class HoldToClean : MonoBehaviour, Interactable
             {
                 _dustParticle.Stop();
                 _isCleaned = true;
+                if(gameObject.GetComponent<DecalProjector>() != null)
+                {
+                    Destroy(gameObject, _dustParticle.main.duration);
+                }
                 StopAndResetProgress();
                 yield break;
             }

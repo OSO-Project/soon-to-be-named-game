@@ -16,7 +16,7 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
     private bool isUnlocked = false;
     private bool isOpen = false;
     private Animator animator;
-
+    private static OpenCloseDoor currentTarget = null;
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -24,48 +24,58 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
         {
             Debug.LogError("Animator component missing from drawer object.");
         }
+        InputManager.Instance.OpenCloseAction.performed += OnPressInteract;
+    }
+
+    private void OnDestroy()
+    {
+        InputManager.Instance.OpenCloseAction.performed -= OnPressInteract;
     }
 
     public void OnBeginLooking()
     {
         Debug.Log("Looking");
-	//Code to execute when you aim at the object
+        currentTarget = this;
+        //Code to execute when you aim at the object
     }
     public void OnFinishLooking()
     {
+        currentTarget = null;
         Debug.Log("NotLooking");
 	//Code to execute when you aim away from the object
     }
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
     {
-        if (!isUnlocked)
+        if (currentTarget == this)
         {
-            Debug.Log("Door's locked.");
-            return;
-        }
-        else
-        {
-            Debug.Log("Interacting");
-            if (animator == null)
+            if (!isUnlocked)
             {
-                Debug.Log("animator is null");
+                Debug.Log("Door's locked.");
                 return;
-            }
-
-            if (isOpen)
-            {
-                Debug.Log("animatingClose");
-                animator.SetTrigger("Close");
             }
             else
             {
-                Debug.Log("animatingClose");
-                animator.SetTrigger("Open");
-            }
+                Debug.Log("Interacting");
+                if (animator == null)
+                {
+                    Debug.Log("animator is null");
+                    return;
+                }
 
-            isOpen = !isOpen;
+                if (isOpen)
+                {
+                    Debug.Log("animatingClose");
+                    animator.SetTrigger("Close");
+                }
+                else
+                {
+                    Debug.Log("animatingClose");
+                    animator.SetTrigger("Open");
+                }
+
+                isOpen = !isOpen;
+            }
         }
-        
     }
 }

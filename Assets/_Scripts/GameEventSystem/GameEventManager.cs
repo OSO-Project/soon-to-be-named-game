@@ -36,6 +36,8 @@ public class GameEventManager : MonoBehaviour
     public event Action OnEarthquakeEncounterEnd;
     #endregion
 
+    public event Action OnLightsControlClick;
+
     //Group of methods for managing saving and loading
     #region Saving and loading
     public void LoadData()
@@ -87,8 +89,13 @@ public class GameEventManager : MonoBehaviour
     }
     #endregion
 
+    public void SwitchLights()
+    {
+        OnLightsControlClick?.Invoke();
+    }
+
     //Group of methods for managing encounters
-    #region Encounters
+    /*#region Encounters
     // General methods
     public void HandleEncounterStart()
     {
@@ -108,5 +115,5 @@ public class GameEventManager : MonoBehaviour
     {
         OnEarthquakeEncounterEnd?.Invoke();
     }
-    #endregion
+    #endregion*/
 }

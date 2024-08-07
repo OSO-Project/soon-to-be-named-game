@@ -11,9 +11,9 @@ public class InputManager : MonoBehaviour
     public bool Run { get; private set; }
     public bool Jump { get; private set; }
     public bool Crouch { get; private set; }
-
-    public bool Interact { get; private set; }
-
+    public bool Clean { get; private set; }
+    public bool OpenClose { get; private set; }
+    public bool GrabDrop { get; private set; }
     public bool Throw { get; private set; }
 
     public InputAction MoveAction;
@@ -21,8 +21,10 @@ public class InputManager : MonoBehaviour
     public InputAction RunAction;
     public InputAction CrouchAction;
 
-    public InputAction InteractAction;
+    public InputAction CleanAction;
+    public InputAction GrabDropAction;
     public InputAction ThrowAction;
+    public InputAction OpenCloseAction;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -45,8 +47,10 @@ public class InputManager : MonoBehaviour
         JumpAction = _currentMap.FindAction("Jump");
         RunAction = _currentMap.FindAction("Run");
         CrouchAction = _currentMap.FindAction("Crouch");
-        InteractAction = _currentMap.FindAction("Interact");
+        CleanAction = _currentMap.FindAction("Clean");
         ThrowAction = _currentMap.FindAction("Throw");
+        OpenCloseAction = _currentMap.FindAction("OpenClose");
+        GrabDropAction = _currentMap.FindAction("GrabDrop");
         MoveAction.performed += OnMove;
         MoveAction.canceled += OnMove;
         JumpAction.performed += OnJump;
@@ -55,10 +59,14 @@ public class InputManager : MonoBehaviour
         RunAction.canceled += OnRun;
         CrouchAction.performed += OnCrouch;
         CrouchAction.canceled += OnCrouch;
-        InteractAction.performed += OnInteract;
-        InteractAction.canceled += OnInteract;
+        CleanAction.performed += OnClean;
+        CleanAction.canceled += OnClean;
         ThrowAction.performed += OnThrow;
         ThrowAction.canceled += OnThrow;
+        OpenCloseAction.performed += OnOpenClose;
+        OpenCloseAction.canceled += OnOpenClose;
+        GrabDropAction.performed += OnGrabDrop;
+        GrabDropAction.canceled += OnGrabDrop;
     }
 
     private void OnMove(InputAction.CallbackContext context)
@@ -86,16 +94,40 @@ public class InputManager : MonoBehaviour
         Throw = context.ReadValueAsButton();
     }
 
-    private void OnInteract(InputAction.CallbackContext context)
+    private void OnClean(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            Interact = true;
+            Clean = true;
         }
         else if (context.canceled)
         {
-            Interact = false;
+            Clean = false;
         }
+    }
+    private void OnGrabDrop(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            GrabDrop = true;
+        }
+        else if (context.canceled)
+        {
+            GrabDrop = false;
+        }
+    }
+
+    private void OnOpenClose(InputAction.CallbackContext context)
+    {
+        /*        if (context.performed)
+                {
+                    OpenClose = true;
+                }
+                else if (context.canceled)
+                {
+                    OpenClose = false;
+                }*/
+        OpenClose = context.ReadValueAsButton();
     }
 
     private void OnEnable()

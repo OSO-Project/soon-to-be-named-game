@@ -180,6 +180,8 @@ public class ObjectPlacementManager : MonoBehaviour
             Quaternion newRotation = Quaternion.Euler(rotationAngleX, rotationAngleY, rotationAngleZ) * asset.prefab.transform.rotation;
             Vector2 adjustedArea = AdjustAreaForRotation(asset.area, randomCell.side);
 
+
+
             if (CanPlaceDecoration(pos, adjustedArea))
             {
                 PlaceDecoration(pos, adjustedArea, asset.prefab, newRotation, parent);
@@ -231,6 +233,38 @@ public class ObjectPlacementManager : MonoBehaviour
         return filteredAssets[randomIndex];
     }
 
+    void SpawnTrashObjects(Vector3 position, Vector2 area, DecorationAsset asset)
+    {
+        if (!asset.canSpawnTrash || asset.trashObjects.Count == 0)
+        {
+            return;
+        }
+
+        int maxTrashObjects = (int)(area.x * area.y);
+        int numTrashObjects = Random.Range(1, maxTrashObjects + 1);
+
+        // Calculate the half-width and half-height of the area
+        float halfWidth = area.x * gridManager.cellSize / 2;
+        float halfHeight = area.y * gridManager.cellSize / 2;
+
+        for (int i = 0; i < numTrashObjects; i++)
+        {
+            DecorationAsset trashAsset = asset.trashObjects[Random.Range(0, asset.trashObjects.Count)];
+
+            // Generate random positions within the area, centered on 'position'
+            float randomX = Random.Range(-halfWidth, halfWidth);
+            float randomZ = Random.Range(-halfHeight, halfHeight);
+            Vector3 randomPositionWithinArea = position + new Vector3(randomX, 0, randomZ);
+
+            Quaternion randomRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+
+            GameObject trashObject = Instantiate(trashAsset.prefab, randomPositionWithinArea, randomRotation, parent);
+            trashObject.transform.position = new Vector3(trashObject.transform.position.x, trashObject.transform.position.y + 1f, trashObject.transform.position.z); // Adjust height to be slightly above the large object
+        }
+        Debug.Log("SpawnTrashObjects completed.");
+    }
+
+
     bool CanPlaceDecoration(Vector3 position, Vector2 area)
     {
         Vector3 gridStartPosition = gridManager.transform.position;
@@ -272,6 +306,13 @@ public class ObjectPlacementManager : MonoBehaviour
         // Instantiate the decoration at the centered position with the given rotation
         GameObject decoration = Instantiate(decorationPrefab, centeredPosition, rotation, parent);
         MarkOccupied(position, area);
+
+        // Spawn trash objects if applicable
+        DecorationAsset asset = decorationAssets.Find(d => d.prefab == decorationPrefab);
+        if (asset != null && asset.canSpawnTrash)
+        {
+            SpawnTrashObjects(position, area, asset);
+        }
     }
 
     Vector2 AdjustAreaForRotation(Vector2 area, CellSideTag.Side side)

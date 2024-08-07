@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Ball : MonoBehaviour
 { 
@@ -12,11 +13,13 @@ public class Ball : MonoBehaviour
     private Rigidbody _ballRB;
     private Collider _ballHitBox;
     private CarriableObject _carriableObject;
-    
-    // private ContactPoint _contactPoint;
+    private ContactPoint _contactPoint;
     [SerializeField] private GameObject _ballDecal;
+    private float lastSpawnTime = -3f; // Initializing to allow immediate first spawn
+    [SerializeField] private float spawnCooldown = 3f; // 3 seconds cooldown
+    [SerializeField] private LayerMask printableLayer;
 
-    void Start()
+    void Awake()
     {
         // Find the CarriableObject script
         _carriableObject = GetComponent<CarriableObject>();
@@ -70,10 +73,10 @@ public class Ball : MonoBehaviour
         _ballHitBox.isTrigger = true;
 
         // Subscribe to the OnPickUpObject event
-        CarriableObject.OnPickUpObject += HandlePickUpObject;
-        DropCollider.OnDropObject += HandleDropOrThrowObject;
-        InputManager.Instance.ThrowAction.performed += HandleDropOrThrowObject;
 
+        //CarriableObject.OnPickUpObject += HandlePickUpObject;
+        //DropCollider.OnDropObject += HandleDropOrThrowObject;
+        InputManager.Instance.ThrowAction.performed += HandleDropOrThrowObject;
     }
 
     void OnTriggerEnter(Collider other)
@@ -99,12 +102,35 @@ public class Ball : MonoBehaviour
         }
     }
 
-    // void OnCollisionEnter(Collision collision)
-    // {
-    //     Quaternion rotation = Quaternion.LookRotation(_contactPoint.normal, Vector3.up);
-    //     _contactPoint = collision.GetContact(0);
-    //     Instantiate(_ballDecal,_contactPoint.point, rotation);
-    // }
+    void OnCollisionEnter(Collision collision)
+    {
+        if ((printableLayer | (1 << collision.gameObject.layer)) != printableLayer) return;
+        // Check if enough time has passed since the last spawn
+        if (Time.time - lastSpawnTime >= spawnCooldown)
+        {
+            if (_ballRB.velocity.magnitude >= 5)
+            {
+                // Get the contact point
+                _contactPoint = collision.GetContact(0);
+
+                // Calculate the rotation to make the decal face opposite to the normal
+                Quaternion rotation = Quaternion.LookRotation(-_contactPoint.normal, Vector3.up);
+
+                // Apply a 180-degree rotation around the Z-axis
+                rotation *= Quaternion.Euler(0, 0, 180);
+
+                // Offset the decal position slightly away from the wall
+                Vector3 offsetPosition = _contactPoint.point + _contactPoint.normal * 0.01f; // Adjust the offset distance as needed
+
+                // Instantiate the decal
+                Instantiate(_ballDecal, offsetPosition, rotation);
+                Debug.Log("Decal spawned!");
+
+                // Update the last spawn time
+                lastSpawnTime = Time.time;
+            }
+        }
+    }
 
     private void HandlePickUpObject(GameObject pickedUpObject)
     {
@@ -135,8 +161,9 @@ public class Ball : MonoBehaviour
     void OnDestroy()
     {
         // Unsubscribe from the OnPickUpObject event
-        CarriableObject.OnPickUpObject -= HandlePickUpObject;
-        DropCollider.OnDropObject -= HandleDropOrThrowObject;
+
+        //CarriableObject.OnPickUpObject -= HandlePickUpObject;
+        //DropCollider.OnDropObject -= HandleDropOrThrowObject;
         InputManager.Instance.ThrowAction.performed -= HandleDropOrThrowObject;
     }
 

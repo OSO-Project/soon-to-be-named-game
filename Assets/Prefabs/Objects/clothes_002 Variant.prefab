@@ -13,8 +13,12 @@ PrefabInstance:
       value: clothes_002 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 401713853753398219, guid: c935566373de4944689c3ab2d7f16480, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 401713853753398219, guid: c935566373de4944689c3ab2d7f16480, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 401713853753398219, guid: c935566373de4944689c3ab2d7f16480, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -123,11 +127,11 @@ Rigidbody:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
+  m_ImplicitCom: 0
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &2474819142214650209
@@ -142,11 +146,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 200
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!65 &5114334373556657475
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd81e8f37040f474590f4ada7d96dbd4, type: 3}
   m_Name: ball
   m_EditorClassIdentifier: 
-  prefab: {fileID: 8750633366434356077, guid: bef6950206de2e840bd0008f84d47e6a, type: 3}
+  prefab: {fileID: 1180528700051766296, guid: c6e34a4b1b725274bb03b729206247ef, type: 3}
   area: {x: 1, y: 1}
   zone: 0
   chances: 0.1
   randomRotation: 0
   minObjNum: 1
-  maxObjNum: 10
+  maxObjNum: 4
+  canSpawnTrash: 0
+  trashObjects: []

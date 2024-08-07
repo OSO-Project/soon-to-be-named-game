@@ -6,84 +6,104 @@ using UnityEngine.InputSystem;
 
 
 [RequireComponent(typeof(Rigidbody))]
-public class CarriableObject : MonoBehaviour, Interactable
+public class CarriableObject : MonoBehaviour
 {
+    private Rigidbody objRigidbody;
+    private Transform objectGrabPointTransform;
+    private Transform playerTransform; // Reference to the player's transform
+    [SerializeField] float lerpSpeed;
+    [SerializeField] float maxDistance = 5f; // Maximum allowed distance before dropping the object
+    [SerializeField] float angularDampingFactor = 0.95f; // Factor to reduce angular velocity
+    private int originalLayer; // Store the original layer
+    public Collider playerCollider; // Reference to the player's collider
+    public Collider objCollider; // Reference to the object's collider
+    [SerializeField] private float maxThrowChargeTime = 3f;
+    [SerializeField] private float maxThrowStrength = 1000f;
 
-    public static event Action<GameObject> OnPickUpObject;
+    private Camera cam;
 
-    public bool _isBeingCarried = false;
-
-    [SerializeField] private float xOffset, yOffset, zOffset;
-    [SerializeField] private float throwStrength;
-
-    private Camera _mainCam;
-    private Rigidbody _rb;
-    private Collider _col;
-    private Transform _prevParent;
-    private int _prevLayer;
-    private bool _useGravity, _isKinematic, _isTrigger;
-
-    public void Start()
+    private void Awake()
     {
-        _mainCam = Camera.main;
-        _rb = GetComponent<Rigidbody>();
-        _col = GetComponent<Collider>();
-        _prevParent = gameObject.transform.parent;
-        _prevLayer = gameObject.layer;
-        _useGravity = _rb.useGravity;
-        _isKinematic = _rb.isKinematic;
-        _isTrigger = _col.isTrigger;
-
-        DropCollider.OnDropObject += Drop;
-        InputManager.Instance.ThrowAction.performed += Throw;
+        objRigidbody = GetComponent<Rigidbody>();
+        objCollider = GetComponent<Collider>();
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
-    public void OnBeginLooking()
+    public void Grab(Transform objectGrabPointTransform, Transform playerTransform, Collider playerCollider)
     {
+        this.objectGrabPointTransform = objectGrabPointTransform;
+        this.playerTransform = playerTransform;
+        this.playerCollider = playerCollider;
+        objRigidbody.useGravity = false;
 
+        // Store the original layer and change to IgnoreRaycast layer
+        originalLayer = gameObject.layer;
+        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+        // Ignore collision between the player and the object
+        Physics.IgnoreCollision(playerCollider, objCollider, true);
     }
 
-    public void OnFinishLooking()
+    public void Drop()
     {
+        this.objectGrabPointTransform = null;
+        objRigidbody.useGravity = true;
 
+        // Restore the original layer
+        gameObject.layer = originalLayer;
+
+        if(playerCollider != null)
+            // Re-enable collision between the player and the object
+            Physics.IgnoreCollision(playerCollider, objCollider, false);
+
+        // Clear the playerCollider reference
+        playerCollider = null;
+    }
+    public void Throw(float throwStrength)
+    {
+        Drop();
+        Vector3 direction = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
+        objRigidbody.AddForce(direction * throwStrength * maxThrowStrength);
     }
 
-    public void OnPressInteract(InputAction.CallbackContext ctx)
+
+    private void Update()
     {
-        if (_isBeingCarried)
+        if(objectGrabPointTransform != null)
         {
-            return;
+            // Check the distance between the player and the object
+            float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+            if (distanceToPlayer > maxDistance)
+            {
+                Drop();
+                return; // Exit early if the object is dropped
+            }
+
+            Vector3 directionToTarget = (objectGrabPointTransform.position - transform.position).normalized;
+            float distanceToTarget = Vector3.Distance(transform.position, objectGrabPointTransform.position);
+
+            // Calculate the force magnitude with damping
+            float forceMagnitude = lerpSpeed * distanceToTarget;
+
+            // Clamp the force to prevent too high acceleration
+            float maxForce = 50f; // Adjust this value as needed
+            forceMagnitude = Mathf.Clamp(forceMagnitude, 0, maxForce);
+
+            // Apply the force towards the target position
+            objRigidbody.AddForce(directionToTarget * forceMagnitude, ForceMode.Acceleration);
+
+            // Apply damping to reduce the velocity over time
+            float dampingFactor = 0.9f; // Adjust this value as needed (closer to 1 means less damping)
+            objRigidbody.velocity *= dampingFactor;
         }
-        gameObject.transform.position = _mainCam.transform.position;
-        gameObject.transform.parent = _mainCam.transform;
-        gameObject.transform.localPosition += new Vector3(xOffset, yOffset, zOffset);
-        _rb.useGravity = false;
-        _rb.isKinematic = true;
-        _col.isTrigger = true;
-        _isBeingCarried = true;
-        gameObject.layer = LayerMask.NameToLayer("Carriable");
-        OnPickUpObject?.Invoke(gameObject);
     }
 
-    private void Drop(GameObject go)
+    private void FixedUpdate()
     {
-        if (!_isBeingCarried)
-            return;
-        gameObject.transform.parent = _prevParent;
-        _rb.useGravity = _useGravity;
-        _rb.isKinematic = _isKinematic;
-        _col.isTrigger = _isTrigger;
-        _isBeingCarried = false;
-        gameObject.layer = _prevLayer;
+        if (objectGrabPointTransform != null)
+        {
+            // Apply angular damping to slow down rotation over time
+            objRigidbody.angularVelocity *= angularDampingFactor;
+        }
     }
-
-    private void Throw(InputAction.CallbackContext ctx)
-    {
-        if (!_isBeingCarried)
-            return;
-        Drop(gameObject);
-        Vector3 direction = _mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
-        _rb.AddForce(direction * throwStrength);
-    }
-
 }

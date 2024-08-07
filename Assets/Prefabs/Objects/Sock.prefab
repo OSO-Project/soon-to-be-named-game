@@ -67,14 +67,18 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: aa5cb2d3f5d43b64fbeacb59d25abfaf, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d64236d4e3837a94fb5e25feeb53930f, type: 2}
+      objectReference: {fileID: 2100000, guid: 3939dc990e1067945bd50e64871234c2, type: 2}
     - target: {fileID: 919132149155446097, guid: aa5cb2d3f5d43b64fbeacb59d25abfaf, type: 3}
       propertyPath: m_Name
       value: Sock
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: aa5cb2d3f5d43b64fbeacb59d25abfaf, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: aa5cb2d3f5d43b64fbeacb59d25abfaf, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -110,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 453219aca239d2a42a4469af433fe40c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sockType: 0
+  _sockType: 1
   _rolledPairPrefab: {fileID: 3415786354909083583, guid: 6477c05385044a447a3f00c886a59a81, type: 3}
   _particleSystemPrefab: {fileID: 7372387072756587380, guid: f167e837f89c29a4a8f57f917b4eb178, type: 3}
 --- !u!54 &5629015249942494917
@@ -133,11 +137,11 @@ Rigidbody:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
+  m_ImplicitCom: 0
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &8985037734950911858
@@ -152,11 +156,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 225
+  lerpSpeed: 40
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
 --- !u!65 &4345257618167174747
 BoxCollider:
   m_ObjectHideFlags: 0

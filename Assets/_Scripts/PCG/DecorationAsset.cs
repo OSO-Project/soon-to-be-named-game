@@ -17,6 +17,6 @@ public class DecorationAsset : ScriptableObject
     public int minObjNum = -1; // Minimum number of objects required to be spawned (-1 means no restriction)
     public int maxObjNum = -1; // Maximum number of objects allowed to be spawned (-1 means no restriction)
 
-/*    public int MinObj => minObj;
-    public int MaxObj => maxObj;*/
+    public bool canSpawnTrash;
+    public List<DecorationAsset> trashObjects;
 }

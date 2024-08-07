@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Sock : MonoBehaviour
 {
@@ -22,12 +24,14 @@ public class Sock : MonoBehaviour
 
     private void Awake()
     {
+        AssignRandomSockType();
         _sockMaterial = GetSockMaterial(_sockType);
         ApplyMaterial(_sockMaterial);
     }
 
     private void OnValidate()
     {
+        AssignRandomSockType();
         _sockMaterial = GetSockMaterial(_sockType);
         ApplyMaterial(_sockMaterial);
     }
@@ -125,5 +129,17 @@ public class Sock : MonoBehaviour
         {
             Debug.Log("Assign Particle System Prefab");
         }
+    }
+
+    public void AssignRandomSockType()
+    {
+        // Get all values of the SockType enum
+        SockType[] values = (SockType[])Enum.GetValues(typeof(SockType));
+
+        // Generate a random index
+        int randomIndex = Random.Range(0, values.Length);
+
+        // Assign the random SockType to the sock
+        _sockType = values[randomIndex];
     }
 }

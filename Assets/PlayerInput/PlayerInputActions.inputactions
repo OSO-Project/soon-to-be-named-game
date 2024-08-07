@@ -85,6 +85,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "OpenClose",
+                    "type": "Button",
+                    "id": "6fc1f55b-51f9-4a78-a705-17ae39bf105a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GrabDrop",
+                    "type": "Button",
+                    "id": "6dfb5915-93b7-4a90-9898-0c436d86815a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -332,8 +350,8 @@
                 },
                 {
                     "name": "",
-                    "id": "430452b2-5037-4375-a313-6b9877aa7f19",
-                    "path": "<Mouse>/leftButton",
+                    "id": "8bc1e3be-3059-4560-8efe-31d39a04a230",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -366,11 +384,33 @@
                 {
                     "name": "",
                     "id": "a235cf3d-0214-4cfa-8509-06a67fa5e295",
-                    "path": "<Keyboard>/e",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Throw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a0354f9-1622-4830-ad77-6ffbe2aef7c2",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenClose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "afd7628d-6109-4db5-b741-79cb46fb607b",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GrabDrop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

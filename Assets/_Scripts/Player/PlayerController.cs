@@ -48,15 +48,6 @@ public class PlayerController : MonoBehaviour
         _startCenter = _capsule.center;
     }
 
-    // For testing earthquake encounter
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            GameEventManager.Instance.HandleEncounterStart();
-        }
-    }
-
     private void FixedUpdate()
     {
         if (!CanMove) return;

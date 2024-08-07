@@ -18,8 +18,7 @@ public class InteractionManager : MonoBehaviour
 	{
 		Instance = this;
 		_mainCamera = Camera.main;
-		InputManager.Instance.InteractAction.performed += PressInteract;
-	}
+    }
 
 	private void Update()
 	{
@@ -74,7 +73,7 @@ public class InteractionManager : MonoBehaviour
 		_interactionInterface = null;
 	}
 
-	private void PressInteract(InputAction.CallbackContext ctx)
+	public void PressInteract(InputAction.CallbackContext ctx)
 	{
 		if(_interactionInterface != null)
 			_interactionInterface.OnPressInteract(ctx);
