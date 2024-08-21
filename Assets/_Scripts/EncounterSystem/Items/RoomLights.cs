@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomLights : MonoBehaviour, IDisableChildren
@@ -12,6 +10,7 @@ public class RoomLights : MonoBehaviour, IDisableChildren
 
     public void DisableAllChildren()
     {
+        Debug.Log("xdd light");
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(false);

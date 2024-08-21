@@ -28,15 +28,31 @@ public class GameEventManager : MonoBehaviour
     public event Action<GameData> OnSaveData;
     #endregion
 
-    #region Encounter Actions
+    /*#region Encounter Actions
     public event Action OnEncounterStart;
     public event Action OnEncounterEnd;
 
     public event Action<float> OnEarthquakeEncounterStart;
     public event Action OnEarthquakeEncounterEnd;
-    #endregion
+    #endregion*/
 
     public event Action OnLightsControlClick;
+    public event Action OnWindowOpen;
+
+    public event Action OnEncounterEnd;
+
+    #region Gameplay Actions
+    public event Action<int> OnAddScore;
+    public event Action<GameData> OnLevelEnd;
+    #endregion
+
+
+    #region Score
+    public void AddScore(float score)
+    {
+        OnAddScore?.Invoke((int)score);
+    }
+    #endregion
 
     //Group of methods for managing saving and loading
     #region Saving and loading
@@ -82,16 +98,26 @@ public class GameEventManager : MonoBehaviour
     }
     #endregion
 
-    #region Progression
-    public void HandleUnlockItem(Unlockables item)
+    #region Gameplay
+    public void EndLevel()
     {
-        gameData.UnlockItem(item);
+        OnLevelEnd?.Invoke(gameData);
     }
     #endregion
 
     public void SwitchLights()
     {
         OnLightsControlClick?.Invoke();
+    }
+
+    public void OpenWindow()
+    {
+        OnWindowOpen?.Invoke();
+    }
+
+    public void EndEncounter()
+    {
+        OnEncounterEnd?.Invoke();
     }
 
     //Group of methods for managing encounters

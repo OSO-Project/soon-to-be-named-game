@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd81e8f37040f474590f4ada7d96dbd4, type: 3}
   m_Name: carpet2
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2518169980483839766, guid: 92c570a4b5cf50e4985877bfcc98aae5, type: 3}
+  prefab: {fileID: 932282317322961982, guid: a7071ca92f92af24b9d187b2932eb6cb, type: 3}
   area: {x: 3, y: 3}
   zone: 0
   chances: 0.1
@@ -27,3 +27,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c4c4f3b851106b1468e226b7ccd43084, type: 2}
   - {fileID: 11400000, guid: e21636c1df98a2242bdbf046531933fe, type: 2}
   - {fileID: 11400000, guid: b9346f559c0454845bd66ce2d396b8a5, type: 2}
+  priority: 4
+  isDecoration: 0

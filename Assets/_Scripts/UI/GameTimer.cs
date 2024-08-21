@@ -27,6 +27,7 @@ public class GameTimer : MonoBehaviour
                 {
                     _remainingTime = 0;
                     _isRunning = false;
+                    GameEventManager.Instance.EndLevel();
                 }
                 UpdateTimerText();
             }
@@ -54,6 +55,12 @@ public class GameTimer : MonoBehaviour
     {
         _remainingTime = StartTimeInSeconds;
         _isRunning = true;
+        UpdateTimerText();
+    }
+
+    public void AddTime(float time)
+    {
+        _remainingTime += time;
         UpdateTimerText();
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: painting
   m_EditorClassIdentifier: 
   prefab: {fileID: 8617489326203553201, guid: 7ffd8ce7c20e6c44a8da9cfe7a7e0216, type: 3}
-  area: {x: 1, y: 0}
+  area: {x: 1, y: 1}
   zone: 1
   chances: 0.549
   randomRotation: 0
@@ -21,3 +21,5 @@ MonoBehaviour:
   maxObjNum: 5
   canSpawnTrash: 0
   trashObjects: []
+  priority: 5
+  isDecoration: 1

@@ -15,7 +15,7 @@ MonoBehaviour:
   prefab: {fileID: 6211369582517326102, guid: ef8f5a544af6046449fe05c53628d71f, type: 3}
   area: {x: 1, y: 1}
   zone: 1
-  chances: 0.491
+  chances: 0.099
   randomRotation: 0
   minObjNum: 2
   maxObjNum: 6
@@ -25,3 +25,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 263f6e4cc46f7644cb5b68f15ec74bd1, type: 2}
   - {fileID: 11400000, guid: e21636c1df98a2242bdbf046531933fe, type: 2}
   - {fileID: 11400000, guid: c4c4f3b851106b1468e226b7ccd43084, type: 2}
+  priority: 3
+  isDecoration: 0

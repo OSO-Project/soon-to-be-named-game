@@ -6,7 +6,7 @@ public class ToolsManager : MonoBehaviour
 {
     public static ToolsManager Instance { get; private set; }
     public UnlockedToolsData PlayerData;
-    private ITool _currentlyHeld;
+    private string _currentlyHeld;
     public List<ITool> Tools = new List<ITool>();
 
     void Start()
@@ -19,12 +19,26 @@ public class ToolsManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
     void Update()
     {
+        if (Input.GetKeyDown("1") && PlayerData.wipeUnlocked && _currentlyHeld != "Wipe")
+        {
+            EquipWipe();
+        }
+    }
 
+    void EquipWipe()
+    {
+        // pull strings from enums
+        _currentlyHeld = "Wipe";
     }
 
     void SwitchItem()

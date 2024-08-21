@@ -19,4 +19,8 @@ public class DecorationAsset : ScriptableObject
 
     public bool canSpawnTrash;
     public List<DecorationAsset> trashObjects;
+
+    public int priority;
+
+    public bool isDecoration;
 }

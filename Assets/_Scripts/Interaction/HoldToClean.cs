@@ -10,11 +10,16 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class HoldToClean : MonoBehaviour, Interactable
 {
-    [SerializeField] private float timeToClean = 3f;
+    [SerializeField] protected float timeToClean = 3f;
 
     private static HoldToClean currentTarget = null;
     private float _lookDuration = 0f;
     private bool _isCleaned = false;
+    public UnlockedToolsData PlayerData;
+
+    public Action cleanSuccesfull;
+
+    public Action cleanSuccesfull;
 
     private HighlightObject _highlight;
     private Coroutine _cleanCoroutine;
@@ -34,7 +39,7 @@ public class HoldToClean : MonoBehaviour, Interactable
 
     public void OnBeginLooking()
     {
-        if (_isCleaned) return;
+        if (_isCleaned || ToolsManager.Instance.PlayerData.currentlyHeld != "Wipe") return;
         _highlight.SetIsHighlighted(true);
         currentTarget = this;
         UIManager.Instance.HintText.gameObject.SetActive(true);
@@ -93,6 +98,9 @@ public class HoldToClean : MonoBehaviour, Interactable
                     Destroy(gameObject, _dustParticle.main.duration);
                 }
                 StopAndResetProgress();
+                // move to another script
+                GameEventManager.Instance.AddScore(50 * timeToClean);
+                cleanSuccesfull.Invoke();
                 yield break;
             }
 
@@ -118,6 +126,8 @@ public class HoldToClean : MonoBehaviour, Interactable
             _highlight.Highlight();
         }
     }
+
+    
 
 }
 

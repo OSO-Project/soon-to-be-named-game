@@ -119,14 +119,6 @@ public class InputManager : MonoBehaviour
 
     private void OnOpenClose(InputAction.CallbackContext context)
     {
-        /*        if (context.performed)
-                {
-                    OpenClose = true;
-                }
-                else if (context.canceled)
-                {
-                    OpenClose = false;
-                }*/
         OpenClose = context.ReadValueAsButton();
     }
 

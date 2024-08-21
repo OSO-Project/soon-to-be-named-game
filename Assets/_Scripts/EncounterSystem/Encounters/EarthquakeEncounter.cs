@@ -5,6 +5,7 @@ using UnityEngine;
 public class EarthquakeEncounter : Encounter
 {
     [SerializeField] private float forceMagnitude = 10f;
+    
 
     public override bool CanStart()
     {
@@ -35,7 +36,7 @@ public class EarthquakeEncounter : Encounter
     private IEnumerator StopAfterDuration()
     {
         yield return new WaitForSeconds(duration);
-        StopEncounter();
+        GameEventManager.Instance.EndEncounter();
     }
 
     public override void StopEncounter()
@@ -46,10 +47,10 @@ public class EarthquakeEncounter : Encounter
             obj.Rigidbody.isKinematic = true;
         }
 
-        IShake[] shakeObjects = FindObjectsOfType<MonoBehaviour>().OfType<IShake>().ToArray();
+        /*IShake[] shakeObjects = FindObjectsOfType<MonoBehaviour>().OfType<IShake>().ToArray();
         foreach (IShake obj in shakeObjects)
         {
             // Stop shaking logic here if needed (prolly yes)
-        }
+        }*/
     }
 }

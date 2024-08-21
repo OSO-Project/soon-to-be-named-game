@@ -8,6 +8,7 @@ public class EncounterManager : MonoBehaviour
 
     public float minTriggerTime;
     public float maxTriggerTime;
+    [SerializeField] private float startDelay = 5f;
 
     private float _levelStartTime;
     private float _currentTime;
@@ -15,6 +16,7 @@ public class EncounterManager : MonoBehaviour
     void Start()
     {
         _levelStartTime = Time.time;
+        GameEventManager.Instance.OnEncounterEnd += StopEncounter;
     }
 
     void Update()
@@ -43,7 +45,6 @@ public class EncounterManager : MonoBehaviour
             Debug.LogWarning("An encounter is already running!");
             return false;
         }
-        Debug.Log($" is started");
         if (CanStartEncounter())
         {
             
@@ -53,6 +54,23 @@ public class EncounterManager : MonoBehaviour
             {
                 Debug.Log($"{encounter.gameObject.name} is started");
                 _currentEncounter = encounter;
+
+                /*// add encounter ender components
+                if(_currentEncounter.encounterEnders != null)
+                {
+                    foreach (var ender in _currentEncounter.encounterEnders)
+                    {
+                        if (!ender.GetComponent<HoldToCleanEncounter>())
+                        {
+                            ender.AddComponent<HoldToCleanEncounter>();
+                            ender.AddComponent<HighlightObject>();
+                        }
+
+                    }
+                }*/
+
+                // display notification
+                UIManager.Instance.DisplayEncounterNotification(_currentEncounter.encounterIcon, _currentEncounter.encounterText, startDelay);
                 _currentEncounter.StartEncounter();
                 return true;
             }
@@ -62,9 +80,20 @@ public class EncounterManager : MonoBehaviour
 
     public void StopEncounter()
     {
+        Debug.Log("Current enc stop");
         if (_currentEncounter != null)
         {
             _currentEncounter.StopEncounter();
+
+            /*// remove encounter ender components
+            if(_currentEncounter.encounterEnders != null)
+            {
+                foreach (var ender in _currentEncounter.encounterEnders)
+                {
+                    Destroy(ender.GetComponent<HoldToCleanEncounter>());
+                    Destroy(ender.GetComponent<HighlightObject>());
+                }
+            }*/
             _currentEncounter = null;
         }
     }

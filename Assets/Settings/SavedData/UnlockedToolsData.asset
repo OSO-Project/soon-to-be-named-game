@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da00b2097237b444ea4cfa81d0c2656e, type: 3}
   m_Name: UnlockedToolsData
   m_EditorClassIdentifier: 
-  wipeUnlocked: 0
-  vaccuumUnlocked: 0
+  currentlyHeld: Wipe
+  wipeUnlocked: 1
+  vaccuumUnlocked: 1
   bucketUnlocked: 0

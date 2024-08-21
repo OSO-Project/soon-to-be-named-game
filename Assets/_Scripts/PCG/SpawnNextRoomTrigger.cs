@@ -16,7 +16,9 @@ public class SpawnNextRoomTrigger : MonoBehaviour
         if (other.transform.parent != null && other.transform.parent.CompareTag("Player"))
         {
             Debug.Log("Player is inside of trigger area");
-            roomManager.SpawnNextRoom(nextRoomPosition.position);
+            //Debug.Log("Global Rotation: " + nextRoomPosition.rotation.eulerAngles);
+            Vector3 spawnPosition = nextRoomPosition.position;
+            roomManager.SpawnNextRoom(spawnPosition, nextRoomPosition.rotation);
             Destroy(gameObject);
         }
     }

@@ -238,6 +238,7 @@ MonoBehaviour:
   objCollider: {fileID: 0}
   maxThrowChargeTime: 3
   maxThrowStrength: 1000
+  _pickUpSoundFX: {fileID: 8300000, guid: f3c6587c7eb4c8c4f9388683375eedd6, type: 3}
 --- !u!4 &1957311247381522082 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 61e53d14b4d615246be49bfef6769056, type: 3}

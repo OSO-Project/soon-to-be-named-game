@@ -1,13 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Sock : MonoBehaviour
 {
+    [Header("Sock Attributes")]
     [SerializeField]
     [Tooltip("Type defines the texture of the sock and assigns its color tag.")]
     private SockType _sockType;
@@ -21,6 +18,10 @@ public class Sock : MonoBehaviour
     private GameObject _particleSystemPrefab;
 
     private bool _hasCollided = false;
+
+    [Header("Sock Sound Effects")]
+    //this can be later changed to AudioClip[] if we want to have multiple sounds for the same event
+    [SerializeField] private AudioClip _sockCollisionSound;
 
     private void Awake()
     {
@@ -85,6 +86,7 @@ public class Sock : MonoBehaviour
         {
             GameObject rolledPair = Instantiate(_rolledPairPrefab, position, rotation);
             ApplyMaterialToRolledPair(rolledPair, sockMaterial);
+            SoundFxManager.instance.PlaySoundFXClip(_sockCollisionSound, transform, 1f);
         }
         else
         {

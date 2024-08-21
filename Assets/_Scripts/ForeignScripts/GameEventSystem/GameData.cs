@@ -1,24 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class GameData
 {
-    private int _numberOfItemsUnlocked;
-    private List<Unlockables> _unlockedItems;
+    private int _upgradePoints;
 
     public GameData()
     {
-        _numberOfItemsUnlocked = 0;
-        _unlockedItems = new List<Unlockables>();
+        _upgradePoints = 0;
     }
 
-    public void UnlockItem(Unlockables unlocked)
+    public void AddUpgradePoints(int points)
     {
-        if(!_unlockedItems.Contains(unlocked))
-        {
-            _numberOfItemsUnlocked++;
-            _unlockedItems.Add(unlocked);
-        }
+        _upgradePoints += points;
     }
 }

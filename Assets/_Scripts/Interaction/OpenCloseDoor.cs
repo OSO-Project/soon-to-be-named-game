@@ -51,31 +51,33 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
         {
             if (!isUnlocked)
             {
-                Debug.Log("Door's locked.");
                 return;
             }
             else
             {
-                Debug.Log("Interacting");
                 if (animator == null)
                 {
-                    Debug.Log("animator is null");
                     return;
                 }
 
                 if (isOpen)
                 {
-                    Debug.Log("animatingClose");
                     animator.SetTrigger("Close");
                 }
                 else
                 {
-                    Debug.Log("animatingClose");
                     animator.SetTrigger("Open");
                 }
 
                 isOpen = !isOpen;
             }
         }
+    }
+
+    public void CloseAndLockDoor()
+    {
+        isUnlocked = false;
+        isOpen = false;
+        animator.SetTrigger("Close");
     }
 }
