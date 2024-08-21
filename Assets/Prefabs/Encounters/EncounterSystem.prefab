@@ -77,8 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a107b28f98876c3479891b0c09ca0c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minInterval: 10
-  maxInterval: 30
+  minInterval: 5
+  maxInterval: 5
   minEncounters: 3
 --- !u!1 &7687398718809592659
 GameObject:
@@ -127,5 +127,7 @@ MonoBehaviour:
   availableEncounters:
   - {fileID: 0}
   - {fileID: 0}
-  minTriggerTime: 10
-  maxTriggerTime: 20
+  - {fileID: 0}
+  minTriggerTime: 1
+  maxTriggerTime: 120
+  startDelay: 5

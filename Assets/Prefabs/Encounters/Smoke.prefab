@@ -48,6 +48,7 @@ MonoBehaviour:
   duration: 0
   encounterIcon: {fileID: 21300000, guid: c8423b3a694b494498d486657bdec247, type: 3}
   encounterText: Smoke
+  encounterEnders: []
 --- !u!65 &1025720189948967478
 BoxCollider:
   m_ObjectHideFlags: 0
