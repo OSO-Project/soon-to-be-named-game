@@ -12,18 +12,16 @@ public class HoldToClean : MonoBehaviour, Interactable
 {
     [SerializeField] protected float timeToClean = 3f;
 
-    private static HoldToClean currentTarget = null;
-    private float _lookDuration = 0f;
-    private bool _isCleaned = false;
+    public static HoldToClean currentTarget = null;
+    public float _lookDuration = 0f;
+    public bool _isCleaned = false;
     public UnlockedToolsData PlayerData;
 
     public Action cleanSuccesfull;
 
-    public Action cleanSuccesfull;
-
-    private HighlightObject _highlight;
-    private Coroutine _cleanCoroutine;
-    private ParticleSystem _dustParticle;
+    public HighlightObject _highlight;
+    public Coroutine _cleanCoroutine;
+    public ParticleSystem _dustParticle;
 
     void Start()
     {
