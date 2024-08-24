@@ -96,6 +96,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 263f6e4cc46f7644cb5b68f15ec74bd1, type: 2}
   - {fileID: 11400000, guid: b9346f559c0454845bd66ce2d396b8a5, type: 2}
   - {fileID: 11400000, guid: a6db49d2d57921149af87d7026ebc93f, type: 2}
+  - {fileID: 11400000, guid: c2e6ac59f53fe1141899f61804786c24, type: 2}
   chanceInnerSpawn: 0.823
   chanceOuterSpawn: 0.811
   seed: 4057

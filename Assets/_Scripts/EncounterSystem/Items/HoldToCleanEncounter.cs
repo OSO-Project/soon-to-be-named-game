@@ -4,6 +4,12 @@ using UnityEngine.InputSystem;
 
 public class HoldToCleanEncounter : HoldToClean, Interactable
 {
+    private void Start()
+    {
+        _highlight = GetComponent<HighlightObject>();
+        gameObject.tag = "Interactable";
+        InputManager.Instance.CleanAction.performed += OnPressInteract;
+    }
     public void OnBeginLooking()
     {
         base.OnBeginLooking();
@@ -38,6 +44,7 @@ public class HoldToCleanEncounter : HoldToClean, Interactable
     {
         while (true)
         {
+            Debug.Log("CleaningProcess");
             if (currentTarget == this && InputManager.Instance.CleanAction.ReadValue<float>() == 0f)
             {
                 StopAndResetProgress();

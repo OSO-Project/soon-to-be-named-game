@@ -6582,8 +6582,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 654808600}
     m_Modifications:
     - target: {fileID: 269245772478080133, guid: d65fe850390165c4fa1797c891fba80b, type: 3}
+      propertyPath: CleanAction.m_Name
+      value: Clean
+      objectReference: {fileID: 0}
+    - target: {fileID: 269245772478080133, guid: d65fe850390165c4fa1797c891fba80b, type: 3}
       propertyPath: ThrowAction.m_Name
       value: Throw
+      objectReference: {fileID: 0}
+    - target: {fileID: 269245772478080133, guid: d65fe850390165c4fa1797c891fba80b, type: 3}
+      propertyPath: GrabDropAction.m_Name
+      value: Grab Drop
+      objectReference: {fileID: 0}
+    - target: {fileID: 269245772478080133, guid: d65fe850390165c4fa1797c891fba80b, type: 3}
+      propertyPath: OpenCloseAction.m_Name
+      value: Open Close
       objectReference: {fileID: 0}
     - target: {fileID: 7359453234541389596, guid: d65fe850390165c4fa1797c891fba80b, type: 3}
       propertyPath: m_LocalPosition.x

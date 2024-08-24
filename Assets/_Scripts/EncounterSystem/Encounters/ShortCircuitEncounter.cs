@@ -26,8 +26,8 @@ public class ShortCircuitEncounter : Encounter
         {
             if (!ender.GetComponent<HoldToCleanEncounter>())
             {
-                ender.AddComponent<HoldToCleanEncounter>();
                 ender.AddComponent<HighlightObject>();
+                ender.AddComponent<HoldToCleanEncounter>();
             }
         }
 
