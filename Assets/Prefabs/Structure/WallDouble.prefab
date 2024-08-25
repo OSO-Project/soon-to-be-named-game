@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4490717243310994130}
   - component: {fileID: 2333185841372748296}
   - component: {fileID: 1936470146211716029}
+  - component: {fileID: -8585871468131715323}
   m_Layer: 0
   m_Name: WallDouble
   m_TagString: Untagged
@@ -104,3 +105,25 @@ MonoBehaviour:
   _wallBackColor: 4
   _floorStripColor: 20
   _windowSillColor: 19
+--- !u!64 &-8585871468131715323
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5238927400808064335}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7532147029035925913, guid: ed38041a1e2e2064f88b4bdf7eb5182e, type: 3}

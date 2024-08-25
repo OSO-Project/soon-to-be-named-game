@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9083282531373088563}
   - component: {fileID: 7669269944677219634}
   - component: {fileID: 2267622867766328128}
+  - component: {fileID: -8971799268307475080}
   m_Layer: 0
   m_Name: WallHalf.End
   m_TagString: Untagged
@@ -104,3 +105,25 @@ MonoBehaviour:
   _wallBackColor: 4
   _floorStripColor: 20
   _windowSillColor: 19
+--- !u!64 &-8971799268307475080
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615987855836112940}
+  m_Material: {fileID: 13400000, guid: bac638344cd6faf42a6dd15a81bc59ac, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8271255716249010777, guid: ed38041a1e2e2064f88b4bdf7eb5182e, type: 3}

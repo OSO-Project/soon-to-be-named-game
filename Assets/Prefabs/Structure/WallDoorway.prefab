@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5413999496259429844}
   - component: {fileID: 4059756787933426770}
   - component: {fileID: 5695625946249822643}
+  - component: {fileID: -4186513479796662695}
   m_Layer: 0
   m_Name: WallDoorway
   m_TagString: Untagged
@@ -103,3 +104,25 @@ MonoBehaviour:
   _wallBackColor: 4
   _floorStripColor: 0
   _windowSillColor: 0
+--- !u!64 &-4186513479796662695
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8736817183503897412}
+  m_Material: {fileID: 13400000, guid: bac638344cd6faf42a6dd15a81bc59ac, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2400663682336586428, guid: ed38041a1e2e2064f88b4bdf7eb5182e, type: 3}
