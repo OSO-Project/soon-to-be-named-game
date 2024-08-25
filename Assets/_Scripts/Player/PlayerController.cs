@@ -251,16 +251,11 @@ public class PlayerController : MonoBehaviour
             _capsule.height = Mathf.SmoothDamp(_capsule.height, targetHeight, ref _uncrouchHeightVelocity, 0.1f);
             _capsule.center = Vector3.SmoothDamp(_capsule.center, targetCenter, ref _uncrouchCenterVelocity, 0.1f);
 
-            // Log the progress
-            Debug.Log("Standing up...");
-
             yield return null;
         }
 
         _capsule.height = targetHeight;
         _capsule.center = targetCenter;
-
-        Debug.Log("StandUp finished");
     }
 
 

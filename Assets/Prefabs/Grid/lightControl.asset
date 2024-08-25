@@ -21,5 +21,5 @@ MonoBehaviour:
   maxObjNum: 1
   canSpawnTrash: 0
   trashObjects: []
-  priority: 1
+  priority: 0
   isDecoration: 0
