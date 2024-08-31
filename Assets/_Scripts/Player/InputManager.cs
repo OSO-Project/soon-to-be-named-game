@@ -131,4 +131,17 @@ public class InputManager : MonoBehaviour
     {
         _currentMap.Disable();
     }
+
+    private void UpdateInputs()
+    {
+        Move = MoveAction.ReadValue<Vector2>();
+        Jump = JumpAction.WasPressedThisFrame();
+        Run = RunAction.IsPressed();
+        Clean = CleanAction.IsPressed();
+        Crouch = CrouchAction.IsPressed();
+        Throw = ThrowAction.IsPressed();
+        OpenClose = OpenCloseAction.IsPressed();
+        GrabDrop = GrabDropAction.IsPressed();
+
+    }
 }
