@@ -6,9 +6,25 @@ using UnityEngine.UI;
 
 public class GameTimer : MonoBehaviour
 {
+    public static GameTimer Instance;
+
     public float StartTimeInSeconds = 300f; // 5 minutes in seconds
     private float _remainingTime;
     private bool _isRunning = true;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
 
     void Start()
     {

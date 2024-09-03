@@ -19,6 +19,9 @@ public class ObjectPlacementManager : MonoBehaviour
     public float objectsSpawnMultiplier;
     private Dictionary<DecorationAsset, int> spawnedObjectsCount;
 
+    [SerializeField] public List<DirtyObject> dirtyObjects; // List of all dirty objects in the room
+    [SerializeField] public List<GameObject> obb;
+
     private void Awake()
     {
         endlessModeManager = GameObject.Find("EndlessModeManager").GetComponent<EndlessModeManager>();
@@ -44,8 +47,17 @@ public class ObjectPlacementManager : MonoBehaviour
         {
             spawnedObjectsCount[asset] = 0;
         }
-
+        dirtyObjects = new List<DirtyObject>();
+        obb = new List<GameObject>();
         PlaceObjects();
+
+        // Set dirty objects for new room
+        SetRoomDirt();
+    }
+
+    void SetRoomDirt()
+    {
+        endlessModeManager.SetNewRoomDirt(dirtyObjects);
     }
 
     void PlaceObjects()
@@ -293,6 +305,13 @@ public class ObjectPlacementManager : MonoBehaviour
             {
                 GameObject trashObject = Instantiate(trashAsset.prefab, randomPositionWithinArea, randomRotation, parent);
                 trashObject.transform.position = new Vector3(trashObject.transform.position.x, trashObject.transform.position.y + 1f, trashObject.transform.position.z); // Adjust height to be slightly above the large object
+                //Debug.Log($"tr: {trashObject.name}");
+                // if objects is a dirt item add to the list
+                if(trashObject.GetComponent<DirtyObject>() != null)
+                {
+                    dirtyObjects.Add(trashObject.GetComponent<DirtyObject>());
+                    obb.Add(trashObject);
+                }
             }
         }
         Debug.Log("SpawnTrashObjects completed.");
@@ -349,6 +368,13 @@ public class ObjectPlacementManager : MonoBehaviour
 
         // Instantiate the decoration at the centered position with the given rotation
         GameObject decoration = Instantiate(decorationObj.prefab, centeredPosition, rotation, parent);
+
+        // if objects is a dirt item add to the list
+        if (decoration.GetComponent<DirtyObject>() != null)
+        {
+            dirtyObjects.Add(decoration.GetComponent<DirtyObject>());
+            obb.Add(decoration);
+        }
         MarkOccupied(position, area, decorationObj.isDecoration);
 
         // Spawn trash objects if applicable

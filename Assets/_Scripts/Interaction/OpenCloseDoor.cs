@@ -11,12 +11,13 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
     //Remember to also include the Interactable interface, as shown above.
     //The interaction range is global between interactable objects, and you can set it in the
     //InteractionManager.cs script or the object with that script. If needed, i can change this.
-    
+
     [SerializeField]
     private bool isUnlocked = false;
     private bool isOpen = false;
     private Animator animator;
     private static OpenCloseDoor currentTarget = null;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -42,7 +43,7 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
     {
         currentTarget = null;
         Debug.Log("NotLooking");
-	//Code to execute when you aim away from the object
+        //Code to execute when you aim away from the object
     }
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
@@ -55,21 +56,24 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
             }
             else
             {
-                if (animator == null)
+                if(GameManager.Instance.AttemptToLeaveRoom())
                 {
-                    return;
-                }
+                    if (animator == null)
+                    {
+                        return;
+                    }
 
-                if (isOpen)
-                {
-                    animator.SetTrigger("Close");
-                }
-                else
-                {
-                    animator.SetTrigger("Open");
-                }
+                    if (isOpen)
+                    {
+                        animator.SetTrigger("Close");
+                    }
+                    else
+                    {
+                        animator.SetTrigger("Open");
+                    }
 
-                isOpen = !isOpen;
+                    isOpen = !isOpen;
+                }
             }
         }
     }

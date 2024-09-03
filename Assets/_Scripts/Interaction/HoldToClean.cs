@@ -8,7 +8,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
-public class HoldToClean : MonoBehaviour, Interactable
+public class HoldToClean : MonoBehaviour, Interactable, DirtyObject
 {
     [SerializeField] protected float timeToClean = 3f;
 
@@ -97,7 +97,7 @@ public class HoldToClean : MonoBehaviour, Interactable
                 }
                 StopAndResetProgress();
                 // move to another script
-                GameEventManager.Instance.AddScore(50 * timeToClean);
+                GameEventManager.Instance.HoldToClean(getDirtValue());
                 cleanSuccesfull.Invoke();
                 yield break;
             }
@@ -125,7 +125,9 @@ public class HoldToClean : MonoBehaviour, Interactable
         }
     }
 
-    
-
+    public int getDirtValue()
+    {
+        return (int) timeToClean / 2;
+    }
 }
 

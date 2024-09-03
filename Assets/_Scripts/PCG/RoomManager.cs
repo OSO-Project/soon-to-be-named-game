@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -11,47 +12,12 @@ public class RoomManager : MonoBehaviour
     public GameObject roomPrefab;
     public Transform initSpawnPoint;
     private GameObject currentRoom;
-    private GameObject nextRoom;
-
-    [Header("Dirt and cleaning Room Settings")]
-    public List<DirtyObject> dirtyObjects; // List of all dirty objects in the room
-    private float totalDirt; // Total dirt in the room
-    private float currentDirt; // Current amount of dirt left in the room
-    public float cleanliness; // Cleanliness percentage of the room
+    private GameObject nextRoom; 
 
     public event Action OnTransitionComplete;
     void Start()
     {
-        SpawnInitialRoom();
-        
-    }
-
-
-    void InitializeRoom()
-    {
-        totalDirt = 0f;
-        foreach (DirtyObject obj in dirtyObjects)
-        {
-            totalDirt += obj.dirtValue;
-        }
-        currentDirt = totalDirt;
-        cleanliness = 0f; // Initially, the room is 0% clean
-    }
-
-    // Update the cleanliness after cleaning or getting dirty
-    public void UpdateCleanliness(float dirtRemoved)
-    {
-        currentDirt -= dirtRemoved;
-        cleanliness = 1f - (currentDirt / totalDirt);
-        cleanliness = Mathf.Clamp(cleanliness, 0f, 1f); // Ensure cleanliness is between 0 and 1
-    }
-
-    // Example function to make an object dirty again
-    public void MakeObjectDirty(DirtyObject obj)
-    {
-        currentDirt += obj.dirtValue;
-        cleanliness = 1f - (currentDirt / totalDirt);
-        cleanliness = Mathf.Clamp(cleanliness, 0f, 1f);
+        SpawnInitialRoom();        
     }
 
     /// <summary>

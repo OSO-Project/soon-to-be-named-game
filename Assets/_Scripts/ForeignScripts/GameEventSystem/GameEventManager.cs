@@ -28,14 +28,6 @@ public class GameEventManager : MonoBehaviour
     public event Action<GameData> OnSaveData;
     #endregion
 
-    /*#region Encounter Actions
-    public event Action OnEncounterStart;
-    public event Action OnEncounterEnd;
-
-    public event Action<float> OnEarthquakeEncounterStart;
-    public event Action OnEarthquakeEncounterEnd;
-    #endregion*/
-
     public event Action OnLightsControlClick;
     public event Action OnWindowOpen;
 
@@ -43,14 +35,24 @@ public class GameEventManager : MonoBehaviour
 
     #region Gameplay Actions
     public event Action<int> OnAddScore;
-    public event Action<GameData> OnLevelEnd;
+    public event Action<int> OnHoldToClean;
+    public event Action OnLevelEnd;
     #endregion
 
 
     #region Score
-    public void AddScore(float score)
+    /*public void AddScore(float score)
     {
         OnAddScore?.Invoke((int)score);
+    }*/
+
+    public void HoldToClean(float dirt)
+    {
+        OnAddScore?.Invoke((int)dirt);
+    }
+    public void MatchSocks(float dirt)
+    {
+        OnAddScore?.Invoke((int)dirt);
     }
     #endregion
 
@@ -101,14 +103,9 @@ public class GameEventManager : MonoBehaviour
     #region Gameplay
     public void EndLevel()
     {
-        OnLevelEnd?.Invoke(gameData);
+        OnLevelEnd?.Invoke();
     }
     #endregion
-
-    public void SwitchLights()
-    {
-        OnLightsControlClick?.Invoke();
-    }
 
     public void OpenWindow()
     {
@@ -120,26 +117,4 @@ public class GameEventManager : MonoBehaviour
         OnEncounterEnd?.Invoke();
     }
 
-    //Group of methods for managing encounters
-    /*#region Encounters
-    // General methods
-    public void HandleEncounterStart()
-    {
-        OnEncounterStart?.Invoke();
-    }
-    public void HandleEncounterEnd()
-    {
-        OnEncounterEnd?.Invoke();
-    }
-
-    // Earthquake
-    public void HandleEarthquakeEncounterStart(float duration)
-    {
-        OnEarthquakeEncounterStart?.Invoke(duration);
-    }
-    public void HandleEarthquakeEncounterEnd()
-    {
-        OnEarthquakeEncounterEnd?.Invoke();
-    }
-    #endregion*/
 }

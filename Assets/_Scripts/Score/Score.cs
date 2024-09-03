@@ -4,38 +4,53 @@ using UnityEngine;
 
 public class Score : MonoBehaviour
 {
-    public int playerScore = 0;
-    public int upgradePoints = 0;
-    public bool isEndlessMode = false;
-    public int pointsPerUpgrade;
-    public int currentLevel = 0; // scriptable obj?
+    public static Score Instance;
 
-    public int[] starThresholds = { 1500, 2500, 4000 };
+    public int globalPlayerScore = 0; // Total score across the game
+    public int roomScore = 0;
+    public int upgradePoints = 0;
+    public bool isEndlessMode = true;
+    public int pointsPerUpgrade = 1000;
+
+    //public int[] cleanThresholds = { 1000, 2000, 3000 }; // Dirty, Clean, Spick & Span
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
-        GameEventManager.Instance.OnAddScore += AddScore;
-        GameEventManager.Instance.OnLevelEnd += EndLevel;
+        GameEventManager.Instance.OnHoldToClean += AddScore;
     }
 
     public void AddScore(int points)
     {
-        playerScore += points;
-        UIManager.Instance.Score.text = playerScore.ToString();
+        roomScore += points;
+        globalPlayerScore += roomScore;
+        UIManager.Instance.Score.text = globalPlayerScore.ToString();
     }
 
     public void SubtractScore(int points)
     {
-        playerScore -= points;
-        UIManager.Instance.Score.text = playerScore.ToString();
+        roomScore -= points;
+        globalPlayerScore += roomScore;
+        UIManager.Instance.Score.text = globalPlayerScore.ToString();
     }
 
-    public void ConvertToUpgrade()
+    public void ConvertToUpgradePoints()
     {
-        if (isEndlessMode)
-        {
-            upgradePoints = playerScore / pointsPerUpgrade;
-        }
+        upgradePoints = globalPlayerScore / pointsPerUpgrade;
+        globalPlayerScore = 0;
+        //UIManager.Instance.UpdateUpgradePoints(upgradePoints);
     }
 
     // FIX: Calculate stars should be different for different levels.
@@ -53,8 +68,19 @@ public class Score : MonoBehaviour
         else
             return 0;
     }*/
+    /*public bool CanLeaveRoom()
+    {
+        return roomScore >= cleanThresholds[1]; // Can leave after reaching the second threshold
+    }*/
 
-    public void EndLevel(GameData data)
+    public void ResetForNextRoom()
+    {
+        roomScore = 0;
+        //UIManager.Instance.UpdateScore(playerScore);
+        //UIManager.Instance.UpdateCleanlinessLevel(currentThresholdIndex);
+    }
+
+    /*public void EndLevel(GameData data)
     {
         if (isEndlessMode)
         {
@@ -64,7 +90,7 @@ public class Score : MonoBehaviour
         }
         else
         {
-            /*int stars = CalculateStars(playerScore);
+            *//*int stars = CalculateStars(playerScore);
             // Display total points and awarded stars
             Debug.Log($"Story Mode - Level {currentLevel + 1}: Total Points: {playerScore}, Stars Awarded: {stars}");
 
@@ -80,7 +106,7 @@ public class Score : MonoBehaviour
             {
                 // Player failed to earn at least 1 star, require replay
                 Debug.Log("Level Failed. Please try again!");
-            }*/
+            }*//*
             playerScore = 0;
         }
 
@@ -89,5 +115,5 @@ public class Score : MonoBehaviour
       
         
 
-    }
+    }*/
 }

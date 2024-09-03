@@ -167,7 +167,7 @@ public class PlayerController : MonoBehaviour
 
         if (!_wasGrounded && _grounded)
         {
-            Debug.Log("Landed! DetectLanding Player");
+            //Debug.Log("Landed! DetectLanding Player");
             OnLand?.Invoke();
         }
         _wasGrounded = _grounded;

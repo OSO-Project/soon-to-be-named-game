@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Sock : MonoBehaviour
+public class Sock : MonoBehaviour, DirtyObject
 {
     [Header("Sock Attributes")]
     [SerializeField]
@@ -73,7 +73,7 @@ public class Sock : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(-90, 0, 0); 
             SpawnRolledPair(collisionPoint, _sockMaterial, rotation);
             SpawnParticleSystem(collisionPoint, rotation);
-
+            GameEventManager.Instance.MatchSocks(getDirtValue());
             // Destroy both socks
             Destroy(gameObject);
             Destroy(collision.gameObject);
@@ -143,5 +143,10 @@ public class Sock : MonoBehaviour
 
         // Assign the random SockType to the sock
         _sockType = values[randomIndex];
+    }
+
+    public int getDirtValue()
+    {
+        return 1;
     }
 }

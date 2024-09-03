@@ -21,6 +21,8 @@ public class RemoveOldRoomTrigger : MonoBehaviour
         if (other.transform.parent != null && other.transform.parent.CompareTag("Player"))
         {
             roomManager.RemoveOldRoom();
+            // Trigger new room (score)
+            GameManager.Instance.ProceedToNextRoom();
             Destroy(gameObject);
         }
     }

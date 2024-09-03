@@ -123,6 +123,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToClean: 3
+  _lookDuration: 0
+  _isCleaned: 0
+  PlayerData: {fileID: 0}
+  _highlight: {fileID: 0}
+  _dustParticle: {fileID: 0}
 --- !u!114 &4398812808292318995
 MonoBehaviour:
   m_ObjectHideFlags: 0
