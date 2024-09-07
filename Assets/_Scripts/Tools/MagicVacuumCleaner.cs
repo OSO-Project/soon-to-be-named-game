@@ -1,10 +1,10 @@
-using System.Collections;
+using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagicVacuumCleaner : MonoBehaviour, ITool
+public class MagicVacuumCleaner : Tool
 {
-    public string Name { get; private set; } = "MagicVacuumCleaner";
+    public override string Name => "MagicVacuumCleaner";
 
     public Transform tubeEnd;  // The point where objects will be sucked into
     public float suckRange = 10f;  // The range of the vacuum cleaner
@@ -24,22 +24,27 @@ public class MagicVacuumCleaner : MonoBehaviour, ITool
     {
         playerCamera = FindObjectOfType<Camera>().transform;
         isVacuumOn = false;
+        InputManager.Instance.UseToolAction.performed += OnUse;
     }
-    void Update()
+
+    private void OnDestroy()
     {
-        Use();
-
-        if (isVacuumOn)
-        {
-            SuckObjects();
-            MoveAndRotateObjects();
-        }
-
-        if (Input.GetKeyDown(KeyCode.C))  // 'C' for throwing objects
-        {
-            ThrowObjects();
-        }
+        InputManager.Instance.UseToolAction.performed -= OnUse;
     }
+
+    void Update()
+{
+    if (isVacuumOn)
+    {
+        SuckObjects();
+        MoveAndRotateObjects();
+    }
+
+    if (Input.GetKeyDown(KeyCode.C))  // 'C' for throwing objects
+    {
+        ThrowObjects();
+    }
+}
 
     void SuckObjects()
     {
@@ -128,15 +133,21 @@ public class MagicVacuumCleaner : MonoBehaviour, ITool
         suckedObjects.Clear();
     }
 
-    public void Use()
+    public override void OnUse(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.V))
+        isVacuumOn = !isVacuumOn;
+        if (!isVacuumOn)
         {
-            isVacuumOn = !isVacuumOn;
-            if (!isVacuumOn)
-            {
-                DropObjects();
-            }
+            DropObjects();
         }
+    }
+
+    public override void Equip()
+    {
+        return;
+    }
+    public override void UnEquip()
+    {
+        return;
     }
 }

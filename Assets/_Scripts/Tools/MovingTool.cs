@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class MovingTool : MonoBehaviour, ITool
+public class MovingTool : Tool
 {
-    public string Name { get; private set; } = "MovingTool";
+    public override string Name => "MovingTool";
     public GameObject toolPrefab;
     public Transform holdPosition; // The position where the tool is held by the player
     public LayerMask groundLayer; // The layer representing the ground
@@ -15,7 +13,6 @@ public class MovingTool : MonoBehaviour, ITool
     public TMP_Text messageText; // UI Text element to display messages
     private GameObject currentTool; // The tool currently held by the player
     public bool isHoldingTool = true;
-
     private MeshCollider toolCollider; // Reference to the MeshCollider component
 
     void Start()
@@ -28,11 +25,16 @@ public class MovingTool : MonoBehaviour, ITool
         {
             toolCollider.enabled = false;
         }
+        InputManager.Instance.UseToolAction.performed += OnUse;
+    }
+    private void OnDestroy()
+    {
+        InputManager.Instance.UseToolAction.performed -= OnUse;
     }
 
     void Update()
     {
-        Use();
+
     }
 
     void TryPlaceTool()
@@ -140,21 +142,23 @@ public class MovingTool : MonoBehaviour, ITool
         }
     }
 
-    public void Use()
+    public override void OnUse(InputAction.CallbackContext context)
     {
         if (isHoldingTool)
         {
-            if (Input.GetKeyDown(KeyCode.V))
-            {
                 TryPlaceTool();
-            }
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.V))
-            {
                 PickUpTool();
-            }
         }
+    }
+    public override void Equip()
+    {
+        return;
+    }
+    public override void UnEquip()
+    {
+        return;
     }
 }

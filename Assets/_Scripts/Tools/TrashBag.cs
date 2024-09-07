@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
-public class TrashBag : MonoBehaviour, ITool
+public class TrashBag : Tool
 {
-    public string Name { get; private set; } = "TrashBag";
+    public override string Name => "TrashBag";
     public Transform bagTransform; // Reference to the bag's transform
     public Transform spawnTrashPoint;
     public float bagGrowthFactor = 0.1f; // How much the bag grows per object
@@ -17,11 +18,15 @@ public class TrashBag : MonoBehaviour, ITool
     void Start()
     {
         originalScale = bagTransform.localScale; // Store the original scale of the bag
+        InputManager.Instance.UseToolAction.performed += OnUse;
+    }
+    private void OnDestroy()
+    {
+        InputManager.Instance.UseToolAction.performed -= OnUse;
     }
 
     void Update()
     {
-        Use();
         if (Input.GetMouseButtonDown(0)) // Left mouse button to suck objects
         {
             TrySuckObject();
@@ -76,11 +81,17 @@ public class TrashBag : MonoBehaviour, ITool
         }
     }
 
-    public void Use()
+    public override void OnUse(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            EmptyBag();
-        }
+        EmptyBag();
+    }
+
+    public override void Equip()
+    {
+        return;
+    }
+    public override void UnEquip()
+    {
+        return;
     }
 }

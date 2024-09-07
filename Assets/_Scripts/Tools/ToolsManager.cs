@@ -1,18 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ToolsManager : MonoBehaviour
 {
     public static ToolsManager Instance { get; private set; }
     public UnlockedToolsData PlayerData;
-    private string _currentlyHeld;
-    public List<ITool> Tools = new List<ITool>();
+    public Tool _currentlyHeld;
+    [SerializeField] private List<Tool> availableTools;
 
-    void Start()
-    {
-        // populate list of items from unlocked items data
-    }
+    private Dictionary<int, Tool> toolMap;
 
     void Awake()
     {
@@ -20,6 +17,7 @@ public class ToolsManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            InitializeToolMap();
         }
         else
         {
@@ -27,22 +25,42 @@ public class ToolsManager : MonoBehaviour
         }
     }
 
-    void Update()
+    void InitializeToolMap()
     {
-        if (Input.GetKeyDown("1") && PlayerData.wipeUnlocked && _currentlyHeld != "Wipe")
+        toolMap = new Dictionary<int, Tool>
         {
-            EquipWipe();
+            { 1, availableTools[0] }, // Wipe
+            { 2, availableTools[1] }, // Vacuum
+            { 3, availableTools[2] }, // TrashBag
+            { 4, availableTools[3] }  // MagicVacuumCleaner
+        };
+    }
+
+    public void EquipTool(int toolIndex)
+    {
+        Debug.Log($"Attempting to equip tool with index {toolIndex}");
+
+        if (_currentlyHeld != null)
+        {
+            if (_currentlyHeld != toolMap[toolIndex])
+            {
+                Debug.Log($"Unequipping {_currentlyHeld.Name} and equipping {toolMap[toolIndex].Name}");
+                _currentlyHeld.UnEquip();
+                _currentlyHeld = toolMap[toolIndex];
+                _currentlyHeld.Equip();
+            }
+            else
+            {
+                Debug.Log($"Unequipping {_currentlyHeld.Name} and setting _currentlyHeld to null");
+                _currentlyHeld.UnEquip();
+                _currentlyHeld = null;
+            }
         }
-    }
-
-    void EquipWipe()
-    {
-        // pull strings from enums
-        _currentlyHeld = "Wipe";
-    }
-
-    void SwitchItem()
-    {
-        // On keydown scroll switch to another item in the list
+        else
+        {
+            Debug.Log($"Equipping {toolMap[toolIndex].Name}");
+            _currentlyHeld = toolMap[toolIndex];
+            _currentlyHeld.Equip();
+        }
     }
 }

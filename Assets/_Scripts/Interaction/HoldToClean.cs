@@ -8,7 +8,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
-public class HoldToClean : MonoBehaviour, Interactable, DirtyObject
+public class HoldToClean : MonoBehaviour, Interactable
 {
     [SerializeField] protected float timeToClean = 3f;
 
@@ -37,7 +37,7 @@ public class HoldToClean : MonoBehaviour, Interactable, DirtyObject
 
     public void OnBeginLooking()
     {
-        if (_isCleaned || ToolsManager.Instance.PlayerData.currentlyHeld != "Wipe") return;
+        if (_isCleaned || ToolsManager.Instance._currentlyHeld is not Wipe) return;
         _highlight.SetIsHighlighted(true);
         currentTarget = this;
         UIManager.Instance.HintText.gameObject.SetActive(true);
@@ -97,7 +97,7 @@ public class HoldToClean : MonoBehaviour, Interactable, DirtyObject
                 }
                 StopAndResetProgress();
                 // move to another script
-                GameEventManager.Instance.HoldToClean(getDirtValue());
+                GameEventManager.Instance.AddScore(50 * timeToClean);
                 cleanSuccesfull.Invoke();
                 yield break;
             }
@@ -125,9 +125,6 @@ public class HoldToClean : MonoBehaviour, Interactable, DirtyObject
         }
     }
 
-    public int getDirtValue()
-    {
-        return (int) timeToClean / 2;
-    }
-}
+    
 
+}

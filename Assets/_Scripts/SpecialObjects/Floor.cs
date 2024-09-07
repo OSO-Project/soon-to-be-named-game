@@ -25,18 +25,13 @@ public class Floor : MonoBehaviour
 
     private void Awake()
     {
-        UpdateMaterialsandMesh();
+        UpdateMaterialsAndMesh();
     }
 
-    private void OnValidate()
-    {
-        UpdateMaterialsandMesh();
-    }
-
-    private void UpdateMaterialsandMesh()
+    public void UpdateMaterialsAndMesh()
     {
         _floorMesh = GetMesh(_floorType);
-        AdjustMaterialSlots(_floorType); // Adjust the material slots based on the floor type
+        AdjustMaterialSlots(_floorType);
         _floorPrimaryMaterial = GetMaterial(_floorPrimaryColor);
         _floorSecondaryMaterial = GetMaterial(_floorSecondaryColor);
         _floorGroutMaterial = GetMaterial(_floorGroutColor);
@@ -134,7 +129,7 @@ public class Floor : MonoBehaviour
                     desiredMaterialCount = 3; // Primary, grout, and secondary
                     break;
                 default:
-                    Debug.LogError("Unexpected floor type: " + floorType);
+                    // Debug.LogError("Unexpected floor type: " + floorType);
                     return;
             }
 
@@ -154,7 +149,7 @@ public class Floor : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Renderer component is missing.");
+            // Debug.LogError("Renderer component is missing.");
         }
     }
 
@@ -171,7 +166,7 @@ public class Floor : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("No mesh available for the selected floor type.");
+                // Debug.LogWarning("No mesh available for the selected floor type.");
             }
 
             Material[] materials = renderer.sharedMaterials;
@@ -195,12 +190,11 @@ public class Floor : MonoBehaviour
                 if (materials.Length > 2)
                     materials[2] = floorSecondaryMaterial; // Secondary color always in slot 2
             }
-
             renderer.sharedMaterials = materials;
         }
         else
         {
-            Debug.LogError("Renderer or MeshFilter component is missing.");
+            // Debug.LogError("Renderer or MeshFilter component is missing.");
         }
     }
 }
