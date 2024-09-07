@@ -6,6 +6,7 @@ using UnityEngine;
 public class SmokeEncounter : Encounter
 {
     private HashSet<ISmokable> smokablesInArea = new HashSet<ISmokable>();
+    [SerializeField] private ParticleSystem smokeParticleSystem;
     public override bool CanStart()
     {
         // Add condition to check if the encounter can start
@@ -14,7 +15,8 @@ public class SmokeEncounter : Encounter
 
     public override void StartEncounter()
     {
-        //StartCoroutine(StartSmoke());
+        smokeParticleSystem = GameObject.Find("SmokeSpawner").GetComponentInChildren<ParticleSystem>();
+        StartSmoke();
         List<GameObject> encounterEnders = FindObjectsOfType<MonoBehaviour>()
             .OfType<ISmokeEnder>()
             .Select(ender => (ender as MonoBehaviour).gameObject)
@@ -22,11 +24,11 @@ public class SmokeEncounter : Encounter
 
         foreach (GameObject ender in encounterEnders)
         {
-            if (!ender.GetComponent<HoldToCleanEncounter>())
+/*            if (!ender.GetComponent<HoldToCleanEncounter>())
             {
                 ender.AddComponent<HoldToCleanEncounter>();
                 ender.AddComponent<HighlightObject>();
-            }
+            }*/
         }
 
         foreach (ISmokable smokable in smokablesInArea)
@@ -58,6 +60,7 @@ public class SmokeEncounter : Encounter
 
     public override void StopEncounter()
     {
+        StopSmoke();
         // remove components from enders
         if (encounterEnders.Count != 0)
         {
@@ -73,5 +76,15 @@ public class SmokeEncounter : Encounter
 
         smokablesInArea.Clear();
         return;
+    }
+
+    private void StartSmoke()
+    {
+        smokeParticleSystem?.Play();
+    }
+
+    private void StopSmoke()
+    {
+        smokeParticleSystem?.Stop();
     }
 }
