@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -265,6 +266,22 @@ public class PlayerController : MonoBehaviour
         horizontalVelocity.y = 0;
         return horizontalVelocity.magnitude;
     }
+
+    //public void BoostSpeed(float duration)
+    //{
+    //    StartCoroutine(BoostSpeedForDuration(duration));
+
+
+    //}
+
+   // private IEnumerator BoostSpeedForDuration(float duration)
+    //{
+        // boost speed for a specific time
+
+
+
+  //  }
+
 
     public bool IsGrounded()
     {
