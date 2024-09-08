@@ -37,7 +37,7 @@ public class SodaCan : MonoBehaviour
         _highlight.SetIsHighlighted(false);
         currentTarget = null;
         UIManager.Instance.HintText.gameObject.SetActive(false);
-        StopAndResetProgress();
+        //StopAndResetProgress();
         _highlight.Highlight();
     }
     public void DrinkSoda()
@@ -57,11 +57,11 @@ public class SodaCan : MonoBehaviour
 
     public void ShowDrinkIcon()
     {
-        UIManager.Instance.DrinkIcon.gameObject.SetActive(true);
+        //UIManager.Instance.DrinkIcon.gameObject.SetActive(true);
     }
     public void HideDrinkIcon()
     {
-        UIManager.Instance.DrinkIcon.gameObject.SetActive(false);
+       // UIManager.Instance.DrinkIcon.gameObject.SetActive(false);
     }
 
     private void ApplyPositiveEffect()
@@ -76,8 +76,8 @@ public class SodaCan : MonoBehaviour
                 GameTimer.Instance.AddTime(20);
                 break;
             case 1:
-                PlayerMovement.Instance.BoostSpeed(20);
-                HoldToClean.Instance.BoostSpeed(20);
+              //  PlayerMovement.Instance.BoostSpeed(20);
+              //  HoldToClean.Instance.BoostSpeed(20);
                 break;
             case 2:
                 //HIGHLIGHT ALL DIRTY ITEMS FOR 20 SECONDS
@@ -99,8 +99,8 @@ public class SodaCan : MonoBehaviour
                 //INVERT KEY BINDS FOR 30 SECONDS
                 break;
             case 1:
-                PlayerMovement.Instance.SlowSpeed(20);
-                HoldToClean.Instance.SlowSpeed(20);
+                //PlayerMovement.Instance.SlowSpeed(20);
+               // HoldToClean.Instance.SlowSpeed(20);
                 break;
             case 2:
                 //DIZZY SCREEN FOR 30 SECONDS

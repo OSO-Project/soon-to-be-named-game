@@ -97,7 +97,7 @@ public class HoldToClean : MonoBehaviour, Interactable
                 }
                 StopAndResetProgress();
                 // move to another script
-                GameEventManager.Instance.AddScore(50 * timeToClean);
+               // GameEventManager.Instance.AddScore(50 * timeToClean);
                 cleanSuccesfull.Invoke();
                 yield break;
             }
