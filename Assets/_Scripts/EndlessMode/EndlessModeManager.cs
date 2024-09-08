@@ -20,11 +20,16 @@ public class EndlessModeManager : MonoBehaviour
     public float cleanliness; // Cleanliness percentage of the room
 
     public event Action OnRoomFinished;
-    // Start is called before the first frame update
+
+    public List<GameObject> availableRooms = new List<GameObject>();
+    public GameObject lastRoom;
     void Start()
     {
         // subscribe updating cleanliness to OnAddScore 
         GameEventManager.Instance.OnAddScore += UpdateCleanliness;
+
+        // Initialize available rooms
+        availableRooms.AddRange(possibleRooms);
 
         SelectNextRoomToSpawn();
         objectsSpawnMultiplier = 0.1f;
@@ -49,18 +54,28 @@ public class EndlessModeManager : MonoBehaviour
 
     private void SelectNextRoomToSpawn()
     {
-        if (possibleRooms.Length == 0)
+        if (availableRooms.Count == 0)
         {
-            Debug.LogError("No possible rooms available.");
-            return;
+            // Reset the list of available rooms if all rooms have been used
+            availableRooms.AddRange(possibleRooms);
         }
 
-        // Randomly select a room from the possibleRooms array
-        int randomIndex = UnityEngine.Random.Range(0, possibleRooms.Length);
-        GameObject selectedRoom = possibleRooms[randomIndex];
+        // Randomly select a room that is not the same as the last room
+        GameObject selectedRoom;
+        do
+        {
+            int randomIndex = UnityEngine.Random.Range(0, availableRooms.Count);
+            selectedRoom = availableRooms[randomIndex];
+        } while (selectedRoom == lastRoom);
+
+        // Remove the selected room from the available list
+        availableRooms.Remove(selectedRoom);
 
         // Set the selected room as the roomPrefab for RoomManager
         roomManager.roomPrefab = selectedRoom;
+
+        // Store the last selected room
+        lastRoom = selectedRoom;
     }
 
     IEnumerator TeleportPlayerOnStartPoint()
