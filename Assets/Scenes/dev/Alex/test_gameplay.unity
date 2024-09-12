@@ -1705,11 +1705,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1948568493647002243, guid: 3869a078431668b40a2be85db5f8e1d8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4282588180210776503, guid: 3869a078431668b40a2be85db5f8e1d8, type: 3}
       propertyPath: maxTriggerTime
-      value: 12
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4282588180210776503, guid: 3869a078431668b40a2be85db5f8e1d8, type: 3}
       propertyPath: minTriggerTime
@@ -7343,7 +7343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8649327172017402706, guid: e812a6788a8754142b49dc7b2ec4d7a1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9845,7 +9845,8 @@ PrefabInstance:
       propertyPath: m_ExcludeLayers.m_Bits
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1652343280117126093, guid: 37b3d165b07c3fb47bb17ee8bb6d208a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
