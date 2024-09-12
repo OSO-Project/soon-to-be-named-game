@@ -1705,19 +1705,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1948568493647002243, guid: 3869a078431668b40a2be85db5f8e1d8, type: 3}
       propertyPath: m_IsActive
-<<<<<<<< HEAD:Assets/Scenes/dev/Alex/test_gameplay.unity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4282588180210776503, guid: 3869a078431668b40a2be85db5f8e1d8, type: 3}
-      propertyPath: maxTriggerTime
-      value: 12
-========
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4282588180210776503, guid: 3869a078431668b40a2be85db5f8e1d8, type: 3}
       propertyPath: maxTriggerTime
       value: 500
->>>>>>>> dev:Assets/Scenes/dev/Denys/test_gameplay.unity
       objectReference: {fileID: 0}
     - target: {fileID: 4282588180210776503, guid: 3869a078431668b40a2be85db5f8e1d8, type: 3}
       propertyPath: minTriggerTime
@@ -7351,11 +7343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8649327172017402706, guid: e812a6788a8754142b49dc7b2ec4d7a1, type: 3}
       propertyPath: m_IsActive
-<<<<<<<< HEAD:Assets/Scenes/dev/Alex/test_gameplay.unity
-      value: 0
-========
       value: 1
->>>>>>>> dev:Assets/Scenes/dev/Denys/test_gameplay.unity
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7920,11 +7908,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possibleRooms:
   - {fileID: 2469965199688650200, guid: d3f93db789514c54fade72fc277f8b0b, type: 3}
-<<<<<<<< HEAD:Assets/Scenes/dev/Alex/test_gameplay.unity
-  - {fileID: 2320390324861456303, guid: 8460661e044e39e4c90fb47f365d1c29, type: 3}
-  - {fileID: 6538981782561284093, guid: e270cd8d0d0687946a165f60b4b63a42, type: 3}
-========
->>>>>>>> dev:Assets/Scenes/dev/Denys/test_gameplay.unity
   roomCount: {fileID: 1079553292}
   gameTimer: {fileID: 1547569334}
   roomManager: {fileID: 1712554940}
@@ -9860,12 +9843,8 @@ PrefabInstance:
       propertyPath: m_ExcludeLayers.m_Bits
       value: 0
       objectReference: {fileID: 0}
-<<<<<<<< HEAD:Assets/Scenes/dev/Alex/test_gameplay.unity
-    m_RemovedComponents: []
-========
     m_RemovedComponents:
     - {fileID: 1652343280117126093, guid: 37b3d165b07c3fb47bb17ee8bb6d208a, type: 3}
->>>>>>>> dev:Assets/Scenes/dev/Denys/test_gameplay.unity
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
