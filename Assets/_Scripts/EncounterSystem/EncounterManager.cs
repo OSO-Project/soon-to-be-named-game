@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class EncounterManager : MonoBehaviour
 {
@@ -7,7 +8,8 @@ public class EncounterManager : MonoBehaviour
     private Encounter _currentEncounter;
 
     public float minTriggerTime;
-    public float maxTriggerTime;
+    public float maxTriggerTime;    
+    [SerializeField] private float startDelay = 5f;
 
     private float _levelStartTime;
     private float _currentTime;
@@ -15,6 +17,8 @@ public class EncounterManager : MonoBehaviour
     void Start()
     {
         _levelStartTime = Time.time;
+        GameEventManager.Instance.OnEncounterEnd += StopEncounter;
+        
     }
 
     void Update()
@@ -43,16 +47,18 @@ public class EncounterManager : MonoBehaviour
             Debug.LogWarning("An encounter is already running!");
             return false;
         }
-        Debug.Log($" is started");
         if (CanStartEncounter())
         {
             
             // Choose a random encounter from the list
-            Encounter encounter = availableEncounters[Random.Range(0, availableEncounters.Count)];
+            Encounter encounter = availableEncounters[UnityEngine.Random.Range(0, availableEncounters.Count)];
             if (encounter.CanStart())
             {
                 Debug.Log($"{encounter.gameObject.name} is started");
                 _currentEncounter = encounter;
+
+                // display notification
+                UIManager.Instance.DisplayEncounterNotification(_currentEncounter.encounterIcon, _currentEncounter.encounterText, startDelay);
                 _currentEncounter.StartEncounter();
                 return true;
             }
@@ -62,9 +68,9 @@ public class EncounterManager : MonoBehaviour
 
     public void StopEncounter()
     {
+        Debug.Log("Current enc stop");
         if (_currentEncounter != null)
         {
-            _currentEncounter.StopEncounter();
             _currentEncounter = null;
         }
     }

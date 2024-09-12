@@ -41,7 +41,7 @@ public class GridManager : MonoBehaviour
                 if (!hasFloor)
                 {
                     // Mark cell as forbidden if there is no floor
-                    Debug.Log(x + " " + y + " Doesn't have floor underneath");
+                    //Debug.Log(x + " " + y + " Doesn't have floor underneath");
                     grid[x, y] = CreateCell(position, CellTag.Zone.Forbidden, CellSideTag.Side.None);
                     continue; // Skip further checks for this cell
                 }
@@ -92,7 +92,7 @@ public class GridManager : MonoBehaviour
                 if (distance <= forbiddenRadius)
                 {
                     grid[x, y].MakeForbidden();
-                    Debug.Log("Marked cell as forbidden at: " + cellPosition);
+                    //Debug.Log("Marked cell as forbidden at: " + cellPosition);
                 }
             }
         }
@@ -127,7 +127,7 @@ public class GridManager : MonoBehaviour
         // Check left
         if (Physics.Raycast(raycastOrigin, Vector3.left, out RaycastHit hitLeft, rayLength))
         {
-            Debug.Log($"Raycast hit on the left at ({x}, {y}): {hitLeft.collider.gameObject.name}");
+            //Debug.Log($"Raycast hit on the left at ({x}, {y}): {hitLeft.collider.gameObject.name}");
             if (hitLeft.collider.CompareTag(wallTag))
             {
                 return CellSideTag.Side.West;
@@ -137,7 +137,7 @@ public class GridManager : MonoBehaviour
         // Check right
         if (Physics.Raycast(raycastOrigin, Vector3.right, out RaycastHit hitRight, rayLength))
         {
-            Debug.Log($"Raycast hit on the right at ({x}, {y}): {hitRight.collider.gameObject.name}");
+            //Debug.Log($"Raycast hit on the right at ({x}, {y}): {hitRight.collider.gameObject.name}");
             if (hitRight.collider.CompareTag(wallTag))
             {
                 return CellSideTag.Side.East;
@@ -147,7 +147,7 @@ public class GridManager : MonoBehaviour
         // Check back
         if (Physics.Raycast(raycastOrigin, Vector3.back, out RaycastHit hitBack, rayLength))
         {
-            Debug.Log($"Raycast hit on the back at ({x}, {y}): {hitBack.collider.gameObject.name}");
+            //Debug.Log($"Raycast hit on the back at ({x}, {y}): {hitBack.collider.gameObject.name}");
             if (hitBack.collider.CompareTag(wallTag))
             {
                 return CellSideTag.Side.South;
@@ -157,7 +157,7 @@ public class GridManager : MonoBehaviour
         // Check forward
         if (Physics.Raycast(raycastOrigin, Vector3.forward, out RaycastHit hitForward, rayLength))
         {
-            Debug.Log($"Raycast hit on the forward at ({x}, {y}): {hitForward.collider.gameObject.name}");
+            //Debug.Log($"Raycast hit on the forward at ({x}, {y}): {hitForward.collider.gameObject.name}");
             if (hitForward.collider.CompareTag(wallTag))
             {
                 return CellSideTag.Side.North;

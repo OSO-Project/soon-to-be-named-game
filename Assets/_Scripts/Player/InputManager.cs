@@ -15,6 +15,11 @@ public class InputManager : MonoBehaviour
     public bool OpenClose { get; private set; }
     public bool GrabDrop { get; private set; }
     public bool Throw { get; private set; }
+    public bool UseTool { get; private set; }
+    public bool EquipWipe { get; private set; }
+    public bool EquipVacuum { get; private set; }
+    public bool EquipTrashBag { get; private set; }
+    public bool EquipMagicVacuum { get; private set; }
 
     public InputAction MoveAction;
     public InputAction JumpAction;
@@ -25,6 +30,12 @@ public class InputManager : MonoBehaviour
     public InputAction GrabDropAction;
     public InputAction ThrowAction;
     public InputAction OpenCloseAction;
+
+    public InputAction UseToolAction;
+    public InputAction EquipWipeAction;
+    public InputAction EquipVacuumAction;
+    public InputAction EquipTrashBagAction;
+    public InputAction EquipMagicVacuumAction;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -51,6 +62,11 @@ public class InputManager : MonoBehaviour
         ThrowAction = _currentMap.FindAction("Throw");
         OpenCloseAction = _currentMap.FindAction("OpenClose");
         GrabDropAction = _currentMap.FindAction("GrabDrop");
+        UseToolAction = _currentMap.FindAction("UseTool");
+        EquipWipeAction = _currentMap.FindAction("EquipWipe");
+        EquipVacuumAction = _currentMap.FindAction("EquipVacuum");
+        EquipTrashBagAction = _currentMap.FindAction("EquipTrashBag");
+        EquipMagicVacuumAction = _currentMap.FindAction("EquipMagicVacuum");
         MoveAction.performed += OnMove;
         MoveAction.canceled += OnMove;
         JumpAction.performed += OnJump;
@@ -67,6 +83,28 @@ public class InputManager : MonoBehaviour
         OpenCloseAction.canceled += OnOpenClose;
         GrabDropAction.performed += OnGrabDrop;
         GrabDropAction.canceled += OnGrabDrop;
+        UseToolAction.performed += OnUseTool;
+        UseToolAction.canceled += OnUseTool;
+        EquipWipeAction.performed += context =>
+        {
+            Debug.Log("EquipWipeAction performed");
+            ToolsManager.Instance.EquipTool(1);
+        };
+        EquipVacuumAction.performed += context =>
+        {
+            Debug.Log("EquipVacuumAction performed");
+            ToolsManager.Instance.EquipTool(2);
+        };
+        EquipTrashBagAction.performed += context =>
+        {
+            Debug.Log("EquipTrashBagAction performed");
+            ToolsManager.Instance.EquipTool(3);
+        };
+        EquipMagicVacuumAction.performed += context =>
+        {
+            Debug.Log("EquipMagicVacuumAction performed");
+            ToolsManager.Instance.EquipTool(4);
+        };
     }
 
     private void OnMove(InputAction.CallbackContext context)
@@ -119,14 +157,6 @@ public class InputManager : MonoBehaviour
 
     private void OnOpenClose(InputAction.CallbackContext context)
     {
-        /*        if (context.performed)
-                {
-                    OpenClose = true;
-                }
-                else if (context.canceled)
-                {
-                    OpenClose = false;
-                }*/
         OpenClose = context.ReadValueAsButton();
     }
 
@@ -138,5 +168,23 @@ public class InputManager : MonoBehaviour
     private void OnDisable()
     {
         _currentMap.Disable();
+    }
+
+    private void OnUseTool(InputAction.CallbackContext context)
+    {
+        UseTool = context.ReadValueAsButton();
+    }
+
+    private void UpdateInputs()
+    {
+        Move = MoveAction.ReadValue<Vector2>();
+        Jump = JumpAction.WasPressedThisFrame();
+        Run = RunAction.IsPressed();
+        Clean = CleanAction.IsPressed();
+        Crouch = CrouchAction.IsPressed();
+        Throw = ThrowAction.IsPressed();
+        OpenClose = OpenCloseAction.IsPressed();
+        GrabDrop = GrabDropAction.IsPressed();
+
     }
 }

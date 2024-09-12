@@ -15,7 +15,11 @@ MonoBehaviour:
   prefab: {fileID: 7269083582715291761, guid: 82963b292be83714fb51823675007c33, type: 3}
   area: {x: 1, y: 1}
   zone: 0
-  chances: 0.214
+  chances: 0.126
   randomRotation: 1
   minObjNum: -1
   maxObjNum: 15
+  canSpawnTrash: 0
+  trashObjects: []
+  priority: 5
+  isDecoration: 0

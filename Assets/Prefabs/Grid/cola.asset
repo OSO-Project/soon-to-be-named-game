@@ -19,3 +19,7 @@ MonoBehaviour:
   randomRotation: 1
   minObjNum: -1
   maxObjNum: 10
+  canSpawnTrash: 0
+  trashObjects: []
+  priority: 5
+  isDecoration: 0

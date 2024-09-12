@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4300868251209000738, guid: 23f96c6f17e0d5b4bacaf839fb197387, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Suckable
       objectReference: {fileID: 0}
     - target: {fileID: 4300868251209000738, guid: 23f96c6f17e0d5b4bacaf839fb197387, type: 3}
       propertyPath: m_StaticEditorFlags

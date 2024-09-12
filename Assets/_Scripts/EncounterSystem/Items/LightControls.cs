@@ -2,49 +2,20 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LightControls : MonoBehaviour, Interactable
+public class LightControls : CleanItem, Interactable
 {
-    [SerializeField] private float timeToClean = 3f;
-
-    private static LightControls currentTarget = null;
-    private float _lookDuration = 0f;
-    private bool _isCleaned = false;
-
-    private HighlightObject _highlight;
-    private Coroutine _cleanCoroutine;
-
-    private void Start()
-    {
-        _highlight = GetComponent<HighlightObject>();
-        InputManager.Instance.CleanAction.performed += OnPressInteract;
-    }
-    private void OnDestroy()
-    {
-        InputManager.Instance.CleanAction.performed -= OnPressInteract;
-    }
     public void OnBeginLooking()
     {
-        Debug.Log("Looking controls");
-        if (_isCleaned) return;
-        _highlight.SetIsHighlighted(true);
-        currentTarget = this;
-        UIManager.Instance.HintText.gameObject.SetActive(true);
-        _highlight.Highlight();
+        base.OnBeginLooking();
     }
 
     public void OnFinishLooking()
     {
-        _highlight.SetIsHighlighted(false);
-        currentTarget = null;
-        UIManager.Instance.HintText.gameObject.SetActive(false);
-        StopAndResetProgress();
-        _highlight.Highlight();
+        base.OnFinishLooking();
     }
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
     {
-        Debug.Log("Clicked on light controls");
-
         if (_isCleaned) return;
 
         if (currentTarget == this)
@@ -61,8 +32,6 @@ public class LightControls : MonoBehaviour, Interactable
                 StopAndResetProgress();
             }
         }
-
-        
     }
 
     private IEnumerator CleaningProcess()
@@ -82,7 +51,7 @@ public class LightControls : MonoBehaviour, Interactable
             {
                 _isCleaned = true;
                 StopAndResetProgress();
-                GameEventManager.Instance.SwitchLights();
+                GameEventManager.Instance.EndEncounter();
                 yield break;
             }
 

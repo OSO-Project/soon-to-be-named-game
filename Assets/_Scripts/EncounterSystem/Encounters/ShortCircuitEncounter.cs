@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -13,6 +14,23 @@ public class ShortCircuitEncounter : Encounter
     {
         Debug.Log("ShortCircuitEncounter started!");
 
+        // maybe move elsewhere for performance
+        List<GameObject> encounterEnders = FindObjectsOfType<MonoBehaviour>()
+            .OfType<IShortCircuitEnder>()
+            .Select(ender => (ender as MonoBehaviour).gameObject)
+            .ToList();
+
+        // move declaration to Encounter
+        // add components to enders
+/*        foreach (GameObject ender in encounterEnders)
+        {
+            if (!ender.GetComponent<CleanItemEncounter>())
+            {
+                ender.AddComponent<HighlightObject>();
+                ender.AddComponent<CleanItemEncounter>();
+            }
+        }*/
+
         IDisableChildren[] disableChildrenObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDisableChildren>().ToArray();
         foreach (IDisableChildren disableChildren in disableChildrenObjects)
         {
@@ -22,6 +40,27 @@ public class ShortCircuitEncounter : Encounter
 
     public override void StopEncounter()
     {
-        throw new System.NotImplementedException();
+        Debug.Log($"{gameObject.name} is stopped");
+
+        // remove components from enders
+        if (encounterEnders.Count != 0)
+        {
+            foreach (GameObject ender in encounterEnders)
+            {
+                Destroy(ender.GetComponent<CleanItemEncounter>());
+                Destroy(ender.GetComponent<HighlightObject>());
+            }
+
+            // clear the enders list
+            encounterEnders.Clear();
+        }
+
+        IDisableChildren[] disableChildrenObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDisableChildren>().ToArray();
+        foreach (IDisableChildren disableChildren in disableChildrenObjects)
+        {
+            disableChildren.EnableAllChildren();
+        }
+
+        return;
     }
 }

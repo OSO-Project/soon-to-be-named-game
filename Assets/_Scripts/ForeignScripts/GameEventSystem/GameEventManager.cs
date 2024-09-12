@@ -28,15 +28,29 @@ public class GameEventManager : MonoBehaviour
     public event Action<GameData> OnSaveData;
     #endregion
 
-    #region Encounter Actions
-    public event Action OnEncounterStart;
+    public event Action OnLightsControlClick;
+    public event Action OnWindowOpen;
     public event Action OnEncounterEnd;
 
-    public event Action<float> OnEarthquakeEncounterStart;
-    public event Action OnEarthquakeEncounterEnd;
+    #region Gameplay Actions
+    public event Action<int> OnAddScore;
+    public event Action<int> OnHoldToClean;
+    public event Action<int> OnSubtractScore;
+    public event Action OnLevelEnd;
     #endregion
 
-    public event Action OnLightsControlClick;
+
+    #region Score
+    public void CleanItem(int dirt)
+    {
+        Debug.Log("OnClean");
+        OnAddScore?.Invoke(dirt);
+    }
+    public void UnCleanItem(int dirt)
+    {
+        OnSubtractScore?.Invoke(dirt);
+    }
+    #endregion
 
     //Group of methods for managing saving and loading
     #region Saving and loading
@@ -82,38 +96,21 @@ public class GameEventManager : MonoBehaviour
     }
     #endregion
 
-    #region Progression
-    public void HandleUnlockItem(Unlockables item)
+    #region Gameplay
+    public void EndLevel()
     {
-        gameData.UnlockItem(item);
+        OnLevelEnd?.Invoke();
     }
     #endregion
 
-    public void SwitchLights()
+    public void OpenWindow()
     {
-        OnLightsControlClick?.Invoke();
+        OnWindowOpen?.Invoke();
     }
 
-    //Group of methods for managing encounters
-    /*#region Encounters
-    // General methods
-    public void HandleEncounterStart()
-    {
-        OnEncounterStart?.Invoke();
-    }
-    public void HandleEncounterEnd()
+    public void EndEncounter()
     {
         OnEncounterEnd?.Invoke();
     }
 
-    // Earthquake
-    public void HandleEarthquakeEncounterStart(float duration)
-    {
-        OnEarthquakeEncounterStart?.Invoke(duration);
-    }
-    public void HandleEarthquakeEncounterEnd()
-    {
-        OnEarthquakeEncounterEnd?.Invoke();
-    }
-    #endregion*/
 }

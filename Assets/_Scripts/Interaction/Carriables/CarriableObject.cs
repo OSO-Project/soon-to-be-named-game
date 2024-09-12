@@ -22,6 +22,10 @@ public class CarriableObject : MonoBehaviour
 
     private Camera cam;
 
+    [Header("Carriable Sound Effects")]
+    //this can be later changed to AudioClip[] if we want to have multiple sounds for the same event
+    [SerializeField] private AudioClip _pickUpSoundFX;
+
     private void Awake()
     {
         objRigidbody = GetComponent<Rigidbody>();
@@ -42,6 +46,10 @@ public class CarriableObject : MonoBehaviour
 
         // Ignore collision between the player and the object
         Physics.IgnoreCollision(playerCollider, objCollider, true);
+
+        // Play the pick up sound effect
+        SoundFxManager.instance.PlaySoundFXClip(_pickUpSoundFX, transform, 1f);
+
     }
 
     public void Drop()

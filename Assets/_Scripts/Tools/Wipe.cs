@@ -1,11 +1,21 @@
-using UnityEditor;
+using UnityEngine.InputSystem;
 using UnityEngine;
+using Unity.VisualScripting;
 
-public class Wipe : MonoBehaviour, ITool
+public class Wipe : Tool
 {
-    public string Name {get; private set;} = "Wipe";
+    public override string Name => "Wipe";
     private int _dirtLevel = 0;
-    public bool isWipeSuccessful()
+
+    void Start()
+    {
+        InputManager.Instance.UseToolAction.performed += OnUse;
+    }
+    private void OnDestroy()
+    {
+        InputManager.Instance.UseToolAction.performed -= OnUse;
+    }
+    public bool IsWipeSuccessful()
     {
         // Return true immediately if dirt level is 50 or less
         if (_dirtLevel <= 50)
@@ -26,12 +36,29 @@ public class Wipe : MonoBehaviour, ITool
         // Return true if the random value is less than or equal to the success chance
         return randomValue <= successChance;
     }
-    public void Use()
+    public override void OnUse(InputAction.CallbackContext context)
     {
         Debug.Log("Wipe Used");
-        _dirtLevel += 10;
+        if (IsWipeSuccessful())
+        {
+            // Perform Clean
+            _dirtLevel += 10;
+        }
+        else
+        {
+            _dirtLevel += 40;
+        }
     }
 
+    
+    public override void Equip()
+    {
+        return;
+    }
+    public override void UnEquip()
+    {
+        return;
+    }
     public void Submerge()
     {
         Debug.Log("Wipe Submerged");

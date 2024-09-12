@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b8e536d6cd91b9a4190951a940912d01, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Suckable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

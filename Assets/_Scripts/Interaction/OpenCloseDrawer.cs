@@ -32,13 +32,11 @@ public class OpenCloseDrawer : MonoBehaviour, Interactable
 
     public void OnBeginLooking()
     {
-        Debug.Log("Looking");
         currentTarget = this;
         //Code to execute when you aim at the object
     }
     public void OnFinishLooking()
     {
-        Debug.Log("NotLooking");
         currentTarget = null;
         //Code to execute when you aim away from the object
     }
@@ -47,7 +45,6 @@ public class OpenCloseDrawer : MonoBehaviour, Interactable
     {
         if(currentTarget == this)
         {
-            Debug.Log("Interacting");
             if (animator == null)
             {
                 Debug.Log("animator is null");
@@ -56,12 +53,10 @@ public class OpenCloseDrawer : MonoBehaviour, Interactable
 
             if (isOpen)
             {
-                Debug.Log("animatingClose");
                 animator.SetTrigger("close");
             }
             else
             {
-                Debug.Log("animatingClose");
                 animator.SetTrigger("open");
             }
 

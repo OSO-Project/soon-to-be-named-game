@@ -1,34 +1,66 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ToolsManager : MonoBehaviour
 {
     public static ToolsManager Instance { get; private set; }
     public UnlockedToolsData PlayerData;
-    private ITool _currentlyHeld;
-    public List<ITool> Tools = new List<ITool>();
+    public Tool _currentlyHeld;
+    [SerializeField] private List<Tool> availableTools;
 
-    void Start()
-    {
-        // populate list of items from unlocked items data
-    }
+    private Dictionary<int, Tool> toolMap;
 
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+            InitializeToolMap();
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
-    void Update()
+    void InitializeToolMap()
     {
-
+        toolMap = new Dictionary<int, Tool>
+        {
+            { 1, availableTools[0] }, // Wipe
+            { 2, availableTools[1] }, // Vacuum
+            { 3, availableTools[2] }, // TrashBag
+            { 4, availableTools[3] }  // MagicVacuumCleaner
+        };
     }
 
-    void SwitchItem()
+    public void EquipTool(int toolIndex)
     {
-        // On keydown scroll switch to another item in the list
+        Debug.Log($"Attempting to equip tool with index {toolIndex}");
+
+        if (_currentlyHeld != null)
+        {
+            if (_currentlyHeld != toolMap[toolIndex])
+            {
+                Debug.Log($"Unequipping {_currentlyHeld.Name} and equipping {toolMap[toolIndex].Name}");
+                _currentlyHeld.UnEquip();
+                _currentlyHeld = toolMap[toolIndex];
+                _currentlyHeld.Equip();
+            }
+            else
+            {
+                Debug.Log($"Unequipping {_currentlyHeld.Name} and setting _currentlyHeld to null");
+                _currentlyHeld.UnEquip();
+                _currentlyHeld = null;
+            }
+        }
+        else
+        {
+            Debug.Log($"Equipping {toolMap[toolIndex].Name}");
+            _currentlyHeld = toolMap[toolIndex];
+            _currentlyHeld.Equip();
+        }
     }
 }

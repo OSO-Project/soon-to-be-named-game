@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/dev/Alex/LastMerge 24.07.2024.unity
     guid: 73d8b4bb1a273e34ca4802a861a95364
   - enabled: 1
-    path: Assets/Scenes/dev/Alex/Menu.unity
-    guid: f23af894ada66ec4fbadd637591d9341
+    path: Assets/Scenes/dev/Menu.unity
+    guid: 77840a6a666fd6f42815666a120a5269
   m_configObjects: {}

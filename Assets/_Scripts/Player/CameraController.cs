@@ -121,7 +121,7 @@ public class CameraController : MonoBehaviour, IShake
         float startY = cameraHolder.localPosition.y;
         float targetY = cameraHolderOriginalPos.y - landingOffset;
 
-        Debug.Log("Landing effect started");
+        //Debug.Log("Landing effect started");
 
         // Move camera downwards
         while (Mathf.Abs(cameraHolder.localPosition.y - targetY) > 0.01f)
@@ -144,6 +144,6 @@ public class CameraController : MonoBehaviour, IShake
         cameraHolder.localPosition = cameraHolderOriginalPos;
         isLanding = false;
 
-        Debug.Log("Landing effect ended");
+        //Debug.Log("Landing effect ended");
     }
 }

@@ -15,6 +15,15 @@ public class UIManager : MonoBehaviour
     [Header("Game Timer")]
     public TMP_Text TimerText;
 
+    [Header("Encounter Notifications")]
+    public GameObject notificationPanel;
+    public Image EncounterIcon;
+    public TMP_Text EncounterText;
+    [Header("Score")]
+    public TMP_Text Score;
+    [Header("Current Room")]
+    public TMP_Text CurrentRoom;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -29,7 +38,28 @@ public class UIManager : MonoBehaviour
 
         ProgressBar.fillAmount = 0f;
         HintText.gameObject.SetActive(false);
+        notificationPanel.SetActive(false);
+        /*EncounterIcon.gameObject.SetActive(false);
+        EncounterText.gameObject.SetActive(false);*/
 
+        Score.text = "0";
+    }
 
+    public void DisplayEncounterNotification(Sprite icon, string message, float delay)
+    {
+        EncounterIcon.sprite = icon;
+        EncounterText.SetText(message);
+
+        notificationPanel.SetActive(true);
+        /*EncounterIcon.gameObject.SetActive(true);
+        EncounterText.gameObject.SetActive(true);*/
+
+        // Hide the notification after a delay
+        Invoke(nameof(HideEncounterNotification), delay);
+    }
+
+    private void HideEncounterNotification()
+    {
+        notificationPanel.SetActive(false);
     }
 }

@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3962899205002032433, guid: aaf11a042e9932a40bb90b9b171a128e, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Suckable
       objectReference: {fileID: 0}
     - target: {fileID: 3962899205002032433, guid: aaf11a042e9932a40bb90b9b171a128e, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -146,6 +146,7 @@ MonoBehaviour:
   objCollider: {fileID: 0}
   maxThrowChargeTime: 3
   maxThrowStrength: 1000
+  _pickUpSoundFX: {fileID: 8300000, guid: 6178915a4a015444db7c9570e0ccbd18, type: 3}
 --- !u!136 &3961285910055740263
 CapsuleCollider:
   m_ObjectHideFlags: 0

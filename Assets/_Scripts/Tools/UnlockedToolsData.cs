@@ -5,5 +5,5 @@ public class UnlockedToolsData : ScriptableObject
 {
     public bool wipeUnlocked;
     public bool vaccuumUnlocked;
-    public bool bucketUnlocked;
+    public bool trashBagUnlocked;
 }

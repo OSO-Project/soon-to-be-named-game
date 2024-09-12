@@ -8,6 +8,7 @@ public class Cell : MonoBehaviour
     public CellTag.Zone zone;
     public CellSideTag.Side side;
     public bool isOccupied;
+    public bool hasDecoration;
 
     public void MakeForbidden()
     {

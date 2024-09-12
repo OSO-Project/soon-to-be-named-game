@@ -25,7 +25,7 @@ public class RandomEncounterTrigger : MonoBehaviour
         {
             if (_encounterManager.CanStartEncounter() && _encountersTriggered < minEncounters)
             {
-                if(_encounterManager.StartEncounter())
+                if (_encounterManager.StartEncounter())
                     _encountersTriggered++;
             }
             ScheduleNextEncounter();
@@ -37,10 +37,10 @@ public class RandomEncounterTrigger : MonoBehaviour
         float currentTime = Time.time - _levelStartTime;
         float remainingTime = _encounterManager.maxTriggerTime - currentTime;
         int remainingEncounters = minEncounters - _encountersTriggered;
-
         if (remainingEncounters <= 0 || remainingTime <= 0)
         {
             // No more encounters need to be scheduled
+            Debug.Log("no more enc");
             _nextEncounterTime = float.MaxValue;
         }
         else

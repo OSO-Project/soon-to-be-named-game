@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/_Scripts/ForeignScripts.meta
 guid: ea19cdc54818ac44092127606cd957ed
+========
+guid: 1535ad219af111144830089e825dee06
+>>>>>>>> origin/EquipmentSystem:Assets/Art/Created Assets/Carpets/Materials.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

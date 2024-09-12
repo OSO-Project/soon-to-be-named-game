@@ -11,12 +11,13 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
     //Remember to also include the Interactable interface, as shown above.
     //The interaction range is global between interactable objects, and you can set it in the
     //InteractionManager.cs script or the object with that script. If needed, i can change this.
-    
+
     [SerializeField]
     private bool isUnlocked = false;
     private bool isOpen = false;
     private Animator animator;
     private static OpenCloseDoor currentTarget = null;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -42,7 +43,7 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
     {
         currentTarget = null;
         Debug.Log("NotLooking");
-	//Code to execute when you aim away from the object
+        //Code to execute when you aim away from the object
     }
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
@@ -51,31 +52,36 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
         {
             if (!isUnlocked)
             {
-                Debug.Log("Door's locked.");
                 return;
             }
             else
             {
-                Debug.Log("Interacting");
-                if (animator == null)
+                if(GameManager.Instance.AttemptToLeaveRoom())
                 {
-                    Debug.Log("animator is null");
-                    return;
-                }
+                    if (animator == null)
+                    {
+                        return;
+                    }
 
-                if (isOpen)
-                {
-                    Debug.Log("animatingClose");
-                    animator.SetTrigger("Close");
-                }
-                else
-                {
-                    Debug.Log("animatingClose");
-                    animator.SetTrigger("Open");
-                }
+                    if (isOpen)
+                    {
+                        animator.SetTrigger("Close");
+                    }
+                    else
+                    {
+                        animator.SetTrigger("Open");
+                    }
 
-                isOpen = !isOpen;
+                    isOpen = !isOpen;
+                }
             }
         }
+    }
+
+    public void CloseAndLockDoor()
+    {
+        isUnlocked = false;
+        isOpen = false;
+        animator.SetTrigger("Close");
     }
 }

@@ -8,17 +8,20 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
-public class HoldToClean : MonoBehaviour, Interactable
+public class CleanItem : MonoBehaviour, Interactable, IDirtyObject
 {
-    [SerializeField] private float timeToClean = 3f;
+    [SerializeField] protected float timeToClean = 3f;
 
-    private static HoldToClean currentTarget = null;
-    private float _lookDuration = 0f;
-    private bool _isCleaned = false;
+    public static CleanItem currentTarget = null;
+    public float _lookDuration = 0f;
+    public bool _isCleaned = false;
+    public UnlockedToolsData PlayerData;
 
-    private HighlightObject _highlight;
-    private Coroutine _cleanCoroutine;
-    private ParticleSystem _dustParticle;
+    public Action cleanSuccesfull;
+
+    public HighlightObject _highlight;
+    public Coroutine _cleanCoroutine;
+    public ParticleSystem _dustParticle;
 
     void Start()
     {
@@ -34,7 +37,7 @@ public class HoldToClean : MonoBehaviour, Interactable
 
     public void OnBeginLooking()
     {
-        if (_isCleaned) return;
+        if (_isCleaned || ToolsManager.Instance._currentlyHeld is not Wipe) return;
         _highlight.SetIsHighlighted(true);
         currentTarget = this;
         UIManager.Instance.HintText.gameObject.SetActive(true);
@@ -93,6 +96,9 @@ public class HoldToClean : MonoBehaviour, Interactable
                     Destroy(gameObject, _dustParticle.main.duration);
                 }
                 StopAndResetProgress();
+                // move to another script
+                GameEventManager.Instance.CleanItem(GetDirtValue());
+                cleanSuccesfull.Invoke();
                 yield break;
             }
 
@@ -119,5 +125,24 @@ public class HoldToClean : MonoBehaviour, Interactable
         }
     }
 
+    public int GetDirtValue()
+    {
+        return (int) timeToClean / 2;
+    }
+
+    public void Hide()
+    {
+        return;
+    }
+
+    public void UnHide()
+    {
+        return;
+    }
+
+    public bool GetHidden()
+    {
+        return false;
+    }
 }
 
