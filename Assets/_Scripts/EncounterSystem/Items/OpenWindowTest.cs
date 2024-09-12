@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class OpenWindowTest : HoldToClean, Interactable
+public class OpenWindowTest : CleanItem, Interactable
 {
     public void OnBeginLooking()
     {

@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 6479406829954962902}
   - component: {fileID: 2070661887288149299}
   - component: {fileID: 250008257738840755}
+  - component: {fileID: 9209080969851715598}
   m_Layer: 3
   m_Name: WindowHingeR
   m_TagString: Interactable
@@ -639,6 +640,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+--- !u!114 &9209080969851715598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5020667272284357293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f40c5fd0ba408824498154e51fd4455a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5172840972705478314
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +665,7 @@ GameObject:
   - component: {fileID: 4560219040187860215}
   - component: {fileID: 8976808984470810611}
   - component: {fileID: 4138192707316536049}
+  - component: {fileID: 875337927357985925}
   m_Layer: 3
   m_Name: WindowHingeL
   m_TagString: Interactable
@@ -758,6 +772,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+--- !u!114 &875337927357985925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5172840972705478314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f40c5fd0ba408824498154e51fd4455a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5259548226441555306
 GameObject:
   m_ObjectHideFlags: 0

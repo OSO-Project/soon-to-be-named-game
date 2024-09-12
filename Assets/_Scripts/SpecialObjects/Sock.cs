@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Sock : MonoBehaviour, DirtyObject
+public class Sock : ItemsToClean
 {
     [Header("Sock Attributes")]
     [SerializeField]
@@ -73,7 +73,7 @@ public class Sock : MonoBehaviour, DirtyObject
             Quaternion rotation = Quaternion.Euler(-90, 0, 0); 
             SpawnRolledPair(collisionPoint, _sockMaterial, rotation);
             SpawnParticleSystem(collisionPoint, rotation);
-            GameEventManager.Instance.MatchSocks(getDirtValue());
+            GameEventManager.Instance.CleanItem(GetDirtValue());
             // Destroy both socks
             Destroy(gameObject);
             Destroy(collision.gameObject);

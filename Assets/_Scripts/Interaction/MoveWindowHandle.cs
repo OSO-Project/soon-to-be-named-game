@@ -34,7 +34,7 @@ public class MoveWindowHandle : MonoBehaviour, Interactable
     public void OnFinishLooking()
     {
         currentTarget = null;
-	    //Code to execute when you aim away from the object
+        //Code to execute when you aim away from the object
     }
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
@@ -49,7 +49,7 @@ public class MoveWindowHandle : MonoBehaviour, Interactable
             }
             if (!isOpen)
             {
-                 if (state == "Down")
+                if (state == "Down")
                 {
                     handleAnimator.SetTrigger("Side");
                     isUnlocked = true;

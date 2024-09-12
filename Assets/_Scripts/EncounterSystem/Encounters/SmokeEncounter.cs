@@ -7,9 +7,23 @@ public class SmokeEncounter : Encounter
 {
     private HashSet<ISmokable> smokablesInArea = new HashSet<ISmokable>();
     [SerializeField] private ParticleSystem smokeParticleSystem;
+
+    private void Start()
+    {
+        GameEventManager.Instance.OnWindowOpen += StopEncounter;
+
+    }
     public override bool CanStart()
     {
-        // Add condition to check if the encounter can start
+        foreach (var window in FindObjectsOfType<OpenCloseWindow>())
+        {
+            if (window.isOpen)
+            {
+                Debug.Log("window opened");
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -17,25 +31,26 @@ public class SmokeEncounter : Encounter
     {
         smokeParticleSystem = GameObject.Find("SmokeSpawner").GetComponentInChildren<ParticleSystem>();
         StartSmoke();
-        List<GameObject> encounterEnders = FindObjectsOfType<MonoBehaviour>()
-            .OfType<ISmokeEnder>()
-            .Select(ender => (ender as MonoBehaviour).gameObject)
-            .ToList();
-
-        foreach (GameObject ender in encounterEnders)
-        {
-/*            if (!ender.GetComponent<HoldToCleanEncounter>())
-            {
-                ender.AddComponent<HoldToCleanEncounter>();
-                ender.AddComponent<HighlightObject>();
-            }*/
-        }
 
         foreach (ISmokable smokable in smokablesInArea)
         {
             smokable.AddSmokeDirt();
         }
+        StartCoroutine(SmokeRunning());
+    }
 
+    // used to check if there are any windows open that weren't caught by CanStart()
+    private IEnumerator SmokeRunning()
+    {
+        foreach (var window in FindObjectsOfType<OpenCloseWindow>())
+        {
+            if (window.isOpen)
+            {
+                Debug.Log("window opened after");
+                GameEventManager.Instance.OpenWindow();
+            }
+        }
+        yield return null;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -60,21 +75,10 @@ public class SmokeEncounter : Encounter
 
     public override void StopEncounter()
     {
-        StopSmoke();
-        // remove components from enders
-        if (encounterEnders.Count != 0)
-        {
-            foreach (GameObject ender in encounterEnders)
-            {
-                Destroy(ender.GetComponent<HoldToCleanEncounter>());
-                Destroy(ender.GetComponent<HighlightObject>());
-            }
-
-            // clear the enders list
-            encounterEnders.Clear();
-        }
-
+        StopSmoke();       
         smokablesInArea.Clear();
+        StopAllCoroutines();
+        GameEventManager.Instance.EndEncounter();
         return;
     }
 

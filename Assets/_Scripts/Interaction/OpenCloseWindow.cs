@@ -11,6 +11,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
     private MoveWindowHandle windowHandleStatus = null;
     private void Start()
     {
+
         windowAnimator = GetComponent<Animator>();
         if (windowAnimator == null)
         {
@@ -70,6 +71,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
                     {
                         windowAnimator.SetTrigger("OpenVertical");
                     }
+                    GameEventManager.Instance.OpenWindow();
                 }
                 else
                 {

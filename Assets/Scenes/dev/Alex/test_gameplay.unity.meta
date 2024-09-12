@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/dev/Alex/test_gameplay.unity.meta
 guid: ec5c9b98aca11014c907203ad6d51973
+========
+guid: 6cc1013f5834e9042b8d176e2bfdbf53
+>>>>>>>> score-clean:Assets/Scenes/dev/Denys/test_gameplay.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

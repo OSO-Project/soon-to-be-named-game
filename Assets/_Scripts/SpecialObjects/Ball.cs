@@ -19,6 +19,8 @@ public class Ball : MonoBehaviour
     [SerializeField] private float spawnCooldown = 3f; // 3 seconds cooldown
     [SerializeField] private LayerMask printableLayer;
 
+    [SerializeField] private AudioClip kickSoundFX;
+
     void Awake()
     {
         // Find the CarriableObject script
@@ -98,6 +100,9 @@ public class Ball : MonoBehaviour
 
                 // Apply a force to the ball
                 _ballRB.AddForce(rotatedDirection * 1500);
+
+                //play the sound of kicking the ball
+                SoundFxManager.instance .PlaySoundFXClip(kickSoundFX, transform, 1f);
             }
         }
     }

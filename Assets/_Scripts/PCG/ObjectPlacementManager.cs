@@ -19,7 +19,7 @@ public class ObjectPlacementManager : MonoBehaviour
     public float objectsSpawnMultiplier;
     private Dictionary<DecorationAsset, int> spawnedObjectsCount;
 
-    [SerializeField] public List<DirtyObject> dirtyObjects; // List of all dirty objects in the room
+    [SerializeField] public List<IDirtyObject> IDirtyObjects; // List of all dirty objects in the room
     [SerializeField] public List<GameObject> obb;
 
     private void Awake()
@@ -47,7 +47,7 @@ public class ObjectPlacementManager : MonoBehaviour
         {
             spawnedObjectsCount[asset] = 0;
         }
-        dirtyObjects = new List<DirtyObject>();
+        IDirtyObjects = new List<IDirtyObject>();
         obb = new List<GameObject>();
         PlaceObjects();
 
@@ -57,7 +57,7 @@ public class ObjectPlacementManager : MonoBehaviour
 
     void SetRoomDirt()
     {
-        endlessModeManager.SetNewRoomDirt(dirtyObjects);
+        endlessModeManager.SetNewRoomDirt(IDirtyObjects);
     }
 
     void PlaceObjects()
@@ -307,9 +307,9 @@ public class ObjectPlacementManager : MonoBehaviour
                 trashObject.transform.position = new Vector3(trashObject.transform.position.x, trashObject.transform.position.y + 1f, trashObject.transform.position.z); // Adjust height to be slightly above the large object
                 //Debug.Log($"tr: {trashObject.name}");
                 // if objects is a dirt item add to the list
-                if(trashObject.GetComponent<DirtyObject>() != null)
+                if(trashObject.GetComponent<IDirtyObject>() != null)
                 {
-                    dirtyObjects.Add(trashObject.GetComponent<DirtyObject>());
+                    IDirtyObjects.Add(trashObject.GetComponent<IDirtyObject>());
                     obb.Add(trashObject);
                 }
             }
@@ -370,9 +370,9 @@ public class ObjectPlacementManager : MonoBehaviour
         GameObject decoration = Instantiate(decorationObj.prefab, centeredPosition, rotation, parent);
 
         // if objects is a dirt item add to the list
-        if (decoration.GetComponent<DirtyObject>() != null)
+        if (decoration.GetComponent<IDirtyObject>() != null)
         {
-            dirtyObjects.Add(decoration.GetComponent<DirtyObject>());
+            IDirtyObjects.Add(decoration.GetComponent<IDirtyObject>());
             obb.Add(decoration);
         }
         MarkOccupied(position, area, decorationObj.isDecoration);

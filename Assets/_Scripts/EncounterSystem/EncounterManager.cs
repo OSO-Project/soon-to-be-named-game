@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class EncounterManager : MonoBehaviour
 {
@@ -7,7 +8,7 @@ public class EncounterManager : MonoBehaviour
     private Encounter _currentEncounter;
 
     public float minTriggerTime;
-    public float maxTriggerTime;
+    public float maxTriggerTime;    
     [SerializeField] private float startDelay = 5f;
 
     private float _levelStartTime;
@@ -17,6 +18,7 @@ public class EncounterManager : MonoBehaviour
     {
         _levelStartTime = Time.time;
         GameEventManager.Instance.OnEncounterEnd += StopEncounter;
+        
     }
 
     void Update()
@@ -49,25 +51,11 @@ public class EncounterManager : MonoBehaviour
         {
             
             // Choose a random encounter from the list
-            Encounter encounter = availableEncounters[Random.Range(0, availableEncounters.Count)];
+            Encounter encounter = availableEncounters[UnityEngine.Random.Range(0, availableEncounters.Count)];
             if (encounter.CanStart())
             {
                 Debug.Log($"{encounter.gameObject.name} is started");
                 _currentEncounter = encounter;
-
-                /*// add encounter ender components
-                if(_currentEncounter.encounterEnders != null)
-                {
-                    foreach (var ender in _currentEncounter.encounterEnders)
-                    {
-                        if (!ender.GetComponent<HoldToCleanEncounter>())
-                        {
-                            ender.AddComponent<HoldToCleanEncounter>();
-                            ender.AddComponent<HighlightObject>();
-                        }
-
-                    }
-                }*/
 
                 // display notification
                 UIManager.Instance.DisplayEncounterNotification(_currentEncounter.encounterIcon, _currentEncounter.encounterText, startDelay);
@@ -83,17 +71,6 @@ public class EncounterManager : MonoBehaviour
         Debug.Log("Current enc stop");
         if (_currentEncounter != null)
         {
-            _currentEncounter.StopEncounter();
-
-            /*// remove encounter ender components
-            if(_currentEncounter.encounterEnders != null)
-            {
-                foreach (var ender in _currentEncounter.encounterEnders)
-                {
-                    Destroy(ender.GetComponent<HoldToCleanEncounter>());
-                    Destroy(ender.GetComponent<HighlightObject>());
-                }
-            }*/
             _currentEncounter = null;
         }
     }
