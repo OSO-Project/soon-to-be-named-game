@@ -67,7 +67,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: aa5cb2d3f5d43b64fbeacb59d25abfaf, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: dfdbba43f7a31d34cb2c1fde0898db0f, type: 2}
+      objectReference: {fileID: 2100000, guid: d64236d4e3837a94fb5e25feeb53930f, type: 2}
     - target: {fileID: 919132149155446097, guid: aa5cb2d3f5d43b64fbeacb59d25abfaf, type: 3}
       propertyPath: m_Name
       value: Sock
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dirt: 0
   isHidden: 0
-  _sockType: 2
+  _sockType: 0
   _rolledPairPrefab: {fileID: 3415786354909083583, guid: 6477c05385044a447a3f00c886a59a81, type: 3}
   _particleSystemPrefab: {fileID: 7372387072756587380, guid: f167e837f89c29a4a8f57f917b4eb178, type: 3}
   _sockCollisionSound: {fileID: 8300000, guid: 44036287a0a3a504bb280143087bf69c, type: 3}
