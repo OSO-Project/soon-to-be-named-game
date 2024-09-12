@@ -22,14 +22,14 @@ public class ShortCircuitEncounter : Encounter
 
         // move declaration to Encounter
         // add components to enders
-        foreach (GameObject ender in encounterEnders)
+/*        foreach (GameObject ender in encounterEnders)
         {
             if (!ender.GetComponent<CleanItemEncounter>())
             {
                 ender.AddComponent<HighlightObject>();
                 ender.AddComponent<CleanItemEncounter>();
             }
-        }
+        }*/
 
         IDisableChildren[] disableChildrenObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDisableChildren>().ToArray();
         foreach (IDisableChildren disableChildren in disableChildrenObjects)
