@@ -13,8 +13,8 @@ public class EndlessModeManager : MonoBehaviour
 
     // Tracking dirtiness
     [Header("Dirt and cleaning Room Settings")]
-    public List<DirtyObject> dirtyObjects; // List of all dirty objects in the room
-    public List<DirtyObject> dirtyObjectsPrev; // List of all dirty objects in the room
+    public List<IDirtyObject> IDirtyObjects; // List of all dirty objects in the room
+    public List<IDirtyObject> IDirtyObjectsPrev; // List of all dirty objects in the room
     [SerializeField] private float totalDirt; // Total dirt in the room
     public float currentDirt; // Current amount of dirt left in the room
     public float cleanliness; // Cleanliness percentage of the room
@@ -89,27 +89,27 @@ public class EndlessModeManager : MonoBehaviour
         totalDirt = 0f;
 
         // set saved dirty objects as current
-        dirtyObjects = dirtyObjectsPrev;
+        IDirtyObjects = IDirtyObjectsPrev;
 
         // calculate dirtiness
-        foreach (DirtyObject obj in dirtyObjects)
+        foreach (IDirtyObject obj in IDirtyObjects)
         {
-            totalDirt += obj.getDirtValue();
+            totalDirt += obj.GetDirtValue();
         }
         currentDirt = totalDirt;
         cleanliness = 0f; // Initially, the room is 0% clean
     }
     // Save dirty objects from newly spawned room
-    public void SetNewRoomDirt(List<DirtyObject> dObj)
+    public void SetNewRoomDirt(List<IDirtyObject> dObj)
     {
-        dirtyObjectsPrev = dObj;
-/*        Debug.Log($"drt: {dirtyObjects == null}");
-        foreach (var item in dirtyObjectsPrev)
+        IDirtyObjectsPrev = dObj;
+/*        Debug.Log($"drt: {IDirtyObjects == null}");
+        foreach (var item in IDirtyObjectsPrev)
         {
             Debug.Log($"{item}");
         }*/
         // if first room then initialize dirt for it
-        if (dirtyObjects == null)
+        if (IDirtyObjects == null)
         {
             InitializeRoomDirt();
         }

@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Samples/Input System/1.7.0/Rebinding UI/RebindingUISampleScene.unity.meta
 guid: f6995f4eab80237489ce6962c13d8372
+========
+guid: 2166467da5e25f743a6e4b172befcdaf
+folderAsset: yes
+>>>>>>>> score-clean:Assets/_Scripts/GameLoop.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

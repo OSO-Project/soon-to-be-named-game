@@ -25,8 +25,9 @@ public class SmokeEncounter : Encounter
         foreach (GameObject ender in encounterEnders)
         {
 /*            if (!ender.GetComponent<HoldToCleanEncounter>())
+            if (!ender.GetComponent<CleanItemEncounter>())
             {
-                ender.AddComponent<HoldToCleanEncounter>();
+                ender.AddComponent<CleanItemEncounter>();
                 ender.AddComponent<HighlightObject>();
             }*/
         }
@@ -66,7 +67,7 @@ public class SmokeEncounter : Encounter
         {
             foreach (GameObject ender in encounterEnders)
             {
-                Destroy(ender.GetComponent<HoldToCleanEncounter>());
+                Destroy(ender.GetComponent<CleanItemEncounter>());
                 Destroy(ender.GetComponent<HighlightObject>());
             }
 

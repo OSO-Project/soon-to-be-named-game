@@ -60,9 +60,9 @@ public class EncounterManager : MonoBehaviour
                 {
                     foreach (var ender in _currentEncounter.encounterEnders)
                     {
-                        if (!ender.GetComponent<HoldToCleanEncounter>())
+                        if (!ender.GetComponent<CleanItemEncounter>())
                         {
-                            ender.AddComponent<HoldToCleanEncounter>();
+                            ender.AddComponent<CleanItemEncounter>();
                             ender.AddComponent<HighlightObject>();
                         }
 
@@ -90,7 +90,7 @@ public class EncounterManager : MonoBehaviour
             {
                 foreach (var ender in _currentEncounter.encounterEnders)
                 {
-                    Destroy(ender.GetComponent<HoldToCleanEncounter>());
+                    Destroy(ender.GetComponent<CleanItemEncounter>());
                     Destroy(ender.GetComponent<HighlightObject>());
                 }
             }*/
