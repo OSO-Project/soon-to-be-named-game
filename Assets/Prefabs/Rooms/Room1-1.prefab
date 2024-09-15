@@ -103,7 +103,7 @@ MonoBehaviour:
   useFixedSeed: 0
   parent: {fileID: 3494754596881880082}
   endlessModeManager: {fileID: 0}
-  objectsSpawnMultiplier: 0
+  objectsSpawnMultiplier: 0.1
   obb: []
 --- !u!1 &981274754113399657
 GameObject:
@@ -688,7 +688,7 @@ Transform:
   m_GameObject: {fileID: 3904054246446452825}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.008, y: 0.47, z: -8.51}
+  m_LocalPosition: {x: -0.008, y: 0.573, z: -8.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1405,7 +1405,7 @@ Transform:
   m_GameObject: {fileID: 9053120156204316686}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.47, y: 0.547, z: -0.287}
+  m_LocalPosition: {x: -0.47, y: 0.547, z: 0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -45,7 +45,7 @@ public class EndlessModeManager : MonoBehaviour
         Debug.Log("RoomFinished");
         // Initialize dirt for new room
         InitializeRoomDirt();
-        //OnRoomFinished?.Invoke();
+        OnRoomFinished?.Invoke();
     }
     public void IncreaseMultiplier()
     {
@@ -54,6 +54,8 @@ public class EndlessModeManager : MonoBehaviour
 
     private void SelectNextRoomToSpawn()
     {
+
+        cleanliness = 1; // FOR TEST REMOVE AFTER
         if (availableRooms.Count == 0)
         {
             // Reset the list of available rooms if all rooms have been used
@@ -71,6 +73,7 @@ public class EndlessModeManager : MonoBehaviour
         // Remove the selected room from the available list
         availableRooms.Remove(selectedRoom);
 
+        Debug.Log(selectedRoom.name + " Set the selected room as the roomPrefab for RoomManager");
         // Set the selected room as the roomPrefab for RoomManager
         roomManager.roomPrefab = selectedRoom;
 
@@ -81,7 +84,8 @@ public class EndlessModeManager : MonoBehaviour
     IEnumerator TeleportPlayerOnStartPoint()
     {
         yield return new WaitForSeconds(0.3f);
-        GameObject.FindGameObjectWithTag("Player").transform.position = GameObject.Find("PlayerSpawnPoint").transform.position;
+        SelectNextRoomToSpawn(); // Set second room to spawn
+        GameObject.FindGameObjectWithTag("Player").transform.position = GameObject.Find("PlayerSpawnPoint").transform.position; // teleport player
     }
 
     private void InitializeRoomDirt()

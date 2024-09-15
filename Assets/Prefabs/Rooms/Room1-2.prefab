@@ -30454,7 +30454,7 @@ MonoBehaviour:
   useFixedSeed: 0
   parent: {fileID: 4299117081803125184}
   endlessModeManager: {fileID: 0}
-  objectsSpawnMultiplier: 0
+  objectsSpawnMultiplier: 0.1
   obb: []
 --- !u!1 &8130567027991591240
 GameObject:
