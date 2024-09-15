@@ -23,7 +23,6 @@ public class SmokeEncounter : Encounter
                 return false;
             }
         }
-
         return true;
     }
 
@@ -42,14 +41,14 @@ public class SmokeEncounter : Encounter
     // used to check if there are any windows open that weren't caught by CanStart()
     private IEnumerator SmokeRunning()
     {
-        foreach (var window in FindObjectsOfType<OpenCloseWindow>())
+        /*foreach (var window in FindObjectsOfType<OpenCloseWindow>())
         {
             if (window.isOpen)
             {
                 Debug.Log("window opened after");
-                GameEventManager.Instance.OpenWindow();
+                GameEventManager.Instance.OpenWindow(window.getState());
             }
-        }
+        }*/
         yield return null;
     }
 
@@ -73,9 +72,9 @@ public class SmokeEncounter : Encounter
         }
     }
 
-    public override void StopEncounter()
+    public override void StopEncounter(bool isWindowUp)
     {
-        StopSmoke();       
+        StopSmoke(isWindowUp);    
         smokablesInArea.Clear();
         StopAllCoroutines();
         GameEventManager.Instance.EndEncounter();
@@ -87,8 +86,19 @@ public class SmokeEncounter : Encounter
         smokeParticleSystem?.Play();
     }
 
-    private void StopSmoke()
+    private void StopSmoke(bool isWindowUp)
     {
+        var main = smokeParticleSystem.main;
+        if (isWindowUp)
+        {
+            main.startLifetime = 10f;
+        }
+        Debug.Log($"smoke lifetime: {main.startLifetime}");
         smokeParticleSystem?.Stop();
+    }
+
+    public override void StopEncounter()
+    {
+        
     }
 }
