@@ -7,7 +7,11 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
     [Header("Hold To Clean")]
     public Image ProgressBar;
+  
     public TMP_Text HintText;
+
+    [Header("E to interact")]
+    public TMP_Text interactText;
 
     [Header("Speed Display")]
     public TMP_Text SpeedText;
@@ -38,6 +42,8 @@ public class UIManager : MonoBehaviour
 
         ProgressBar.fillAmount = 0f;
         HintText.gameObject.SetActive(false);
+        interactText.gameObject.SetActive(false);
+
         notificationPanel.SetActive(false);
         /*EncounterIcon.gameObject.SetActive(false);
         EncounterText.gameObject.SetActive(false);*/

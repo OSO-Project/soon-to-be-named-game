@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class SodaCan : MonoBehaviour
+public class SodaCan : MonoBehaviour, Interactable
 {
     /*Player can drink soda cans in different colours. Upon interacting with the can, the player gets either a positive or a negative effect. There is 70% chance for a positive and 30% chance for a negative effect.
 
@@ -21,25 +22,10 @@ public class SodaCan : MonoBehaviour
 
      */
 
-    public HighlightObject _highlight;
+   // public HighlightObject _highlight;
     public static SodaCan currentTarget = null;
-    public void OnBeginLooking()
-    {
-        
-        _highlight.SetIsHighlighted(true);
-        currentTarget = this;
-        UIManager.Instance.HintText.gameObject.SetActive(true);
-        _highlight.Highlight();
-    }
+    
 
-    public void OnFinishLooking()
-    {
-        _highlight.SetIsHighlighted(false);
-        currentTarget = null;
-        UIManager.Instance.HintText.gameObject.SetActive(false);
-        //StopAndResetProgress();
-        _highlight.Highlight();
-    }
     public void DrinkSoda()
     {
 
@@ -54,16 +40,6 @@ public class SodaCan : MonoBehaviour
         }
     }
 
-
-    public void ShowDrinkIcon()
-    {
-        //UIManager.Instance.DrinkIcon.gameObject.SetActive(true);
-    }
-    public void HideDrinkIcon()
-    {
-       // UIManager.Instance.DrinkIcon.gameObject.SetActive(false);
-    }
-
     private void ApplyPositiveEffect()
     {
         Debug.Log("Positive effect");
@@ -76,8 +52,8 @@ public class SodaCan : MonoBehaviour
                 GameTimer.Instance.AddTime(20);
                 break;
             case 1:
-              //  PlayerMovement.Instance.BoostSpeed(20);
-              //  HoldToClean.Instance.BoostSpeed(20);
+                //  PlayerMovement.Instance.BoostSpeed(20);
+                //  HoldToClean.Instance.BoostSpeed(20);
                 break;
             case 2:
                 //HIGHLIGHT ALL DIRTY ITEMS FOR 20 SECONDS
@@ -100,14 +76,56 @@ public class SodaCan : MonoBehaviour
                 break;
             case 1:
                 //PlayerMovement.Instance.SlowSpeed(20);
-               // HoldToClean.Instance.SlowSpeed(20);
+                // HoldToClean.Instance.SlowSpeed(20);
                 break;
             case 2:
                 //DIZZY SCREEN FOR 30 SECONDS
                 break;
         }
 
-        
+
     }
 
+    public void OnBeginLooking()
+    {
+       // _highlight.SetIsHighlighted(true);
+        Debug.Log("Looking at soda can");
+        currentTarget = this;
+        ShowDrinkIcon();
+       // _highlight.Highlight();
+    }
+
+    public void OnFinishLooking()
+    {
+        Debug.Log("Stopped looking at soda can");
+        // _highlight.SetIsHighlighted(false);
+        currentTarget = null;
+        HideDrinkIcon();
+       // _highlight.Highlight();
+    }
+
+    public void ShowDrinkIcon()
+    {
+        UIManager.Instance.interactText.gameObject.SetActive(true);
+
+    }
+    public void HideDrinkIcon()
+    {
+        UIManager.Instance.interactText.gameObject.SetActive(false);
+    }
+
+    public void OnPressInteract(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("Pressed Interact. Drinking soda can");
+        if (currentTarget == this)
+        {
+            if (ctx.performed)
+            {
+                DrinkSoda();
+            }
+        } else
+        {
+            return;
+        }
+    }
 }

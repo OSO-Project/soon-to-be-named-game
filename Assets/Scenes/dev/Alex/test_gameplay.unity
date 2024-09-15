@@ -4687,6 +4687,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 11400000, guid: 08a403ff6b85326498ed322b8ce0daa5, type: 2}
+  _currentlyHeld: {fileID: 0}
+  availableTools: []
 --- !u!1001 &601470580
 PrefabInstance:
   m_ObjectHideFlags: 0
