@@ -61,6 +61,7 @@ public class RoomManager : MonoBehaviour
         {
             Destroy(roomForRandomGen.gameObject);
         }
+        Debug.Log(currentRoom.name + " Destroyed!");
         Transform exitDoor = currentRoom.transform.Find("ExitDoor");
         exitDoor.gameObject.GetComponentInChildren<OpenCloseDoor>().CloseAndLockDoor();
         exitDoor.parent.name = "EnterDoorLocked";
