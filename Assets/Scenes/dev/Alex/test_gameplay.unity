@@ -7907,7 +7907,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possibleRooms:
-  - {fileID: 1512856339580329662, guid: 61cb66fd48364cb44b88c964a7249d47, type: 3}
+  - {fileID: 2378434290708532790, guid: 291f19e7b4bd3b945a0ecd937af20ff3, type: 3}
+  - {fileID: 1868127621668558641, guid: cce993bc007861d4bb83d97b935f0b9d, type: 3}
   roomCount: {fileID: 1079553292}
   gameTimer: {fileID: 1547569334}
   roomManager: {fileID: 1712554940}
