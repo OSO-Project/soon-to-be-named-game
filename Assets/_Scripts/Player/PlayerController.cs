@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance;
+
     private Rigidbody _rb;
     private CapsuleCollider _capsule;
     private BoxCollider _ceilingChecker;
@@ -38,7 +40,18 @@ public class PlayerController : MonoBehaviour
     public bool CanMove;
 
     public event System.Action OnLand;
-
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
         CanMove = true;
@@ -267,20 +280,70 @@ public class PlayerController : MonoBehaviour
         return horizontalVelocity.magnitude;
     }
 
-    //public void BoostSpeed(float duration)
-    //{
-    //    StartCoroutine(BoostSpeedForDuration(duration));
+    public void BoostSpeed(float duration)
+    {
+        StartCoroutine(BoostSpeedForDuration(duration));
+    }
 
+    private IEnumerator BoostSpeedForDuration(float duration)
+    {
+        try
+        {
+            walkSpeed *= 2;
+            runSpeed *= 2;
+            crouchSpeed *= 2;
+            
+        } catch (Exception e)
+        {
+            Debug.Log("BoostSpeedForDuration error: " + e.Message);
+        }
+        yield return new WaitForSeconds(duration);
+        
+        try
+        {
+            walkSpeed /= 2;
+            runSpeed /= 2;
+            crouchSpeed /= 2;
 
-    //}
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Boost speed down: " + e.Message);
+        }
+    }
 
-   // private IEnumerator BoostSpeedForDuration(float duration)
-    //{
-        // boost speed for a specific time
+    public void SlowSpeed(float duration)
+    {
+        StartCoroutine(SlowSpeedForDuration(duration));
+    }
 
+    private IEnumerator SlowSpeedForDuration(float duration)
+    {
+        try
+        {
+            walkSpeed /= 2;
+            runSpeed /= 2;
+            crouchSpeed /= 2;
 
+        }
+        catch (Exception e)
+        {
+            Debug.Log("SlowSpeedForDuration error: " + e.Message);
+        }
+        yield return new WaitForSeconds(duration);
 
-  //  }
+        try
+        {
+            walkSpeed *= 2;
+            runSpeed *= 2;
+            crouchSpeed *= 2;
+
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Boost speed up: " + e.Message);
+        }
+    }
 
 
     public bool IsGrounded()

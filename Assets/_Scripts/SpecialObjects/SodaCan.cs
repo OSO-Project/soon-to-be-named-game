@@ -52,7 +52,7 @@ public class SodaCan : MonoBehaviour, Interactable
                 GameTimer.Instance.AddTime(20);
                 break;
             case 1:
-                //  PlayerMovement.Instance.BoostSpeed(20);
+                PlayerController.Instance.BoostSpeed(20);
                 //  HoldToClean.Instance.BoostSpeed(20);
                 break;
             case 2:
@@ -75,7 +75,7 @@ public class SodaCan : MonoBehaviour, Interactable
                 //INVERT KEY BINDS FOR 30 SECONDS
                 break;
             case 1:
-                //PlayerMovement.Instance.SlowSpeed(20);
+                PlayerController.Instance.SlowSpeed(20);
                 // HoldToClean.Instance.SlowSpeed(20);
                 break;
             case 2:
