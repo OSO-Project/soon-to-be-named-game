@@ -10,4 +10,7 @@ public abstract class Encounter : MonoBehaviour
     public abstract bool CanStart();
     public abstract void StartEncounter();
     public abstract void StopEncounter();
+    public virtual void StopEncounter(bool check)
+    {
+    }
 }

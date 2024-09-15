@@ -29,7 +29,7 @@ public class GameEventManager : MonoBehaviour
     #endregion
 
     public event Action OnLightsControlClick;
-    public event Action OnWindowOpen;
+    public event Action<bool> OnWindowOpen;
     public event Action OnEncounterEnd;
 
     #region Gameplay Actions
@@ -103,9 +103,9 @@ public class GameEventManager : MonoBehaviour
     }
     #endregion
 
-    public void OpenWindow()
+    public void OpenWindow(bool isWindowUp)
     {
-        OnWindowOpen?.Invoke();
+        OnWindowOpen?.Invoke(isWindowUp);
     }
 
     public void EndEncounter()

@@ -71,7 +71,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
                     {
                         windowAnimator.SetTrigger("OpenVertical");
                     }
-                    GameEventManager.Instance.OpenWindow();
+                    GameEventManager.Instance.OpenWindow(state.Equals("Up"));
                 }
                 else
                 {
