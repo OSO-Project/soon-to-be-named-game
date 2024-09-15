@@ -7,6 +7,8 @@ public class SmokeEncounter : Encounter
 {
     private HashSet<ISmokable> smokablesInArea = new HashSet<ISmokable>();
     [SerializeField] private ParticleSystem smokeParticleSystem;
+    [SerializeField] private float particleLifeTimeWindowUp = 10f;
+    [SerializeField] private float particleLifeTimeWindowSide = 5f;
 
     private void Start()
     {
@@ -91,9 +93,12 @@ public class SmokeEncounter : Encounter
         var main = smokeParticleSystem.main;
         if (isWindowUp)
         {
-            main.startLifetime = 10f;
+            main.startLifetime = particleLifeTimeWindowUp;
         }
-        Debug.Log($"smoke lifetime: {main.startLifetime}");
+        else
+        {
+            main.startLifetime = particleLifeTimeWindowSide;
+        }
         smokeParticleSystem?.Stop();
     }
 
