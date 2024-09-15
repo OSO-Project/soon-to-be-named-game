@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public bool isEndlessMode = false;
     private bool isLevelActive = true;
     public EndlessModeManager emm;
+    public RandomEncounterTrigger ret;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
         GameTimer.Instance.RestartTimer();
 
         emm = GameObject.Find("EndlessModeManager").GetComponent<EndlessModeManager>();
+        ret = GameObject.Find("RandomEncounterTrigger").GetComponent<RandomEncounterTrigger>();
     }
 
     public bool AttemptToLeaveRoom()
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
     public void ProceedToNextRoom()
     {
         // Logic to transition to the next room
+        ret.NextRoomEncounter();
         Score.Instance.ResetForNextRoom(); // Reset score for the new room
         //GameTimer.Instance.RestartTimer(); // Reset timer for the new room
 

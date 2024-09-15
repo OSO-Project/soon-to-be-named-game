@@ -4,7 +4,9 @@ public class RandomEncounterTrigger : MonoBehaviour
 {
     [SerializeField] private float minInterval = 10f;
     [SerializeField] private float maxInterval = 30f;
-    [SerializeField] private int minEncounters = 3;
+    [SerializeField] private int totalEncounters = 3;
+    private int minEncounters = 3;
+    private float encounterNumberMultiplier;
 
     private EncounterManager _encounterManager;
     private float _nextEncounterTime;
@@ -35,9 +37,9 @@ public class RandomEncounterTrigger : MonoBehaviour
     private void ScheduleNextEncounter()
     {
         float currentTime = Time.time - _levelStartTime;
-        float remainingTime = _encounterManager.maxTriggerTime - currentTime;
+        //float remainingTime = _encounterManager.maxTriggerTime - currentTime;
         int remainingEncounters = minEncounters - _encountersTriggered;
-        if (remainingEncounters <= 0 || remainingTime <= 0)
+        if (remainingEncounters <= 0)
         {
             // No more encounters need to be scheduled
             Debug.Log("no more enc");
@@ -45,8 +47,26 @@ public class RandomEncounterTrigger : MonoBehaviour
         }
         else
         {
-            float averageInterval = remainingTime / remainingEncounters;
-            _nextEncounterTime = Time.time + Random.Range(minInterval, Mathf.Min(maxInterval, averageInterval));
+            //float averageInterval = remainingTime / remainingEncounters;
+            _nextEncounterTime = Time.time + Random.Range(minInterval, maxInterval);
         }
+    }
+
+    public void NextRoomEncounter()
+    {
+        IncreaseEncounterMultiplier();
+        totalEncounters += (int) encounterNumberMultiplier;
+
+        ResetEncounters();
+    }
+
+    private void ResetEncounters()
+    {
+        minEncounters = totalEncounters;
+    }
+
+    private void IncreaseEncounterMultiplier()
+    {
+        encounterNumberMultiplier += 0.1f;
     }
 }

@@ -8,7 +8,7 @@ public class EncounterManager : MonoBehaviour
     private Encounter _currentEncounter;
 
     public float minTriggerTime;
-    public float maxTriggerTime;    
+    //public float maxTriggerTime;    
     [SerializeField] private float startDelay = 5f;
 
     private float _levelStartTime;
@@ -37,7 +37,7 @@ public class EncounterManager : MonoBehaviour
     public bool CanStartEncounter()
     {
         _currentTime = Time.time - _levelStartTime;
-        return _currentEncounter == null && _currentTime >= minTriggerTime && _currentTime <= maxTriggerTime;
+        return _currentEncounter == null && _currentTime >= minTriggerTime;
     }
 
     public bool StartEncounter()
