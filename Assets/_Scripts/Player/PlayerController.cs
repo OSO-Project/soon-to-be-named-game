@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 _uncrouchCenterVelocity = Vector3.zero;
     private float _uncrouchHeightVelocity = 0;
 
+    private bool _isBoosted;
+
     public bool CanMove;
 
     public event System.Action OnLand;
@@ -280,19 +282,20 @@ public class PlayerController : MonoBehaviour
         return horizontalVelocity.magnitude;
     }
 
-    public void BoostSpeed(float duration)
+    public void BoostSpeed(float duration, float speed)
     {
-        StartCoroutine(BoostSpeedForDuration(duration));
+        StartCoroutine(BoostSpeedForDuration(duration, speed));
     }
 
-    private IEnumerator BoostSpeedForDuration(float duration)
+    private IEnumerator BoostSpeedForDuration(float duration, float speed)
     {
+        if (_isBoosted) { Debug.Log("Cannot boost, is boosted"); yield break; }
         try
         {
-            walkSpeed *= 2;
-            runSpeed *= 2;
-            crouchSpeed *= 2;
-            
+            walkSpeed *= speed;
+            runSpeed *= speed;
+            crouchSpeed *= speed;
+            _isBoosted = true;
         } catch (Exception e)
         {
             Debug.Log("BoostSpeedForDuration error: " + e.Message);
@@ -301,10 +304,10 @@ public class PlayerController : MonoBehaviour
         
         try
         {
-            walkSpeed /= 2;
-            runSpeed /= 2;
-            crouchSpeed /= 2;
-
+            walkSpeed /= speed;
+            runSpeed /= speed;
+            crouchSpeed /= speed;
+            _isBoosted = false;
         }
         catch (Exception e)
         {
@@ -312,19 +315,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SlowSpeed(float duration)
+    public void SlowSpeed(float duration, float speed)
     {
-        StartCoroutine(SlowSpeedForDuration(duration));
+        StartCoroutine(SlowSpeedForDuration(duration, speed));
     }
 
-    private IEnumerator SlowSpeedForDuration(float duration)
+    private IEnumerator SlowSpeedForDuration(float duration, float speed)
     {
+        if (_isBoosted) { Debug.Log("Cannot boost, is boosted"); yield break; }
         try
         {
-            walkSpeed /= 2;
-            runSpeed /= 2;
-            crouchSpeed /= 2;
-
+            walkSpeed /= speed;
+            runSpeed /= speed;
+            crouchSpeed /=  speed;
+            _isBoosted = true;
         }
         catch (Exception e)
         {
@@ -334,10 +338,10 @@ public class PlayerController : MonoBehaviour
 
         try
         {
-            walkSpeed *= 2;
-            runSpeed *= 2;
-            crouchSpeed *= 2;
-
+            walkSpeed *= speed;
+            runSpeed *= speed;
+            crouchSpeed *= speed;
+            _isBoosted = false;
         }
         catch (Exception e)
         {

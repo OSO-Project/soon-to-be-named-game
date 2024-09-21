@@ -22,10 +22,29 @@ public class SodaCan : MonoBehaviour, Interactable
 
      */
 
-   // public HighlightObject _highlight;
+    // public HighlightObject _highlight;
     public static SodaCan currentTarget = null;
-    
 
+    [Header("Positive Effects")]
+    [SerializeField] private float _boostBuffMultiplier;
+    [SerializeField] private float _boostHoldToCleanMultiplier;
+    [SerializeField] private float _speedBoostDurationInSec;
+    [SerializeField] private float _timeToAdd;
+    [SerializeField] private float _highlightDurationInSec;
+
+    [Header("Negative Effects")]
+    [SerializeField] private float _slowDebuffMultiplier;
+    [SerializeField] private float _slowHoldToCleanMultiplier;
+    [SerializeField] private float _slowDurationInSec;
+    [SerializeField] private float _dizzyDurationInSec;
+    [SerializeField] private float _invertKeyBindsDurationInSec;
+
+
+    public void Start()
+    {
+        // _highlight = GetComponent<HighlightObject>();
+        InputManager.Instance.InteractAction.performed += OnPressInteract;
+    }
     public void DrinkSoda()
     {
 
@@ -38,28 +57,32 @@ public class SodaCan : MonoBehaviour, Interactable
         {
             ApplyNegativeEffect();
         }
+        Object.Destroy(gameObject);
     }
 
     private void ApplyPositiveEffect()
     {
         Debug.Log("Positive effect");
+        //
+        //GameTimer.Instance.AddTime(20);
 
-        //33% chance for each effect
+        //HIGHLIGHT ALL DIRTY ITEMS FOR 20 SECONDS
         int random = Random.Range(0, 3);
         switch (random)
         {
             case 0:
-                GameTimer.Instance.AddTime(20);
+                GameTimer.Instance.AddTime(_timeToAdd);
                 break;
             case 1:
-                PlayerController.Instance.BoostSpeed(20);
-                //  HoldToClean.Instance.BoostSpeed(20);
+                PlayerController.Instance.BoostSpeed(_speedBoostDurationInSec, _boostBuffMultiplier);
+                CleanItem.currentTarget.BoostHoldToCleanSpeed(_speedBoostDurationInSec, _boostHoldToCleanMultiplier);
                 break;
             case 2:
                 //HIGHLIGHT ALL DIRTY ITEMS FOR 20 SECONDS
+                Debug.Log("Highlight all dirty items for 20 seconds");
                 break;
-        }
 
+        }
     }
 
     private void ApplyNegativeEffect()
@@ -75,8 +98,8 @@ public class SodaCan : MonoBehaviour, Interactable
                 //INVERT KEY BINDS FOR 30 SECONDS
                 break;
             case 1:
-                PlayerController.Instance.SlowSpeed(20);
-                // HoldToClean.Instance.SlowSpeed(20);
+                PlayerController.Instance.SlowSpeed(_slowDurationInSec, _slowDebuffMultiplier);
+                CleanItem.currentTarget.SlowHoldToCleanSpeed(_slowDurationInSec, _slowHoldToCleanMultiplier);
                 break;
             case 2:
                 //DIZZY SCREEN FOR 30 SECONDS
@@ -88,11 +111,11 @@ public class SodaCan : MonoBehaviour, Interactable
 
     public void OnBeginLooking()
     {
-       // _highlight.SetIsHighlighted(true);
+        // _highlight.SetIsHighlighted(true);
         Debug.Log("Looking at soda can");
         currentTarget = this;
         ShowDrinkIcon();
-       // _highlight.Highlight();
+        // _highlight.Highlight();
     }
 
     public void OnFinishLooking()
@@ -101,7 +124,7 @@ public class SodaCan : MonoBehaviour, Interactable
         // _highlight.SetIsHighlighted(false);
         currentTarget = null;
         HideDrinkIcon();
-       // _highlight.Highlight();
+        // _highlight.Highlight();
     }
 
     public void ShowDrinkIcon()
@@ -116,16 +139,11 @@ public class SodaCan : MonoBehaviour, Interactable
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
     {
-        Debug.Log("Pressed Interact. Drinking soda can");
-        if (currentTarget == this)
-        {
-            if (ctx.performed)
-            {
-                DrinkSoda();
-            }
-        } else
-        {
-            return;
-        }
+        Debug.Log("Drinking soda can. Interact system works.");
+
+        DrinkSoda();
+
     }
+
+
 }

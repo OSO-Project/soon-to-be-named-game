@@ -12,6 +12,8 @@ public class InputManager : MonoBehaviour
     public bool Jump { get; private set; }
     public bool Crouch { get; private set; }
     public bool Clean { get; private set; }
+
+    public bool Interact { get; private set; }
     public bool OpenClose { get; private set; }
     public bool GrabDrop { get; private set; }
     public bool Throw { get; private set; }
@@ -36,6 +38,8 @@ public class InputManager : MonoBehaviour
     public InputAction EquipVacuumAction;
     public InputAction EquipTrashBagAction;
     public InputAction EquipMagicVacuumAction;
+
+    public InputAction InteractAction;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -67,6 +71,9 @@ public class InputManager : MonoBehaviour
         EquipVacuumAction = _currentMap.FindAction("EquipVacuum");
         EquipTrashBagAction = _currentMap.FindAction("EquipTrashBag");
         EquipMagicVacuumAction = _currentMap.FindAction("EquipMagicVacuum");
+        InteractAction = _currentMap.FindAction("Interact");
+        InteractAction.performed += OnInteract;
+        InteractAction.canceled += OnInteract;
         MoveAction.performed += OnMove;
         MoveAction.canceled += OnMove;
         JumpAction.performed += OnJump;
@@ -143,6 +150,19 @@ public class InputManager : MonoBehaviour
             Clean = false;
         }
     }
+
+    private void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Interact = true;
+        }
+        else if (context.canceled)
+        {
+            Interact = false;
+        }
+    }
+
     private void OnGrabDrop(InputAction.CallbackContext context)
     {
         if (context.performed)

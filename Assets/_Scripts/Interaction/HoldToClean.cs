@@ -23,6 +23,7 @@ public class CleanItem : MonoBehaviour, Interactable, IDirtyObject
     public Coroutine _cleanCoroutine;
     public ParticleSystem _dustParticle;
 
+
     void Start()
     {
         _highlight = GetComponent<HighlightObject>();
@@ -123,6 +124,24 @@ public class CleanItem : MonoBehaviour, Interactable, IDirtyObject
             UIManager.Instance.HintText.gameObject.SetActive(false);
             _highlight.Highlight();
         }
+    }
+
+    public void BoostHoldToCleanSpeed(float duration, float multiplier)
+    {
+        ChangeHoldToCleanSpeedForDuration(duration, multiplier);
+    }
+
+    public void SlowHoldToCleanSpeed(float duration, float multiplier)
+    {
+        ChangeHoldToCleanSpeedForDuration(duration, multiplier);
+    }
+
+    private IEnumerator ChangeHoldToCleanSpeedForDuration(float duration, float multiplier)
+    {
+        float originalSpeed = timeToClean;
+        timeToClean *= multiplier;
+        yield return new WaitForSeconds(duration);
+        timeToClean = originalSpeed;
     }
 
     public int GetDirtValue()
