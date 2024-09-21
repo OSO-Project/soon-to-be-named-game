@@ -25,16 +25,17 @@ public class InputManager : MonoBehaviour
     public InputAction JumpAction;
     public InputAction RunAction;
     public InputAction CrouchAction;
+
     public InputAction CleanAction;
     public InputAction GrabDropAction;
     public InputAction ThrowAction;
     public InputAction OpenCloseAction;
+
     public InputAction UseToolAction;
     public InputAction EquipWipeAction;
     public InputAction EquipVacuumAction;
     public InputAction EquipTrashBagAction;
     public InputAction EquipMagicVacuumAction;
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -66,7 +67,6 @@ public class InputManager : MonoBehaviour
         EquipVacuumAction = _currentMap.FindAction("EquipVacuum");
         EquipTrashBagAction = _currentMap.FindAction("EquipTrashBag");
         EquipMagicVacuumAction = _currentMap.FindAction("EquipMagicVacuum");
-
         MoveAction.performed += OnMove;
         MoveAction.canceled += OnMove;
         JumpAction.performed += OnJump;
@@ -132,11 +132,6 @@ public class InputManager : MonoBehaviour
         Throw = context.ReadValueAsButton();
     }
 
-    private void OnUseTool(InputAction.CallbackContext context)
-    {
-        UseTool = context.ReadValueAsButton();
-    }
-
     private void OnClean(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -175,5 +170,21 @@ public class InputManager : MonoBehaviour
         _currentMap.Disable();
     }
 
+    private void OnUseTool(InputAction.CallbackContext context)
+    {
+        UseTool = context.ReadValueAsButton();
+    }
 
+    private void UpdateInputs()
+    {
+        Move = MoveAction.ReadValue<Vector2>();
+        Jump = JumpAction.WasPressedThisFrame();
+        Run = RunAction.IsPressed();
+        Clean = CleanAction.IsPressed();
+        Crouch = CrouchAction.IsPressed();
+        Throw = ThrowAction.IsPressed();
+        OpenClose = OpenCloseAction.IsPressed();
+        GrabDrop = GrabDropAction.IsPressed();
+
+    }
 }

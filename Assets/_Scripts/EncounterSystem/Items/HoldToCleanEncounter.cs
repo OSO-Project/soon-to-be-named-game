@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HoldToCleanEncounter : HoldToClean, Interactable
+public class CleanItemEncounter : CleanItem, Interactable
 {
     private void Start()
     {

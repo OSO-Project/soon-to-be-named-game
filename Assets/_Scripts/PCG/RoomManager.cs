@@ -30,9 +30,9 @@ public class RoomManager : MonoBehaviour
 
     public void SpawnNextRoom(Vector3 position, Quaternion rotation)
     {
-        if (roomPrefab.name != "Room1-61") position.y += 15.0f;
+        position.y += 15.0f;
         nextRoom = Instantiate(roomPrefab, position, Quaternion.identity);
-        if (roomPrefab.name != "Room1-61") StartCoroutine(RotateTheRoom(rotation));
+        StartCoroutine(RotateTheRoom(rotation));
         Debug.Log("SpawnNextRoom");
     }
 

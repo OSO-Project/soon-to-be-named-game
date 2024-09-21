@@ -8,11 +8,11 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
-public class HoldToClean : MonoBehaviour, Interactable
+public class CleanItem : MonoBehaviour, Interactable, IDirtyObject
 {
     [SerializeField] protected float timeToClean = 3f;
 
-    public static HoldToClean currentTarget = null;
+    public static CleanItem currentTarget = null;
     public float _lookDuration = 0f;
     public bool _isCleaned = false;
     public UnlockedToolsData PlayerData;
@@ -97,7 +97,7 @@ public class HoldToClean : MonoBehaviour, Interactable
                 }
                 StopAndResetProgress();
                 // move to another script
-               // GameEventManager.Instance.AddScore(50 * timeToClean);
+                GameEventManager.Instance.CleanItem(GetDirtValue());
                 cleanSuccesfull.Invoke();
                 yield break;
             }
@@ -125,6 +125,24 @@ public class HoldToClean : MonoBehaviour, Interactable
         }
     }
 
-    
+    public int GetDirtValue()
+    {
+        return (int) timeToClean / 2;
+    }
 
+    public void Hide()
+    {
+        return;
+    }
+
+    public void UnHide()
+    {
+        return;
+    }
+
+    public bool GetHidden()
+    {
+        return false;
+    }
 }
+

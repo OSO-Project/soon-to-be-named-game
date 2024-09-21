@@ -13,18 +13,23 @@ public class EndlessModeManager : MonoBehaviour
 
     // Tracking dirtiness
     [Header("Dirt and cleaning Room Settings")]
-    public List<DirtyObject> dirtyObjects; // List of all dirty objects in the room
-    public List<DirtyObject> dirtyObjectsPrev; // List of all dirty objects in the room
+    public List<IDirtyObject> IDirtyObjects; // List of all dirty objects in the room
+    public List<IDirtyObject> IDirtyObjectsPrev; // List of all dirty objects in the room
     [SerializeField] private float totalDirt; // Total dirt in the room
     public float currentDirt; // Current amount of dirt left in the room
     public float cleanliness; // Cleanliness percentage of the room
 
     public event Action OnRoomFinished;
-    // Start is called before the first frame update
+
+    public List<GameObject> availableRooms = new List<GameObject>();
+    public GameObject lastRoom;
     void Start()
     {
         // subscribe updating cleanliness to OnAddScore 
         GameEventManager.Instance.OnAddScore += UpdateCleanliness;
+
+        // Initialize available rooms
+        availableRooms.AddRange(possibleRooms);
 
         SelectNextRoomToSpawn();
         objectsSpawnMultiplier = 0.1f;
@@ -49,18 +54,28 @@ public class EndlessModeManager : MonoBehaviour
 
     private void SelectNextRoomToSpawn()
     {
-        if (possibleRooms.Length == 0)
+        if (availableRooms.Count == 0)
         {
-            Debug.LogError("No possible rooms available.");
-            return;
+            // Reset the list of available rooms if all rooms have been used
+            availableRooms.AddRange(possibleRooms);
         }
 
-        // Randomly select a room from the possibleRooms array
-        int randomIndex = UnityEngine.Random.Range(0, possibleRooms.Length);
-        GameObject selectedRoom = possibleRooms[randomIndex];
+        // Randomly select a room that is not the same as the last room
+        GameObject selectedRoom;
+        do
+        {
+            int randomIndex = UnityEngine.Random.Range(0, availableRooms.Count);
+            selectedRoom = availableRooms[randomIndex];
+        } while (selectedRoom == lastRoom);
+
+        // Remove the selected room from the available list
+        availableRooms.Remove(selectedRoom);
 
         // Set the selected room as the roomPrefab for RoomManager
         roomManager.roomPrefab = selectedRoom;
+
+        // Store the last selected room
+        lastRoom = selectedRoom;
     }
 
     IEnumerator TeleportPlayerOnStartPoint()
@@ -74,27 +89,27 @@ public class EndlessModeManager : MonoBehaviour
         totalDirt = 0f;
 
         // set saved dirty objects as current
-        dirtyObjects = dirtyObjectsPrev;
+        IDirtyObjects = IDirtyObjectsPrev;
 
         // calculate dirtiness
-        foreach (DirtyObject obj in dirtyObjects)
+        foreach (IDirtyObject obj in IDirtyObjects)
         {
-            totalDirt += obj.getDirtValue();
+            totalDirt += obj.GetDirtValue();
         }
         currentDirt = totalDirt;
         cleanliness = 0f; // Initially, the room is 0% clean
     }
     // Save dirty objects from newly spawned room
-    public void SetNewRoomDirt(List<DirtyObject> dObj)
+    public void SetNewRoomDirt(List<IDirtyObject> dObj)
     {
-        dirtyObjectsPrev = dObj;
-/*        Debug.Log($"drt: {dirtyObjects == null}");
-        foreach (var item in dirtyObjectsPrev)
+        IDirtyObjectsPrev = dObj;
+/*        Debug.Log($"drt: {IDirtyObjects == null}");
+        foreach (var item in IDirtyObjectsPrev)
         {
             Debug.Log($"{item}");
         }*/
         // if first room then initialize dirt for it
-        if (dirtyObjects == null)
+        if (IDirtyObjects == null)
         {
             InitializeRoomDirt();
         }

@@ -29,7 +29,8 @@ public class Score : MonoBehaviour
 
     private void Start()
     {
-        GameEventManager.Instance.OnHoldToClean += AddScore;
+        GameEventManager.Instance.OnAddScore += AddScore;
+        GameEventManager.Instance.OnSubtractScore += SubtractScore;
     }
 
     public void AddScore(int points)

@@ -30,29 +30,25 @@ public class GameEventManager : MonoBehaviour
 
     public event Action OnLightsControlClick;
     public event Action OnWindowOpen;
-
     public event Action OnEncounterEnd;
 
     #region Gameplay Actions
     public event Action<int> OnAddScore;
     public event Action<int> OnHoldToClean;
+    public event Action<int> OnSubtractScore;
     public event Action OnLevelEnd;
     #endregion
 
 
     #region Score
-    /*public void AddScore(float score)
+    public void CleanItem(int dirt)
     {
-        OnAddScore?.Invoke((int)score);
-    }*/
-
-    public void HoldToClean(float dirt)
-    {
-        OnAddScore?.Invoke((int)dirt);
+        Debug.Log("OnClean");
+        OnAddScore?.Invoke(dirt);
     }
-    public void MatchSocks(float dirt)
+    public void UnCleanItem(int dirt)
     {
-        OnAddScore?.Invoke((int)dirt);
+        OnSubtractScore?.Invoke(dirt);
     }
     #endregion
 

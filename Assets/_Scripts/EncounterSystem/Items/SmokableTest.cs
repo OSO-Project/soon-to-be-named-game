@@ -9,7 +9,7 @@ public class SmokableTest : MonoBehaviour, ISmokable
         GameObject childObject = Instantiate(dust);
         childObject.transform.SetParent(transform);
 
-        gameObject.AddComponent<HoldToClean>();
+        gameObject.AddComponent<CleanItem>();
         gameObject.AddComponent<HighlightObject>();
 
         childObject.transform.localPosition = Vector3.zero;
@@ -23,7 +23,7 @@ public class SmokableTest : MonoBehaviour, ISmokable
         GameObject childObject = Instantiate(dust);
         childObject.transform.SetParent(transform);
 
-        gameObject.AddComponent<HoldToClean>();
+        gameObject.AddComponent<CleanItem>();
         gameObject.AddComponent<HighlightObject>();
 
         childObject.transform.localPosition = Vector3.zero;

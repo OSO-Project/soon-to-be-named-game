@@ -470,6 +470,7 @@ GameObject:
   - component: {fileID: 7049987020819072683}
   - component: {fileID: 1293467358141483648}
   - component: {fileID: 6898193189430114090}
+  - component: {fileID: 7629233321429201321}
   m_Layer: 3
   m_Name: WindowHinge
   m_TagString: Interactable
@@ -576,6 +577,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+--- !u!114 &7629233321429201321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9112227730810656927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f40c5fd0ba408824498154e51fd4455a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9168963415040051405
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,14 +22,14 @@ public class ShortCircuitEncounter : Encounter
 
         // move declaration to Encounter
         // add components to enders
-        foreach (GameObject ender in encounterEnders)
+/*        foreach (GameObject ender in encounterEnders)
         {
-            if (!ender.GetComponent<HoldToCleanEncounter>())
+            if (!ender.GetComponent<CleanItemEncounter>())
             {
                 ender.AddComponent<HighlightObject>();
-                ender.AddComponent<HoldToCleanEncounter>();
+                ender.AddComponent<CleanItemEncounter>();
             }
-        }
+        }*/
 
         IDisableChildren[] disableChildrenObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDisableChildren>().ToArray();
         foreach (IDisableChildren disableChildren in disableChildrenObjects)
@@ -47,7 +47,7 @@ public class ShortCircuitEncounter : Encounter
         {
             foreach (GameObject ender in encounterEnders)
             {
-                Destroy(ender.GetComponent<HoldToCleanEncounter>());
+                Destroy(ender.GetComponent<CleanItemEncounter>());
                 Destroy(ender.GetComponent<HighlightObject>());
             }
 
