@@ -8746,7 +8746,7 @@ GameObject:
   - component: {fileID: 9083979655261715211}
   m_Layer: 0
   m_Name: WallHalf (10)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15952,7 +15952,7 @@ GameObject:
   - component: {fileID: 8896499276581935528}
   m_Layer: 0
   m_Name: WallDouble (18)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

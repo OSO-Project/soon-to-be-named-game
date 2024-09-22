@@ -4118,7 +4118,7 @@ GameObject:
   - component: {fileID: 1813066266563347459}
   m_Layer: 0
   m_Name: WallDouble (12)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4827,7 +4827,7 @@ GameObject:
   - component: {fileID: 1156856266545952918}
   m_Layer: 0
   m_Name: WallHalf (4)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13299,7 +13299,7 @@ GameObject:
   - component: {fileID: 1990400033460905954}
   m_Layer: 0
   m_Name: WallHalf (12)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15054,7 +15054,7 @@ GameObject:
   - component: {fileID: 2111422582453310719}
   m_Layer: 0
   m_Name: WallDouble (9)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

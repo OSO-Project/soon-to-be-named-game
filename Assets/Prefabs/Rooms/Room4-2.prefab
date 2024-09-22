@@ -20579,7 +20579,7 @@ GameObject:
   - component: {fileID: 5866205528951087976}
   m_Layer: 0
   m_Name: WallSingle (20)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27185,7 +27185,7 @@ GameObject:
   - component: {fileID: 4694586353249666967}
   m_Layer: 0
   m_Name: WallSingle (9)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33585,7 +33585,7 @@ GameObject:
   - component: {fileID: 6373348393491595263}
   m_Layer: 0
   m_Name: WallSingle (22)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56198,7 +56198,7 @@ GameObject:
   - component: {fileID: 8093893463215366476}
   m_Layer: 0
   m_Name: WallSingle (7)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
