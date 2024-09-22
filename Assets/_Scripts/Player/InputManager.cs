@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -40,6 +42,10 @@ public class InputManager : MonoBehaviour
     public InputAction EquipMagicVacuumAction;
 
     public InputAction InteractAction;
+
+    [Header("Inverting Keybinds for SodaCanMechanic")]
+    public bool keybindsAreInverted = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -116,7 +122,16 @@ public class InputManager : MonoBehaviour
 
     private void OnMove(InputAction.CallbackContext context)
     {
-        Move = context.ReadValue<Vector2>();
+        Vector2 movement = context.ReadValue<Vector2>();
+
+        // Invert the keybinds for the player when soda can is drunk
+        if (keybindsAreInverted)
+        {
+            movement.x = -movement.x;
+            movement.y = -movement.y;
+        }
+
+        Move = movement;
     }
 
     private void OnJump(InputAction.CallbackContext context)
@@ -206,5 +221,12 @@ public class InputManager : MonoBehaviour
         OpenClose = OpenCloseAction.IsPressed();
         GrabDrop = GrabDropAction.IsPressed();
 
+    }
+
+    public IEnumerator InvertKeybindsForDuration(float duration)
+    {
+        keybindsAreInverted = true;
+        yield return new WaitForSeconds(duration);
+        keybindsAreInverted = false;
     }
 }

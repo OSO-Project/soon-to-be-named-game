@@ -5,22 +5,6 @@ using UnityEngine.InputSystem;
 
 public class SodaCan : MonoBehaviour, Interactable
 {
-    /*Player can drink soda cans in different colours. Upon interacting with the can, the player gets either a positive or a negative effect. There is 70% chance for a positive and 30% chance for a negative effect.
-
-    The colour of the can (different textures) do not change how the can works. All types of cans have the same influence.
-
-    Possible outcomes of the soda drinking are as follows:
-    Positive soda drinking outcomes (70% chance):
-    Add 20 seconds to timer
-    Movement speed & hold to clean boost for 20 seconds
-    Highlight all dirty items for 20 seconds
-
-    Negative soda drinking outcomes (30% chance):
-    Invert key binds for 30 seconds
-    Slow player movement speed and hold to clean for 20 seconds
-    Dizzy screen for 30 seconds
-
-     */
 
     // public HighlightObject _highlight;
     public static SodaCan currentTarget = null;
@@ -39,15 +23,12 @@ public class SodaCan : MonoBehaviour, Interactable
     [SerializeField] private float _dizzyDurationInSec;
     [SerializeField] private float _invertKeyBindsDurationInSec;
 
-
     public void Start()
     {
-        // _highlight = GetComponent<HighlightObject>();
         InputManager.Instance.InteractAction.performed += OnPressInteract;
     }
     public void DrinkSoda()
     {
-
         float random = Random.Range(0f, 1f);
         if (random <= 0.7f)
         {
@@ -57,16 +38,13 @@ public class SodaCan : MonoBehaviour, Interactable
         {
             ApplyNegativeEffect();
         }
-        Object.Destroy(gameObject);
+        //Object.Destroy(gameObject);
     }
 
     private void ApplyPositiveEffect()
     {
-        Debug.Log("Positive effect");
-        //
-        //GameTimer.Instance.AddTime(20);
-
-        //HIGHLIGHT ALL DIRTY ITEMS FOR 20 SECONDS
+        Debug.Log("Positive effect applied.");
+       
         int random = Random.Range(0, 3);
         switch (random)
         {
@@ -77,10 +55,10 @@ public class SodaCan : MonoBehaviour, Interactable
                 PlayerController.Instance.BoostSpeed(_speedBoostDurationInSec, _boostBuffMultiplier);
                 CleanItem.currentTarget.BoostHoldToCleanSpeed(_speedBoostDurationInSec, _boostHoldToCleanMultiplier);
                 break;
-            case 2:
-                //HIGHLIGHT ALL DIRTY ITEMS FOR 20 SECONDS
-                Debug.Log("Highlight all dirty items for 20 seconds");
-                break;
+            //case 2:
+            //    //HIGHLIGHT ALL DIRTY ITEMS FOR 20 SECONDS
+            //    Debug.Log("Highlight all dirty items for 20 seconds");
+            //    break;
 
         }
     }
@@ -95,14 +73,17 @@ public class SodaCan : MonoBehaviour, Interactable
         switch (random)
         {
             case 0:
-                //INVERT KEY BINDS FOR 30 SECONDS
+                //INVERT KEY BINDS FOR DURATION
+                StartCoroutine(InputManager.Instance.InvertKeybindsForDuration(_invertKeyBindsDurationInSec));
                 break;
             case 1:
+                //SLOW PLAYER SPEED FOR DURATION
                 PlayerController.Instance.SlowSpeed(_slowDurationInSec, _slowDebuffMultiplier);
                 CleanItem.currentTarget.SlowHoldToCleanSpeed(_slowDurationInSec, _slowHoldToCleanMultiplier);
                 break;
             case 2:
-                //DIZZY SCREEN FOR 30 SECONDS
+                //APPLY POSTFX DIZZY EFFECT FOR DURATION
+                StartCoroutine(PostFXManager.Instance.ApplyDizzyEffect(_dizzyDurationInSec));
                 break;
         }
 
@@ -143,6 +124,11 @@ public class SodaCan : MonoBehaviour, Interactable
 
         DrinkSoda();
 
+    }
+
+    private void OnDestroy()
+    {
+        InputManager.Instance.InteractAction.performed -= OnPressInteract;
     }
 
 

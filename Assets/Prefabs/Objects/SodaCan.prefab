@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 3371067819673312647}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.3204, y: -0.7587, z: 0.2207}
-  m_LocalScale: {x: 0.3593, y: 0.241319, z: 0.5586}
+  m_LocalPosition: {x: -0.2984, y: -0.7587, z: 0.2207}
+  m_LocalScale: {x: 0.31532168, y: 0.241319, z: 0.5586}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   _timeToAdd: 20
   _highlightDurationInSec: 20
   _slowDebuffMultiplier: 1.5
-  _slowHoldToCleanMultiplier: 0.5
+  _slowHoldToCleanMultiplier: 1.5
   _slowDurationInSec: 20
   _dizzyDurationInSec: 20
   _invertKeyBindsDurationInSec: 20
