@@ -11599,6 +11599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEndlessMode: 1
   emm: {fileID: 0}
+  ret: {fileID: 0}
 --- !u!1 &1623187773 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a257d3eb90ac3504cb541890285b0de4, type: 3}
@@ -13389,10 +13390,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1629994560152326619, guid: 94d865461b49cc84085e1069a134699f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -90.90991
+      objectReference: {fileID: 0}
     - target: {fileID: 1888821806400811235, guid: 94d865461b49cc84085e1069a134699f, type: 3}
       propertyPath: m_text
       value: Hold E to Clean
       objectReference: {fileID: 0}
+    - target: {fileID: 2771278101135482881, guid: 94d865461b49cc84085e1069a134699f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771278101135482881, guid: 94d865461b49cc84085e1069a134699f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771278101135482881, guid: 94d865461b49cc84085e1069a134699f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -61.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771278101135482881, guid: 94d865461b49cc84085e1069a134699f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3334115979063505451, guid: 94d865461b49cc84085e1069a134699f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.00048828125
+      objectReference: {fileID: 0}
+    - target: {fileID: 3334115979063505451, guid: 94d865461b49cc84085e1069a134699f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -144.95972
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174859989686448629, guid: 94d865461b49cc84085e1069a134699f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d8abf03cf1dd2d047be89d1a2ae784b0, type: 3}
+    - target: {fileID: 5684670705038462934, guid: 94d865461b49cc84085e1069a134699f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c8423b3a694b494498d486657bdec247, type: 3}
     - target: {fileID: 5958314418169402702, guid: 94d865461b49cc84085e1069a134699f, type: 3}
       propertyPath: m_Name
       value: Bar
