@@ -7911,8 +7911,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possibleRooms:
-  - {fileID: 7627620398233586263, guid: 60e7938d92bd3e44d85d0e832823eeb7, type: 3}
-  - {fileID: 4256391467531878704, guid: 50b41088a80927646adb0fd69a02bcf0, type: 3}
+  - {fileID: 1660147902145914959, guid: 854fd0859e24cb643bf8654184c6982d, type: 3}
+  - {fileID: 4156849164686125129, guid: 1a9120f624d706f43a00a27543c3fc6f, type: 3}
   roomCount: {fileID: 1079553292}
   gameTimer: {fileID: 1547569334}
   roomManager: {fileID: 1712554940}
@@ -9820,6 +9820,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 634520789}
     m_Modifications:
+    - target: {fileID: 2375947222010965233, guid: 37b3d165b07c3fb47bb17ee8bb6d208a, type: 3}
+      propertyPath: crouchRadius
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 2626666923368538399, guid: 37b3d165b07c3fb47bb17ee8bb6d208a, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.9

@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private float crouchGroundCheckerCenter = 0.52f;
     [SerializeField] private float crouchScale = 0.7f;
-    [SerializeField] private float crouchRadius = 0.5f;
+    [SerializeField] private float crouchRadius = 0.4f;
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float deceleration = 10f;
     [SerializeField] private float additionalFallGravity = 20f;
