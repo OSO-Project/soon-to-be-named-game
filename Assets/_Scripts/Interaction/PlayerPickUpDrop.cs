@@ -34,10 +34,14 @@ public class PlayerPickUpDrop : MonoBehaviour
     {
         if (carriableObject == null)
         {
-            if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit raycastHit, pickUpDistance, pickUpLayerMask))
+            if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, 
+                out RaycastHit raycastHit, pickUpDistance, pickUpLayerMask))
             {
+                UIManager.Instance.ShowThisCrosshairAndHideOthers(UIManager.Instance.handOpenCrosshair);
                 if (raycastHit.transform.TryGetComponent(out carriableObject))
                 {
+                    //Manage the hand in UI
+                    UIManager.Instance.ShowThisCrosshairAndHideOthers(UIManager.Instance.handClosedCrosshair);
                     carriableObject.Grab(objectGrabPointTransform, transform, playerCollider);
                 }
             }
@@ -46,6 +50,9 @@ public class PlayerPickUpDrop : MonoBehaviour
         {
             carriableObject.Drop();
             carriableObject = null;
+            //Manage the hand in UI
+            UIManager.Instance.mainCrosshair.gameObject.SetActive(false);
+            UIManager.Instance.handOpenCrosshair.gameObject.SetActive(true);
         }
     }
 

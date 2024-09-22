@@ -24,6 +24,12 @@ public class UIManager : MonoBehaviour
     [Header("Current Room")]
     public TMP_Text CurrentRoom;
 
+
+    [Header("Crosshairs")]
+    public Image mainCrosshair;
+    public Image handOpenCrosshair;
+    public Image handClosedCrosshair;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -39,6 +45,11 @@ public class UIManager : MonoBehaviour
         ProgressBar.fillAmount = 0f;
         HintText.gameObject.SetActive(false);
         notificationPanel.SetActive(false);
+
+        //HIDE THE HAND CROSSHAIRS
+        handOpenCrosshair.gameObject.SetActive(false);
+        handClosedCrosshair.gameObject.SetActive(false);
+
         /*EncounterIcon.gameObject.SetActive(false);
         EncounterText.gameObject.SetActive(false);*/
 
@@ -61,5 +72,27 @@ public class UIManager : MonoBehaviour
     private void HideEncounterNotification()
     {
         notificationPanel.SetActive(false);
+    }
+
+    public void ShowThisCrosshairAndHideOthers(Image crosshairToShow)
+    {
+        if (crosshairToShow == mainCrosshair)
+        {
+            mainCrosshair.gameObject.SetActive(true);
+            handOpenCrosshair.gameObject.SetActive(false);
+            handClosedCrosshair.gameObject.SetActive(false);
+        }
+        else if (crosshairToShow == handOpenCrosshair)
+        {
+            mainCrosshair.gameObject.SetActive(false);
+            handOpenCrosshair.gameObject.SetActive(true);
+            handClosedCrosshair.gameObject.SetActive(false);
+        }
+        else if (crosshairToShow == handClosedCrosshair)
+        {
+            mainCrosshair.gameObject.SetActive(false);
+            handOpenCrosshair.gameObject.SetActive(false);
+            handClosedCrosshair.gameObject.SetActive(true);
+        }
     }
 }
