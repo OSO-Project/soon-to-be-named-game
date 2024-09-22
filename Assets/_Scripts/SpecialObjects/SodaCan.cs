@@ -38,7 +38,7 @@ public class SodaCan : MonoBehaviour, Interactable
         {
             ApplyNegativeEffect();
         }
-        //Object.Destroy(gameObject);
+        Object.Destroy(gameObject);
     }
 
     private void ApplyPositiveEffect()
