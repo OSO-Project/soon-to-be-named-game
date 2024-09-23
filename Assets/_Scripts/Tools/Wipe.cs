@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 public class Wipe : Tool
 {
     public override string Name => "Wipe";
-    private int _dirtLevel = 0;
+    public int _dirtLevel = 0;
 
     void Start()
     {
@@ -18,8 +18,9 @@ public class Wipe : Tool
     public bool IsWipeSuccessful()
     {
         // Return true immediately if dirt level is 50 or less
-        if (_dirtLevel <= 50)
+        if (_dirtLevel <= 49)
         {
+            _dirtLevel += 10;
             return true;
         }
 
@@ -33,21 +34,22 @@ public class Wipe : Tool
         // Generate a random number between 0 and 100
         float randomValue = Random.Range(0f, 100f);
 
+        Debug.Log(randomValue + " " + successChance);
         // Return true if the random value is less than or equal to the success chance
-        return randomValue <= successChance;
-    }
-    public override void OnUse(InputAction.CallbackContext context)
-    {
-        Debug.Log("Wipe Used");
-        if (IsWipeSuccessful())
+        if (randomValue <= successChance)
         {
-            // Perform Clean
             _dirtLevel += 10;
+            return true;
         }
         else
         {
-            _dirtLevel += 40;
-        }
+            _dirtLevel += 30;
+            return false;
+        } 
+    }
+    public override void OnUse(InputAction.CallbackContext ctx)
+    {
+        // Usage being handles by Interactable and Cleanable script
     }
 
     

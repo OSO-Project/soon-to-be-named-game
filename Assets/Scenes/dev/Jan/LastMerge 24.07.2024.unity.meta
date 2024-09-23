@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/dev/Jan/LastMerge 24.07.2024.unity.meta
 guid: c97f7d13d59acec4a8c319a6fbb5d968
+========
+guid: f6995f4eab80237489ce6962c13d8372
+>>>>>>>> EquipmentSystemRefine:Assets/Samples/Input System/1.7.0/Rebinding UI/RebindingUISampleScene.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

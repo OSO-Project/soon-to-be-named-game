@@ -11,7 +11,7 @@ public class InteractionManager : MonoBehaviour
 
 	[SerializeField] private float range;
 	
-	private Interactable _interactionInterface = null;
+	private Interactable _currentInteractableObject = null;
 	private Camera _mainCamera;
 
 	private void Start()
@@ -25,7 +25,7 @@ public class InteractionManager : MonoBehaviour
 		LookForInteractable();
 	}
 
-	private Collider _current;
+	private Collider _currentCollider;
 	//This method's purpose is to detect when the player is looking at an object, detect if
 	//the object is interactable, and call the appropriate methods. It also handles edge-cases
 	//such as looking at another interactable object right after another.
@@ -40,43 +40,47 @@ public class InteractionManager : MonoBehaviour
 		}
 		else if(cameraHit.transform.CompareTag("Interactable")) 
 		{
-			Collider selectedObject = cameraHit.collider;
-			if(_current != selectedObject && _current != null && _interactionInterface != null)
+			Collider _anotherCollider = cameraHit.collider;
+			if(_currentCollider != _anotherCollider && _currentCollider != null && _currentInteractableObject != null)
 			{
-				_current = selectedObject;
+				_currentCollider = _anotherCollider;
 				FinishLooking();
 			}
-			if(_current != selectedObject)
+			if(_currentCollider != _anotherCollider)
 			{
-				_current = selectedObject;
-				_interactionInterface = null;
+				_currentCollider = _anotherCollider;
+				_currentInteractableObject = null;
 			}
-			if(_interactionInterface == null)
+			if(_currentInteractableObject == null)
 			{
-				_interactionInterface = selectedObject.GetComponent<Interactable>();
-				_interactionInterface.OnBeginLooking();
+				_currentInteractableObject = _anotherCollider.GetComponent<Interactable>();
+				_currentInteractableObject.OnBeginLooking();
 			}
 		}
 		else
 		{
 			FinishLooking();
 		}
-
 	}
 
 	private void FinishLooking()
 	{
-		if(_interactionInterface == null)
+		if(_currentInteractableObject == null)
 			return;
-		_current=null;
-		_interactionInterface.OnFinishLooking();
-		_interactionInterface = null;
+		_currentCollider=null;
+		_currentInteractableObject.OnFinishLooking();
+		_currentInteractableObject = null;
 	}
 
 	public void PressInteract(InputAction.CallbackContext ctx)
 	{
-		if(_interactionInterface != null)
-			_interactionInterface.OnPressInteract(ctx);
+		if(_currentInteractableObject != null)
+			_currentInteractableObject.OnPressInteract(ctx);
 	}
+
+	public Interactable GetCurrentInteractable()
+    {
+        return _currentInteractableObject;
+    }
 
 }
