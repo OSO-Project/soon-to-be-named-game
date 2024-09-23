@@ -1,12 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public class HoldToClean : MonoBehaviour, Interactable
 {
@@ -22,6 +19,8 @@ public class HoldToClean : MonoBehaviour, Interactable
     public HighlightObject _highlight;
     public Coroutine _cleanCoroutine;
     public ParticleSystem _dustParticle;
+    [SerializeField] private GameObject progressBarCanvas;
+    public Image progressBar;
 
     void Start()
     {
@@ -30,9 +29,35 @@ public class HoldToClean : MonoBehaviour, Interactable
         InputManager.Instance.CleanAction.performed += OnPressInteract;
     }
 
+    private void OnEnable()
+    {
+        ToolsManager.toolSwap += OnToolSwap;
+    }
+
+    private void OnDisable()
+    {
+        ToolsManager.toolSwap -= OnToolSwap;
+    }
+
     private void OnDestroy()
     {
         InputManager.Instance.CleanAction.performed -= OnPressInteract;
+    }
+
+    private void OnToolSwap()
+    {
+        if (UnityEngine.Object.ReferenceEquals(InteractionManager.Instance.GetCurrentInteractable(), this))
+        {
+            if (ToolsManager.Instance._currentlyHeld is not Wipe)
+            {
+                if (_isCleaned) return;
+                StopAndResetProgress();
+            }
+            else
+            {
+                OnBeginLooking();
+            }
+        }
     }
 
     public void OnBeginLooking()
@@ -40,6 +65,7 @@ public class HoldToClean : MonoBehaviour, Interactable
         if (_isCleaned || ToolsManager.Instance._currentlyHeld is not Wipe) return;
         _highlight.SetIsHighlighted(true);
         currentTarget = this;
+        progressBarCanvas.SetActive(true);
         UIManager.Instance.HintText.gameObject.SetActive(true);
         _highlight.Highlight();
     }
@@ -49,6 +75,7 @@ public class HoldToClean : MonoBehaviour, Interactable
         if (_isCleaned) return;
         _highlight.SetIsHighlighted(false);
         currentTarget = null;
+        progressBarCanvas.SetActive(false);
         UIManager.Instance.HintText.gameObject.SetActive(false);
         StopAndResetProgress();
         _highlight.Highlight();
@@ -77,15 +104,15 @@ public class HoldToClean : MonoBehaviour, Interactable
     private IEnumerator CleaningProcess()
     {
         while (true)
-        {
-            if (currentTarget == this && InputManager.Instance.CleanAction.ReadValue<float>() == 0f)
+        {        
+            if (currentTarget == this && InputManager.Instance.CleanAction.ReadValue<float>() == 0f || ToolsManager.Instance._currentlyHeld is not Wipe)
             {
                 StopAndResetProgress();
                 yield break;
             }
 
             _lookDuration += Time.deltaTime;
-            UIManager.Instance.ProgressBar.fillAmount = _lookDuration / timeToClean;
+            progressBar.fillAmount = _lookDuration / timeToClean;
 
             if (_lookDuration >= timeToClean)
             {
@@ -98,7 +125,7 @@ public class HoldToClean : MonoBehaviour, Interactable
                 StopAndResetProgress();
                 // move to another script
                 //GameEventManager.Instance.AddScore(50 * timeToClean);
-                cleanSuccesfull.Invoke();
+                // cleanSuccesfull.Invoke();
                 yield break;
             }
 
@@ -115,16 +142,14 @@ public class HoldToClean : MonoBehaviour, Interactable
         }
 
         _lookDuration = 0f;
-        UIManager.Instance.ProgressBar.fillAmount = 0f;
+        progressBar.fillAmount = 0f;
 
-        if (_isCleaned)
+        if (_isCleaned || ToolsManager.Instance._currentlyHeld is not Wipe)
         {
             _highlight.SetIsHighlighted(false);
+            progressBarCanvas.SetActive(false);
             UIManager.Instance.HintText.gameObject.SetActive(false);
             _highlight.Highlight();
         }
     }
-
-    
-
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,6 +6,7 @@ using UnityEngine.InputSystem;
 public class ToolsManager : MonoBehaviour
 {
     public static ToolsManager Instance { get; private set; }
+    public static event Action toolSwap;
     public UnlockedToolsData PlayerData;
     public Tool _currentlyHeld;
     [SerializeField] private List<Tool> availableTools;
@@ -62,5 +64,6 @@ public class ToolsManager : MonoBehaviour
             _currentlyHeld = toolMap[toolIndex];
             _currentlyHeld.Equip();
         }
+        toolSwap?.Invoke();
     }
 }

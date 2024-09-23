@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
-    [Header("Hold To Clean")]
-    public Image ProgressBar;
+    [Header("Progress Bar On Screen")]
+    public Image ProgressBar; //Not required in Hold To Clean anymore. Progress Bar now on each object.
     public TMP_Text HintText;
 
     [Header("Speed Display")]
@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
 
-        ProgressBar.fillAmount = 0f;
+        ProgressBar.fillAmount = 0f; //- Progress Bar now on each object adjusted separately
         HintText.gameObject.SetActive(false);
         notificationPanel.SetActive(false);
         /*EncounterIcon.gameObject.SetActive(false);

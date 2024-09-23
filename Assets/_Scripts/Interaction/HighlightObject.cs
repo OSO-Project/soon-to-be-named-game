@@ -20,7 +20,7 @@ public class HighlightObject : MonoBehaviour
             if (outline == null)
             {
                 outline = gameObject.AddComponent<Outline>();
-                outline.OutlineColor = Color.red;
+                outline.OutlineColor = Color.white;
                 outline.OutlineWidth = 5.0f;
             }
             outline.enabled = true;
