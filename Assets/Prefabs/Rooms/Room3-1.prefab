@@ -14368,7 +14368,7 @@ GameObject:
   - component: {fileID: 4511124966376726202}
   m_Layer: 0
   m_Name: WallHalf.End (1)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23759,7 +23759,7 @@ GameObject:
   - component: {fileID: 1713080239491326969}
   m_Layer: 0
   m_Name: WallHalf.End
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
