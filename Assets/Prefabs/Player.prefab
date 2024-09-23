@@ -65,6 +65,7 @@ GameObject:
   - component: {fileID: 889163618483816808}
   - component: {fileID: 2375947222010965233}
   - component: {fileID: 5074379137363867612}
+  - component: {fileID: 3394549513419321531}
   - component: {fileID: 1652343280117126093}
   m_Layer: 0
   m_Name: Player
@@ -164,6 +165,26 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &3394549513419321531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2713673165955820655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fa216e771d85304d8613ce19c25e4eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCameraTransform: {fileID: 7991159049668055494}
+  objectGrabPointTransform: {fileID: 0}
+  pickUpLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  pickUpDistance: 2
+  playerCollider: {fileID: 8304967422258512440}
+  maxThrowChargeTime: 3
 --- !u!114 &1652343280117126093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,3 +524,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f0246fa2875eda46b940481168443d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dirtLevel: 0
