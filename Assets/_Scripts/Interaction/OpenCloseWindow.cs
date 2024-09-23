@@ -71,7 +71,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
                     {
                         windowAnimator.SetTrigger("OpenVertical");
                     }
-                    GameEventManager.Instance.OpenWindow(state.Equals("Up"));
+                    
                 }
                 else
                 {
@@ -85,6 +85,10 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
                     }
                 }
                 isOpen = !isOpen;
+                if (isOpen)
+                {
+                    GameEventManager.Instance.OpenWindow(state.Equals("Up"));
+                }
             }
         }
     }

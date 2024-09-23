@@ -8,7 +8,7 @@ public class WindEncounter : Encounter
     [SerializeField] private List<Transform> windowTransforms;   // The position of the open window
     [SerializeField] private float windForce = 10f;      // Force of the wind
     [SerializeField] private float pushInterval = 5f;    // Interval to push objects (in seconds)
-    //[SerializeField] private Vector3 pushDirection = Vector3.forward;  // Direction to push items away from the window
+    [SerializeField] private Vector3 pushDirection = Vector3.forward;  // Direction to push items away from the window
     [SerializeField] private List<Collider> windAreas;           // The area of effect for the wind
 
     private List<OpenCloseWindow> windows;
@@ -21,15 +21,18 @@ public class WindEncounter : Encounter
     private void Start()
     {
         GameEventManager.Instance.OnWindowClose += StopEncounter;
+        GameManager.Instance.OnNextRoom += NewCurrentRoom;
     }
 
     public override bool CanStart()
     {
         windows = currentRoom.GetComponentsInChildren<OpenCloseWindow>().ToList();
+        //Debug.Log($"windows: {windows.Count}");
         foreach (var window in windows)
         {
             if (window.isOpen)
             {
+                //Debug.Log($"windows yes");
                 return true;
             }
         }
@@ -38,17 +41,17 @@ public class WindEncounter : Encounter
 
     public override void StartEncounter()
     {
-        Debug.Log("Wind Encounter started!");
+        //Debug.Log("Wind Encounter started!");
         foreach (var window in windows)
         {
             if (window.isOpen)
             {
                 windowTransforms.Add(window.transform);
                 Collider col = window.transform.Find("WindHitbox").GetComponent<Collider>();
-                if(col != null)
+                if (col != null)
                 {
                     windAreas.Add(col);
-                    Debug.Log("added col");
+                    //Debug.Log("added col");
                 }
             }
         }
@@ -59,7 +62,7 @@ public class WindEncounter : Encounter
 
     public override void StopEncounter()
     {
-        Debug.Log("Wind Encounter stopped!");
+        //Debug.Log("Wind Encounter stopped!");
 
         // Stop the coroutine if it's running
         if (windCoroutine != null)
@@ -78,7 +81,9 @@ public class WindEncounter : Encounter
         {
             PushObjects();
             yield return new WaitForSeconds(pushInterval);
+
         }
+        
 
     }
 
@@ -91,13 +96,14 @@ public class WindEncounter : Encounter
                 // Check if the pushable object is within the specific wind area
                 if (windArea.bounds.Contains(pushable.Rigidbody.transform.position))
                 {
+                    Debug.Log("push");
                     //Vector3 forceDirection = (windowTransform.position - pushable.Rigidbody.transform.position).normalized; // Direction towards the window
                     Vector3 windowTransform = windowTransforms[windAreas.IndexOf(windArea)].position;
                     Vector3 forceDirection = (windowTransform - pushable.Rigidbody.transform.position).normalized; // Direction towards the window
                     pushable.Rigidbody.AddForce(forceDirection * windForce, ForceMode.Impulse);
                 }
             }
-            
+
         }
     }
 
@@ -107,6 +113,7 @@ public class WindEncounter : Encounter
         IPhysics pushable = other.GetComponent<IPhysics>();
         if (pushable != null)
         {
+            Debug.Log("entered");
             pushableObjectsInArea.Add(pushable);
         }
     }
@@ -119,5 +126,10 @@ public class WindEncounter : Encounter
         {
             pushableObjectsInArea.Remove(pushable);
         }
+    }
+
+    private void NewCurrentRoom(GameObject cr)
+    {
+        currentRoom = cr;
     }
 }

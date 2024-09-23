@@ -90,7 +90,7 @@ public class SmokeEncounter : Encounter
 
     private void StopSmoke(bool isWindowUp)
     {
-        var main = smokeParticleSystem.main;
+        /*var main = smokeParticleSystem.main;
         if (isWindowUp)
         {
             main.startLifetime = particleLifeTimeWindowUp;
@@ -98,7 +98,7 @@ public class SmokeEncounter : Encounter
         else
         {
             main.startLifetime = particleLifeTimeWindowSide;
-        }
+        }*/
         smokeParticleSystem?.Stop();
     }
 
