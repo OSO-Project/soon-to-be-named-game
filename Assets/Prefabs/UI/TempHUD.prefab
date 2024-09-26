@@ -1954,7 +1954,7 @@ GameObject:
   - component: {fileID: 1548704590995613113}
   - component: {fileID: 3948369739799351526}
   m_Layer: 5
-  m_Name: HUD
+  m_Name: TempHUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
