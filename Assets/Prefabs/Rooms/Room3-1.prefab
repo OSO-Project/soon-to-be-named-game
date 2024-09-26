@@ -14524,7 +14524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc8ea108f86b1f4b83a2d4b68eb40b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWidth: 11
+  gridWidth: 12
   gridHeight: 10
   cellSize: 1
   innerColor: {r: 0, g: 1, b: 0, a: 1}

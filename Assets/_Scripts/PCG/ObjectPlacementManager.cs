@@ -366,8 +366,17 @@ public class ObjectPlacementManager : MonoBehaviour
         Vector3 offset = new Vector3(offsetX, 0, offsetZ);
         Vector3 centeredPosition = position + offset;
 
-        // Instantiate the decoration at the centered position with the given rotation
+        // Temporarily instantiate the object
         GameObject decoration = Instantiate(decorationObj.prefab, centeredPosition, rotation, parent);
+
+        // Check for collisions with walls
+        if (CollisionCheck(decoration) && !decorationObj.isDecoration)
+        {
+            Debug.Log("Removed " + decorationObj.prefab.name);
+            // If any collider collides with a wall, destroy the decoration and return early
+            Destroy(decoration, 1.5f);
+            return;
+        }
 
         // if objects is a dirt item add to the list
         if (decoration.GetComponent<IDirtyObject>() != null)
@@ -384,6 +393,256 @@ public class ObjectPlacementManager : MonoBehaviour
             SpawnTrashObjects(position, area, asset);
         }
     }
+
+    bool CollisionCheck(GameObject decoration)
+    {
+        // Initialize a list to hold all colliders
+        List<Collider> decorationColliders = new List<Collider>();
+
+        // Check if the decoration has any children
+        if (decoration.transform.childCount > 0)
+        {
+            // Get all colliders attached to the decoration object, including its own
+            decorationColliders.AddRange(decoration.GetComponents<Collider>()); // Get colliders on the decoration itself
+            decorationColliders.AddRange(decoration.GetComponentsInChildren<Collider>()); // Get colliders in children
+        }
+        else
+        {
+            // If no children, just get colliders from the decoration itself
+            decorationColliders.AddRange(decoration.GetComponents<Collider>());
+        }
+
+        bool collisionDetected = false;
+
+        // Check for collision for each collider in the object
+        foreach (var decorationCollider in decorationColliders)
+        {
+            // Handle the Mesh Collider case
+            if (decorationCollider is MeshCollider meshCollider)
+            {
+                // If the mesh collider is non-convex, we can only check with other non-kinematic rigidbodies
+                if (!meshCollider.convex)
+                {
+                    // Skip this collider for overlap checks as it won't work properly with non-convex mesh colliders
+                    continue;
+                }
+
+                // Calculate the center and size for convex mesh colliders
+                Vector3 boxCenter = meshCollider.bounds.center;
+                Vector3 boxSize = meshCollider.bounds.extents * 0.8f; // Half size for OverlapBox
+
+                // Visualize the collider for debugging
+                VisualizeBox(boxCenter, boxSize, Color.yellow);
+
+                // Use OverlapBox to check for colliders in the scene
+                Collider[] hitColliders = Physics.OverlapBox(boxCenter, boxSize, meshCollider.transform.rotation);
+
+                foreach (var hitCollider in hitColliders)
+                {
+                    // Check if the hit collider has the "Wall" tag and is not the decoration itself
+                    if (hitCollider.CompareTag("Wall") && hitCollider.gameObject != decoration)
+                    {
+                        VisualizeCollider(meshCollider, Color.magenta);
+                        Debug.Log($"Collision detected with {hitCollider.gameObject.name}");
+                        collisionDetected = true; // Collision detected
+                        break; // Exit the loop if collision is found
+                    }
+                }
+
+                if (collisionDetected)
+                    break; // Exit if a collision is detected
+            }
+            else
+            {
+                // Handle non-mesh colliders (e.g., Box, Sphere)
+                Vector3 boxCenter = decorationCollider.bounds.center;
+                Vector3 boxSize = decorationCollider.bounds.extents * 0.8f; // Half size for OverlapBox
+
+                // Visualize the collider for debugging
+                VisualizeBox(boxCenter, boxSize, Color.yellow);
+
+                // Use OverlapBox to check for colliders in the scene
+                Collider[] hitColliders = Physics.OverlapBox(boxCenter, boxSize, decorationCollider.transform.rotation);
+
+                foreach (var hitCollider in hitColliders)
+                {
+                    if (hitCollider.CompareTag("Wall") && hitCollider.gameObject != decoration)
+                    {
+                        VisualizeCollider(decorationCollider, Color.magenta);
+                        Debug.Log($"Collision detected with {hitCollider.gameObject.name}");
+                        collisionDetected = true; // Collision detected
+                        break; // Exit the loop if collision is found
+                    }
+                }
+
+                if (collisionDetected)
+                    break; // Exit if a collision is detected
+            }
+        }
+
+        return collisionDetected;
+    }
+
+
+    private void VisualizeBox(Vector3 center, Vector3 size, Color color)
+    {
+        Debug.DrawLine(center - new Vector3(size.x, 0, size.z), center + new Vector3(size.x, 0, size.z), color, 55f);
+        Debug.DrawLine(center - new Vector3(size.x, 0, -size.z), center + new Vector3(size.x, 0, -size.z), color, 55f);
+        Debug.DrawLine(center - new Vector3(-size.x, 0, size.z), center + new Vector3(-size.x, 0, size.z), color, 55f);
+        Debug.DrawLine(center - new Vector3(-size.x, 0, -size.z), center + new Vector3(-size.x, 0, -size.z), color, 55f);
+        Debug.DrawLine(center - new Vector3(0, size.y, size.z), center + new Vector3(0, size.y, size.z), color, 55f);
+        Debug.DrawLine(center - new Vector3(0, -size.y, size.z), center + new Vector3(0, -size.y, size.z), color, 55f);
+    }
+
+    // Method to visualize the collider box for debugging
+    private void VisualizeCollider(Collider collider, Color color)
+    {
+        // Get the bounds of the collider
+        Bounds bounds = collider.bounds;
+
+        // Draw the bounds of the collider
+        Debug.DrawLine(bounds.min, new Vector3(bounds.min.x, bounds.max.y, bounds.min.z), color, 1.0f); // Left
+        Debug.DrawLine(bounds.min, new Vector3(bounds.max.x, bounds.min.y, bounds.min.z), color, 1.0f); // Front
+        Debug.DrawLine(bounds.min, new Vector3(bounds.min.x, bounds.min.y, bounds.max.z), color, 1.0f); // Bottom
+
+        Debug.DrawLine(bounds.max, new Vector3(bounds.min.x, bounds.max.y, bounds.max.z), color, 1.0f); // Left
+        Debug.DrawLine(bounds.max, new Vector3(bounds.max.x, bounds.min.y, bounds.max.z), color, 1.0f); // Front
+        Debug.DrawLine(bounds.max, new Vector3(bounds.max.x, bounds.max.y, bounds.min.z), color, 1.0f); // Top
+
+        Debug.DrawLine(bounds.min, bounds.max, color, 1.0f); // Max connection
+    }
+
+    //bool CollisionCheck(GameObject decoration)
+    //{
+    //    // Initialize a list to hold all colliders
+    //    List<Collider> decorationColliders = new List<Collider>();
+
+    //    // Check if the decoration has any children
+    //    if (decoration.transform.childCount > 0)
+    //    {
+    //        // Get all colliders attached to the decoration object, including its own
+    //        decorationColliders.AddRange(decoration.GetComponents<Collider>()); // Get colliders on the decoration itself
+    //        decorationColliders.AddRange(decoration.GetComponentsInChildren<Collider>()); // Get colliders in children
+    //    }
+    //    else
+    //    {
+    //        // If no children, just get colliders from the decoration itself
+    //        decorationColliders.AddRange(decoration.GetComponents<Collider>());
+    //    }
+
+    //    bool collisionDetected = false;
+
+    //    // Check for collision for each collider in the object
+    //    foreach (var decorationCollider in decorationColliders)
+    //    {
+    //        // Calculate the center of the collider
+    //        Vector3 boxCenter = decorationCollider.bounds.center;
+
+    //        // Use the collider's bounds directly for precise sizing
+    //        Vector3 boxSize = decorationCollider.bounds.size; // Full size for OverlapBox
+
+
+    //        // Check for collision with Mesh Colliders more accurately
+    //        if (decorationCollider is MeshCollider)
+    //        {
+    //            // For Mesh Colliders, we will use the MeshCollider's sharedMesh and bounds
+    //            Collider[] hitColliders = Physics.OverlapBox(boxCenter, boxSize, decorationCollider.transform.rotation);
+
+    //            foreach (var hitCollider in hitColliders)
+    //            {
+    //                // Check if the hit collider has the "Wall" tag and is not the decoration itself
+    //                if (hitCollider.CompareTag("Wall") && hitCollider.gameObject != decoration)
+    //                {
+    //                    // Calculate if the collision is significant
+    //                    if (IsCollisionSignificant(decorationCollider, hitCollider))
+    //                    {
+    //                        VisualizeCollider(decorationCollider, Color.red);
+    //                        Debug.Log($"Collision detected with {hitCollider.gameObject.name}");
+    //                        collisionDetected = true; // Collision detected
+    //                        break;
+    //                    }
+    //                }
+    //                // Visualize the wall collider
+    //            }
+    //        }
+    //        else
+    //        {
+    //            // Use OverlapBox for other colliders (Box, Sphere, Capsule, etc.)
+    //            Collider[] hitColliders = Physics.OverlapBox(boxCenter, boxSize / 2f, decorationCollider.transform.rotation);
+
+    //            foreach (var hitCollider in hitColliders)
+    //            {
+    //                // Check if the hit collider has the "Wall" tag and is not the decoration itself
+    //                if (hitCollider.CompareTag("Wall") && hitCollider.gameObject != decoration)
+    //                {
+    //                    // Calculate if the collision is significant
+    //                    if (IsCollisionSignificant(decorationCollider, hitCollider))
+    //                    {
+    //                        VisualizeCollider(decorationCollider, Color.red);
+    //                        Debug.Log($"Collision detected with {hitCollider.gameObject.name}");
+    //                        collisionDetected = true; // Collision detected
+    //                        break;
+    //                    }
+    //                }
+    //            }
+    //        }
+
+    //        if (collisionDetected)
+    //            break;
+    //    }
+
+    //    return collisionDetected;
+    //}
+
+    //private void VisualizeCollider(Collider collider, Color color)
+    //{
+    //    // Get the bounds of the collider
+    //    Bounds bounds = collider.bounds;
+
+    //    // Draw the bounds of the collider
+    //    Debug.DrawLine(bounds.min, new Vector3(bounds.min.x, bounds.max.y, bounds.min.z), color, 1.0f); // Left
+    //    Debug.DrawLine(bounds.min, new Vector3(bounds.max.x, bounds.min.y, bounds.min.z), color, 1.0f); // Front
+    //    Debug.DrawLine(bounds.min, new Vector3(bounds.min.x, bounds.min.y, bounds.max.z), color, 1.0f); // Bottom
+
+    //    Debug.DrawLine(bounds.max, new Vector3(bounds.min.x, bounds.max.y, bounds.max.z), color, 1.0f); // Left
+    //    Debug.DrawLine(bounds.max, new Vector3(bounds.max.x, bounds.min.y, bounds.max.z), color, 1.0f); // Front
+    //    Debug.DrawLine(bounds.max, new Vector3(bounds.max.x, bounds.max.y, bounds.min.z), color, 1.0f); // Top
+
+    //    Debug.DrawLine(bounds.min, bounds.max, color, 1.0f); // Max connection
+    //}
+
+    //// Method to determine if the collision is significant enough
+    //private bool IsCollisionSignificant(Collider decorationCollider, Collider wallCollider)
+    //{
+    //    // Calculate intersection volume
+    //    Bounds decorationBounds = decorationCollider.bounds;
+    //    Bounds wallBounds = wallCollider.bounds;
+
+    //    // Calculate the intersection bounds
+    //    if (decorationBounds.Intersects(wallBounds))
+    //    {
+    //        Bounds intersection = new Bounds();
+    //        intersection.SetMinMax(
+    //            Vector3.Max(decorationBounds.min, wallBounds.min),
+    //            Vector3.Min(decorationBounds.max, wallBounds.max)
+    //        );
+
+    //        // Calculate intersection volume
+    //        Vector3 intersectionSize = intersection.size;
+
+    //        // Define a threshold for what constitutes a significant collision
+    //        float threshold = 0.1f; // 10% of decoration volume for example
+
+    //        // Calculate the volume of the decoration
+    //        float decorationVolume = decorationBounds.size.x * decorationBounds.size.y * decorationBounds.size.z;
+    //        float intersectionVolume = intersectionSize.x * intersectionSize.y * intersectionSize.z;
+
+    //        // Check if the intersection volume is a significant percentage of the decoration's volume
+    //        return (intersectionVolume / decorationVolume) > threshold;
+    //    }
+
+    //    return false; // No intersection
+    //}
 
     Vector2 AdjustAreaForRotation(Vector2 area, CellSideTag.Side side)
     {

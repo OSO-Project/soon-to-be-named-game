@@ -6328,7 +6328,7 @@ GameObject:
   - component: {fileID: 2347028884981232363}
   m_Layer: 0
   m_Name: WallCornerR (3)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23455,7 +23455,7 @@ GameObject:
   - component: {fileID: 422687385388034653}
   m_Layer: 0
   m_Name: WallCornerR (7)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24762,7 +24762,7 @@ GameObject:
   - component: {fileID: 7704755959150163731}
   m_Layer: 0
   m_Name: WallHalf (7)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25255,7 +25255,7 @@ GameObject:
   - component: {fileID: 7878376739152401284}
   m_Layer: 0
   m_Name: WallHalf (13)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26612,7 +26612,7 @@ GameObject:
   - component: {fileID: 8720795772219053939}
   m_Layer: 0
   m_Name: WallCornerL (3)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34191,7 +34191,7 @@ GameObject:
   - component: {fileID: 7593329449668616442}
   m_Layer: 0
   m_Name: WallCornerL (7)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

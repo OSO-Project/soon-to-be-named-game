@@ -40,6 +40,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6881751144142834706}
     m_Modifications:
+    - target: {fileID: 2278557356083397244, guid: 293d8f23de5316249899ab38b4fdd631, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2278557356083397244, guid: 293d8f23de5316249899ab38b4fdd631, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3988912012581743169, guid: 293d8f23de5316249899ab38b4fdd631, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -83,6 +91,14 @@ PrefabInstance:
     - target: {fileID: 4328142842167390459, guid: 293d8f23de5316249899ab38b4fdd631, type: 3}
       propertyPath: m_Name
       value: Sofa Double
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299657924709833496, guid: 293d8f23de5316249899ab38b4fdd631, type: 3}
+      propertyPath: m_Mass
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299657924709833496, guid: 293d8f23de5316249899ab38b4fdd631, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

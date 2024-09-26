@@ -2332,7 +2332,7 @@ GameObject:
   - component: {fileID: 1063721117709243181}
   m_Layer: 0
   m_Name: WallDoubleWindow2 (1)
-  m_TagString: Ground
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4721,7 +4721,7 @@ GameObject:
   - component: {fileID: 143169349398117653}
   m_Layer: 0
   m_Name: WallSingleWindow2R
-  m_TagString: Ground
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13262,7 +13262,7 @@ GameObject:
   - component: {fileID: 8851043258313414951}
   m_Layer: 0
   m_Name: WallDoubleWindow2
-  m_TagString: Ground
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33607,7 +33607,7 @@ GameObject:
   - component: {fileID: 3033655276954289507}
   m_Layer: 0
   m_Name: WallSingleWindow2L
-  m_TagString: Ground
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

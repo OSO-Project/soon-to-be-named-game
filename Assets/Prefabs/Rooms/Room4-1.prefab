@@ -2673,7 +2673,7 @@ GameObject:
   - component: {fileID: 3765757665037930304}
   m_Layer: 0
   m_Name: WallSingleWindow2L
-  m_TagString: Ground
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10391,7 +10391,7 @@ GameObject:
   - component: {fileID: 8201205336391092449}
   m_Layer: 0
   m_Name: WallCornerL (5)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15454,7 +15454,7 @@ GameObject:
   - component: {fileID: 3690684104075748918}
   m_Layer: 0
   m_Name: WallDoubleWindow2
-  m_TagString: Ground
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19502,7 +19502,7 @@ GameObject:
   - component: {fileID: 8150062523268390314}
   m_Layer: 0
   m_Name: WallDoubleWindow2 (2)
-  m_TagString: Ground
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34306,7 +34306,7 @@ GameObject:
   - component: {fileID: 2079742374981546347}
   m_Layer: 0
   m_Name: WallDoubleWindow2 (1)
-  m_TagString: Ground
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45550,7 +45550,7 @@ GameObject:
   - component: {fileID: 250693096994916170}
   m_Layer: 0
   m_Name: WallHalf (11)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46293,7 +46293,7 @@ GameObject:
   - component: {fileID: 8639980480964462428}
   m_Layer: 0
   m_Name: WallSingleWindow2R
-  m_TagString: Ground
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49145,7 +49145,7 @@ GameObject:
   - component: {fileID: 6795345212796125909}
   m_Layer: 0
   m_Name: WallCornerR (5)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50572,7 +50572,7 @@ GameObject:
   - component: {fileID: 2987838666720767953}
   m_Layer: 0
   m_Name: WallDoubleWindow2 (3)
-  m_TagString: Ground
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -59297,8 +59297,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc8ea108f86b1f4b83a2d4b68eb40b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWidth: 13
-  gridHeight: 14
+  gridWidth: 15
+  gridHeight: 20
   cellSize: 1
   innerColor: {r: 0, g: 1, b: 0, a: 1}
   outerColor: {r: 0, g: 0, b: 1, a: 1}
