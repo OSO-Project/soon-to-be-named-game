@@ -366,17 +366,20 @@ public class ObjectPlacementManager : MonoBehaviour
         Vector3 offset = new Vector3(offsetX, 0, offsetZ);
         Vector3 centeredPosition = position + offset;
 
-        // Temporarily instantiate the object
-        GameObject decoration = Instantiate(decorationObj.prefab, centeredPosition, rotation, parent);
 
-        // Check for collisions with walls
-        if (CollisionCheck(decoration) && !decorationObj.isDecoration)
+        // Calculate ray lengths based on the area
+        float rayLengthX = (area.x * gridManager.cellSize) / 2f; // X dimension (width)
+        float rayLengthZ = (area.y * gridManager.cellSize) / 2f; // Z dimension (length)
+
+        // Perform raycast collision detection
+        if (RaycastCollisionCheck(centeredPosition, rayLengthX, rayLengthZ))
         {
-            Debug.Log("Removed " + decorationObj.prefab.name);
-            // If any collider collides with a wall, destroy the decoration and return early
-            Destroy(decoration, 1.5f);
-            return;
+            Debug.Log("Collision detected, cannot place the object: " + decorationObj.prefab.name);
+            return; // Don't instantiate if there's a collision
         }
+
+        // Instantiate the object
+        GameObject decoration = Instantiate(decorationObj.prefab, centeredPosition, rotation, parent);
 
         // if objects is a dirt item add to the list
         if (decoration.GetComponent<IDirtyObject>() != null)
@@ -394,122 +397,44 @@ public class ObjectPlacementManager : MonoBehaviour
         }
     }
 
-    bool CollisionCheck(GameObject decoration)
+    bool RaycastCollisionCheck(Vector3 centeredPosition, float rayLengthX, float rayLengthZ)
     {
-        // Initialize a list to hold all colliders
-        List<Collider> decorationColliders = new List<Collider>();
+        // Define layer mask for wall detection
+        int wallLayerMask = LayerMask.GetMask("Wall");
 
-        // Check if the decoration has any children
-        if (decoration.transform.childCount > 0)
-        {
-            // Get all colliders attached to the decoration object, including its own
-            decorationColliders.AddRange(decoration.GetComponents<Collider>()); // Get colliders on the decoration itself
-            decorationColliders.AddRange(decoration.GetComponentsInChildren<Collider>()); // Get colliders in children
-        }
-        else
-        {
-            // If no children, just get colliders from the decoration itself
-            decorationColliders.AddRange(decoration.GetComponents<Collider>());
-        }
+        // Adjust the raycast origin to be 1 unit higher than the centered position
+        Vector3 raycastOrigin = centeredPosition + Vector3.up * 0.5f;
 
-        bool collisionDetected = false;
+        // Ray directions: forward (Z+), backward (Z-), right (X+), left (X-)
+        Vector3[] rayDirections = {
+        Vector3.forward,    // Forward (positive Z)
+        Vector3.back,       // Backward (negative Z)
+        Vector3.right,      // Right (positive X)
+        Vector3.left        // Left (negative X)
+    };
 
-        // Check for collision for each collider in the object
-        foreach (var decorationCollider in decorationColliders)
+        // Halve the ray lengths corresponding to each direction
+        float[] rayLengths = { rayLengthZ / 2f, rayLengthZ / 2f, rayLengthX / 2f, rayLengthX / 2f };
+
+        // Loop through each direction and cast the ray
+        for (int i = 0; i < rayDirections.Length; i++)
         {
-            // Handle the Mesh Collider case
-            if (decorationCollider is MeshCollider meshCollider)
+            Vector3 rayDirection = rayDirections[i];
+            float rayLength = rayLengths[i];
+
+            // Perform the raycast from the raised position
+            if (Physics.Raycast(raycastOrigin, rayDirection, rayLength, wallLayerMask))
             {
-                // If the mesh collider is non-convex, we can only check with other non-kinematic rigidbodies
-                if (!meshCollider.convex)
-                {
-                    // Skip this collider for overlap checks as it won't work properly with non-convex mesh colliders
-                    continue;
-                }
-
-                // Calculate the center and size for convex mesh colliders
-                Vector3 boxCenter = meshCollider.bounds.center;
-                Vector3 boxSize = meshCollider.bounds.extents * 0.8f; // Half size for OverlapBox
-
-                // Visualize the collider for debugging
-                VisualizeBox(boxCenter, boxSize, Color.yellow);
-
-                // Use OverlapBox to check for colliders in the scene
-                Collider[] hitColliders = Physics.OverlapBox(boxCenter, boxSize, meshCollider.transform.rotation);
-
-                foreach (var hitCollider in hitColliders)
-                {
-                    // Check if the hit collider has the "Wall" tag and is not the decoration itself
-                    if (hitCollider.CompareTag("Wall") && hitCollider.gameObject != decoration)
-                    {
-                        VisualizeCollider(meshCollider, Color.magenta);
-                        Debug.Log($"Collision detected with {hitCollider.gameObject.name}");
-                        collisionDetected = true; // Collision detected
-                        break; // Exit the loop if collision is found
-                    }
-                }
-
-                if (collisionDetected)
-                    break; // Exit if a collision is detected
+                Debug.DrawRay(raycastOrigin, rayDirection * rayLength, Color.red, 1.0f); // Visualize ray if collision
+                Debug.Log($"Ray hit detected in direction {rayDirection}");
+                return true; // Collision detected
             }
-            else
-            {
-                // Handle non-mesh colliders (e.g., Box, Sphere)
-                Vector3 boxCenter = decorationCollider.bounds.center;
-                Vector3 boxSize = decorationCollider.bounds.extents * 0.8f; // Half size for OverlapBox
 
-                // Visualize the collider for debugging
-                VisualizeBox(boxCenter, boxSize, Color.yellow);
-
-                // Use OverlapBox to check for colliders in the scene
-                Collider[] hitColliders = Physics.OverlapBox(boxCenter, boxSize, decorationCollider.transform.rotation);
-
-                foreach (var hitCollider in hitColliders)
-                {
-                    if (hitCollider.CompareTag("Wall") && hitCollider.gameObject != decoration)
-                    {
-                        VisualizeCollider(decorationCollider, Color.magenta);
-                        Debug.Log($"Collision detected with {hitCollider.gameObject.name}");
-                        collisionDetected = true; // Collision detected
-                        break; // Exit the loop if collision is found
-                    }
-                }
-
-                if (collisionDetected)
-                    break; // Exit if a collision is detected
-            }
+            // Visualize ray in case no collision is found (for debugging)
+            Debug.DrawRay(raycastOrigin, rayDirection * rayLength, Color.green, 1.0f);
         }
 
-        return collisionDetected;
-    }
-
-
-    private void VisualizeBox(Vector3 center, Vector3 size, Color color)
-    {
-        Debug.DrawLine(center - new Vector3(size.x, 0, size.z), center + new Vector3(size.x, 0, size.z), color, 55f);
-        Debug.DrawLine(center - new Vector3(size.x, 0, -size.z), center + new Vector3(size.x, 0, -size.z), color, 55f);
-        Debug.DrawLine(center - new Vector3(-size.x, 0, size.z), center + new Vector3(-size.x, 0, size.z), color, 55f);
-        Debug.DrawLine(center - new Vector3(-size.x, 0, -size.z), center + new Vector3(-size.x, 0, -size.z), color, 55f);
-        Debug.DrawLine(center - new Vector3(0, size.y, size.z), center + new Vector3(0, size.y, size.z), color, 55f);
-        Debug.DrawLine(center - new Vector3(0, -size.y, size.z), center + new Vector3(0, -size.y, size.z), color, 55f);
-    }
-
-    // Method to visualize the collider box for debugging
-    private void VisualizeCollider(Collider collider, Color color)
-    {
-        // Get the bounds of the collider
-        Bounds bounds = collider.bounds;
-
-        // Draw the bounds of the collider
-        Debug.DrawLine(bounds.min, new Vector3(bounds.min.x, bounds.max.y, bounds.min.z), color, 1.0f); // Left
-        Debug.DrawLine(bounds.min, new Vector3(bounds.max.x, bounds.min.y, bounds.min.z), color, 1.0f); // Front
-        Debug.DrawLine(bounds.min, new Vector3(bounds.min.x, bounds.min.y, bounds.max.z), color, 1.0f); // Bottom
-
-        Debug.DrawLine(bounds.max, new Vector3(bounds.min.x, bounds.max.y, bounds.max.z), color, 1.0f); // Left
-        Debug.DrawLine(bounds.max, new Vector3(bounds.max.x, bounds.min.y, bounds.max.z), color, 1.0f); // Front
-        Debug.DrawLine(bounds.max, new Vector3(bounds.max.x, bounds.max.y, bounds.min.z), color, 1.0f); // Top
-
-        Debug.DrawLine(bounds.min, bounds.max, color, 1.0f); // Max connection
+        return false; // No collision
     }
 
     //bool CollisionCheck(GameObject decoration)
