@@ -56,6 +56,7 @@ public class EncounterManager : MonoBehaviour
             {
                 Debug.Log($"{encounter.gameObject.name} is started");
                 _currentEncounter = encounter;
+                _currentEncounter.isActive = true;
 
                 // display notification
                 UIManager.Instance.DisplayEncounterNotification(_currentEncounter.encounterIcon, _currentEncounter.encounterText, startDelay);
@@ -71,6 +72,7 @@ public class EncounterManager : MonoBehaviour
         Debug.Log("Current enc stop");
         if (_currentEncounter != null)
         {
+            _currentEncounter.isActive = false;
             _currentEncounter = null;
         }
     }

@@ -9,6 +9,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
     private Animator windowAnimator;
     private OpenCloseWindow currentTarget = null;
     private MoveWindowHandle windowHandleStatus = null;
+    [SerializeField] private GameObject windHitBox;
     private void Start()
     {
 
@@ -25,6 +26,8 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
         }
 
         InputManager.Instance.OpenCloseAction.performed += OnPressInteract;
+
+
     }
 
     private void OnDestroy()
@@ -87,9 +90,24 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
                 isOpen = !isOpen;
                 if (isOpen)
                 {
-                    GameEventManager.Instance.OpenWindow(state.Equals("Up"));
+                    GameEventManager.Instance.OpenWindow();
                 }
             }
+        }
+    }
+
+    public GameObject GetWindHitbox()
+    {
+        return windHitBox;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        var area = windHitBox.GetComponent<Collider>();
+        if (isOpen)
+        {
+            Gizmos.DrawWireCube(area.bounds.center, area.bounds.size);
         }
     }
 }

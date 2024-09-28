@@ -4474,6 +4474,14 @@ PrefabInstance:
       propertyPath: _ceilingStripColor
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6898193189430114090, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}
+      propertyPath: isOpen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6898193189430114090, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}
+      propertyPath: windHitBox
+      value: 
+      objectReference: {fileID: 5657249499151933342}
     - target: {fileID: 7390151834423859800, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.9934397
@@ -4549,6 +4557,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3949204819269021605, guid: ed38041a1e2e2064f88b4bdf7eb5182e, type: 3}
+--- !u!1 &5657249499151933342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6788590068771938877, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}
+  m_PrefabInstance: {fileID: 1204568593787813283}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8518676554633013243 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7390151834423859800, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}
@@ -7508,6 +7521,10 @@ PrefabInstance:
       propertyPath: _ceilingStripColor
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 6898193189430114090, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}
+      propertyPath: windHitBox
+      value: 
+      objectReference: {fileID: 9144409620602283405}
     - target: {fileID: 7390151834423859800, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.0065603
@@ -7586,6 +7603,11 @@ MeshCollider:
 --- !u!4 &5070355380123835880 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7390151834423859800, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}
+  m_PrefabInstance: {fileID: 2365114017364346800}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9144409620602283405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6788590068771938877, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}
   m_PrefabInstance: {fileID: 2365114017364346800}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2557960195510653296
@@ -11024,6 +11046,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2187061670725939341}
     m_Modifications:
+    - target: {fileID: 250008257738840755, guid: d6f80f381fb9e3a4b93616a3caa3258d, type: 3}
+      propertyPath: windHitBox
+      value: 
+      objectReference: {fileID: 6041065874886684280}
     - target: {fileID: 757960765918663027, guid: d6f80f381fb9e3a4b93616a3caa3258d, type: 3}
       propertyPath: _floorStripColor
       value: 3
@@ -11104,6 +11130,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4138192707316536049, guid: d6f80f381fb9e3a4b93616a3caa3258d, type: 3}
+      propertyPath: windHitBox
+      value: 
+      objectReference: {fileID: 1001372989316816174}
     - target: {fileID: 5598446749350460026, guid: d6f80f381fb9e3a4b93616a3caa3258d, type: 3}
       propertyPath: m_Size.y
       value: 2.2839916
@@ -11120,6 +11150,10 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.000000101480026
       objectReference: {fileID: 0}
+    - target: {fileID: 7048221276697321379, guid: d6f80f381fb9e3a4b93616a3caa3258d, type: 3}
+      propertyPath: m_Name
+      value: WindHitboxR
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11131,6 +11165,11 @@ PrefabInstance:
 --- !u!4 &759781579075269778 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4074961420412028233, guid: d6f80f381fb9e3a4b93616a3caa3258d, type: 3}
+  m_PrefabInstance: {fileID: 3604676855644172763}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1001372989316816174 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4603793645938175221, guid: d6f80f381fb9e3a4b93616a3caa3258d, type: 3}
   m_PrefabInstance: {fileID: 3604676855644172763}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1366184223040625915 stripped
@@ -11160,6 +11199,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3013507244633434518, guid: ed38041a1e2e2064f88b4bdf7eb5182e, type: 3}
+--- !u!1 &6041065874886684280 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7048221276697321379, guid: d6f80f381fb9e3a4b93616a3caa3258d, type: 3}
+  m_PrefabInstance: {fileID: 3604676855644172763}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3617184075872623565
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19168,6 +19212,10 @@ PrefabInstance:
       propertyPath: _ceilingStripColor
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6898193189430114090, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}
+      propertyPath: windHitBox
+      value: 
+      objectReference: {fileID: 284272181202627578}
     - target: {fileID: 7390151834423859800, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.9934397
@@ -19216,6 +19264,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4171686033011570876}
   m_SourcePrefab: {fileID: 100100000, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}
+--- !u!1 &284272181202627578 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6788590068771938877, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}
+  m_PrefabInstance: {fileID: 6756554726507989447}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4272523281190867871 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7390151834423859800, guid: 1596d8f6fc846784b9c06a0f87921810, type: 3}

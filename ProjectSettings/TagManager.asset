@@ -9,6 +9,7 @@ TagManager:
   - DontSpawnHere
   - Wall
   - Suckable
+  - WindHitbox
   layers:
   - Default
   - TransparentFX

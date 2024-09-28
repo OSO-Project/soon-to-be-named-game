@@ -74,9 +74,9 @@ public class SmokeEncounter : Encounter
         }
     }
 
-    public override void StopEncounter(bool isWindowUp)
+    public override void StopEncounter()
     {
-        StopSmoke(isWindowUp);    
+        StopSmoke();    
         smokablesInArea.Clear();
         StopAllCoroutines();
         GameEventManager.Instance.EndEncounter();
@@ -88,7 +88,7 @@ public class SmokeEncounter : Encounter
         smokeParticleSystem?.Play();
     }
 
-    private void StopSmoke(bool isWindowUp)
+    private void StopSmoke()
     {
         /*var main = smokeParticleSystem.main;
         if (isWindowUp)
@@ -100,10 +100,5 @@ public class SmokeEncounter : Encounter
             main.startLifetime = particleLifeTimeWindowSide;
         }*/
         smokeParticleSystem?.Stop();
-    }
-
-    public override void StopEncounter()
-    {
-        
     }
 }

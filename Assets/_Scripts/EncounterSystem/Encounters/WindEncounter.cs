@@ -6,15 +6,20 @@ using UnityEngine;
 public class WindEncounter : Encounter
 {
     [SerializeField] private List<Transform> windowTransforms;   // The position of the open window
-    [SerializeField] private float windForce = 10f;      // Force of the wind
+    [SerializeField] private float windForce = 100f;      // Force of the wind
     [SerializeField] private float pushInterval = 5f;    // Interval to push objects (in seconds)
-    [SerializeField] private Vector3 pushDirection = Vector3.forward;  // Direction to push items away from the window
+    //[SerializeField] private Vector3 pushDirection = Vector3.forward;  // Direction to push items away from the window
     [SerializeField] private List<Collider> windAreas;           // The area of effect for the wind
+    [SerializeField] private HashSet<Collider> windAreasHash = new HashSet<Collider>();
+
+    private Vector3 temp;
+    private Vector3 temp2;
 
     private List<OpenCloseWindow> windows;
     private GameObject currentRoom;
 
-    private HashSet<IPhysics> pushableObjectsInArea = new HashSet<IPhysics>();
+    private HashSet<IPhysics> pushableObjectsInRoom = new HashSet<IPhysics>();
+    [SerializeField] private List<GameObject> obj = new List<GameObject>();
     private Coroutine windCoroutine;
 
 
@@ -22,11 +27,13 @@ public class WindEncounter : Encounter
     {
         GameEventManager.Instance.OnWindowClose += StopEncounter;
         GameManager.Instance.OnNextRoom += NewCurrentRoom;
+        GameEventManager.Instance.OnWindowOpen += AddWindows;
     }
 
     public override bool CanStart()
     {
         windows = currentRoom.GetComponentsInChildren<OpenCloseWindow>().ToList();
+        
         //Debug.Log($"windows: {windows.Count}");
         foreach (var window in windows)
         {
@@ -42,19 +49,12 @@ public class WindEncounter : Encounter
     public override void StartEncounter()
     {
         //Debug.Log("Wind Encounter started!");
-        foreach (var window in windows)
-        {
-            if (window.isOpen)
-            {
-                windowTransforms.Add(window.transform);
-                Collider col = window.transform.Find("WindHitbox").GetComponent<Collider>();
-                if (col != null)
-                {
-                    windAreas.Add(col);
-                    //Debug.Log("added col");
-                }
-            }
-        }
+        AddWindows();
+        pushableObjectsInRoom = currentRoom.GetComponentsInChildren<IPhysics>().ToHashSet();
+        obj = currentRoom
+            .GetComponentsInChildren<IPhysics>()
+            .Select(physicsObject => ((MonoBehaviour)physicsObject).gameObject) 
+            .ToList();
 
         // Start the coroutine to push objects every few seconds
         windCoroutine = StartCoroutine(PushObjectsPeriodically());
@@ -72,7 +72,7 @@ public class WindEncounter : Encounter
         }
 
         // Clear all pushable objects
-        pushableObjectsInArea.Clear();
+        pushableObjectsInRoom.Clear();
     }
 
     private IEnumerator PushObjectsPeriodically()
@@ -81,25 +81,30 @@ public class WindEncounter : Encounter
         {
             PushObjects();
             yield return new WaitForSeconds(pushInterval);
-
         }
-        
-
     }
 
     private void PushObjects()
     {
-        foreach (var pushable in pushableObjectsInArea)
+        foreach (var pushable in pushableObjectsInRoom)
         {
-            foreach (var windArea in windAreas)
+            Debug.Log($"push: {pushable}");
+            Debug.Log($"obj1: {pushable.Rigidbody == null}");
+            foreach (var windArea in windAreasHash)
             {
                 // Check if the pushable object is within the specific wind area
-                if (windArea.bounds.Contains(pushable.Rigidbody.transform.position))
+                Debug.Log($"obj: {pushable.Rigidbody.position}");
+                if (windArea.bounds.Contains(pushable.Rigidbody.position))
                 {
                     Debug.Log("push");
+                    obj.Add(pushable.Rigidbody.gameObject);
                     //Vector3 forceDirection = (windowTransform.position - pushable.Rigidbody.transform.position).normalized; // Direction towards the window
-                    Vector3 windowTransform = windowTransforms[windAreas.IndexOf(windArea)].position;
-                    Vector3 forceDirection = (windowTransform - pushable.Rigidbody.transform.position).normalized; // Direction towards the window
+                    //Vector3 windowTransform = windowTransforms[windAreas.IndexOf(windArea)].position;
+                    Vector3 windowForward = windArea.transform.forward;
+                    //Vector3 forceDirection = (windowTransform - pushable.Rigidbody.position).normalized;
+                    Vector3 forceDirection = windowForward + Vector3.up.normalized * 0.1f;
+                    temp = forceDirection;
+                    temp2 = pushable.Rigidbody.position;
                     pushable.Rigidbody.AddForce(forceDirection * windForce, ForceMode.Impulse);
                 }
             }
@@ -107,14 +112,14 @@ public class WindEncounter : Encounter
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         // Check if the object entering the area implements IPushable
         IPhysics pushable = other.GetComponent<IPhysics>();
         if (pushable != null)
         {
             Debug.Log("entered");
-            pushableObjectsInArea.Add(pushable);
+            pushableObjectsInRoom.Add(pushable);
         }
     }
 
@@ -124,12 +129,46 @@ public class WindEncounter : Encounter
         IPhysics pushable = other.GetComponent<IPhysics>();
         if (pushable != null)
         {
-            pushableObjectsInArea.Remove(pushable);
+            pushableObjectsInRoom.Remove(pushable);
         }
-    }
+    }*/
 
     private void NewCurrentRoom(GameObject cr)
     {
         currentRoom = cr;
+    }
+
+    private void AddWindows()
+    {
+        foreach (var window in windows)
+        {
+            if (window.isOpen)
+            {
+                windowTransforms.Add(window.transform);
+                Collider col = window.GetWindHitbox().GetComponent<Collider>();
+                if (col != null)
+                {
+                    //windAreas.Add(col);
+                    windAreasHash.Add(col);
+                    
+                    Debug.Log("added col");
+                }
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        
+        foreach (var area in windAreas)
+        {
+            //Gizmos.matrix = area.transform.localToWorldMatrix;
+            Gizmos.DrawWireCube(area.bounds.center, area.bounds.size);
+            //Gizmos.DrawLine(area.transform.position, Vector3.forward);
+        }
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(temp2, temp2 + temp * 2f);
     }
 }

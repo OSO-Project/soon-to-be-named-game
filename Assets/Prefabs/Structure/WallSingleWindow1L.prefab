@@ -34,6 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1176252250424266250}
+  - {fileID: 5600208762299419793}
   - {fileID: 1750655333728042552}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -469,7 +470,7 @@ GameObject:
   - component: {fileID: 1214190119252913280}
   m_Layer: 3
   m_Name: WindHitbox
-  m_TagString: Untagged
+  m_TagString: WindHitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -482,12 +483,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6788590068771938877}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.92}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.37195578, y: 1.0749998, z: 0.89475095}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1750655333728042552}
+  m_Father: {fileID: 7390151834423859800}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1214190119252913280
 BoxCollider:
@@ -546,7 +547,6 @@ Transform:
   m_Children:
   - {fileID: 1803262977452515426}
   - {fileID: 5205746298374033516}
-  - {fileID: 5600208762299419793}
   m_Father: {fileID: 7390151834423859800}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8985879815106582332
@@ -631,6 +631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+  windHitBox: {fileID: 0}
 --- !u!114 &7629233321429201321
 MonoBehaviour:
   m_ObjectHideFlags: 0
