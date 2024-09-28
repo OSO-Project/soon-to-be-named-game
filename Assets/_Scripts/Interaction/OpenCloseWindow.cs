@@ -9,6 +9,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
     private Animator windowAnimator;
     private OpenCloseWindow currentTarget = null;
     private MoveWindowHandle windowHandleStatus = null;
+    [SerializeField] private GameObject windHitBox;
     private void Start()
     {
 
@@ -17,7 +18,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
         {
             Debug.LogError("Animator component missing from drawer object.");
         }
-        
+
         windowHandleStatus = transform.Find("HandleHinge").GetComponent<MoveWindowHandle>();
         if (windowHandleStatus == null)
         {
@@ -25,6 +26,8 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
         }
 
         InputManager.Instance.OpenCloseAction.performed += OnPressInteract;
+
+
     }
 
     private void OnDestroy()
@@ -40,7 +43,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
     public void OnFinishLooking()
     {
         currentTarget = null;
-	    //Code to execute when you aim away from the object
+        //Code to execute when you aim away from the object
     }
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
@@ -71,7 +74,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
                     {
                         windowAnimator.SetTrigger("OpenVertical");
                     }
-                    GameEventManager.Instance.OpenWindow(state.Equals("Up"));
+
                 }
                 else
                 {
@@ -85,7 +88,41 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
                     }
                 }
                 isOpen = !isOpen;
+                if (isOpen)
+                {
+                    GameEventManager.Instance.OpenWindow();
+                }
             }
         }
     }
+
+    public bool GetIfUp()
+    {
+        return state.Equals("Up");
+    }
+
+    public float GetOpenness()
+    {
+        if (isOpen)
+        {
+            if (state.Equals("Up")) return 0.5f;
+            else return 1f;
+        }
+        return 0f;
+    }
+        public GameObject GetWindHitbox()
+        {
+            return windHitBox;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            var area = windHitBox.GetComponent<Collider>();
+            if (isOpen)
+            {
+                Gizmos.DrawWireCube(area.bounds.center, area.bounds.size);
+            }
+        }
+    
 }
