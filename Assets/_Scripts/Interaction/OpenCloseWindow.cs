@@ -18,7 +18,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
         {
             Debug.LogError("Animator component missing from drawer object.");
         }
-        
+
         windowHandleStatus = transform.Find("HandleHinge").GetComponent<MoveWindowHandle>();
         if (windowHandleStatus == null)
         {
@@ -43,7 +43,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
     public void OnFinishLooking()
     {
         currentTarget = null;
-	    //Code to execute when you aim away from the object
+        //Code to execute when you aim away from the object
     }
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
@@ -74,7 +74,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
                     {
                         windowAnimator.SetTrigger("OpenVertical");
                     }
-                    
+
                 }
                 else
                 {
@@ -103,24 +103,26 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
 
     public float GetOpenness()
     {
-        if(isOpen)
+        if (isOpen)
         {
             if (state.Equals("Up")) return 0.5f;
             else return 1f;
         }
         return 0f;
-    public GameObject GetWindHitbox()
-    {
-        return windHitBox;
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        var area = windHitBox.GetComponent<Collider>();
-        if (isOpen)
+        public GameObject GetWindHitbox()
         {
-            Gizmos.DrawWireCube(area.bounds.center, area.bounds.size);
+            return windHitBox;
         }
-    }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            var area = windHitBox.GetComponent<Collider>();
+            if (isOpen)
+            {
+                Gizmos.DrawWireCube(area.bounds.center, area.bounds.size);
+            }
+        }
+    
 }

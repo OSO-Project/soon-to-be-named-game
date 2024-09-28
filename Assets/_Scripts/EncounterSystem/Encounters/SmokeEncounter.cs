@@ -112,11 +112,6 @@ public class SmokeEncounter : Encounter
         smokeParticleSystem?.Stop();
     }
 
-    public override void StopEncounter()
-    {
-        
-    }
-
     private void NewCurrentRoom(GameObject cr)
     {
         currentRoom = cr;
