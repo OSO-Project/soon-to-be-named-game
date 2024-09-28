@@ -4182,7 +4182,7 @@ GameObject:
   - component: {fileID: 4378329372254597636}
   m_Layer: 10
   m_Name: WallHalf.End (4)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13150,7 +13150,7 @@ Transform:
   m_GameObject: {fileID: 2257094947494080570}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.27, y: 0.547, z: -0.86}
+  m_LocalPosition: {x: -0.27, y: 0.547, z: 0.116}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17307,7 +17307,7 @@ GameObject:
   - component: {fileID: 4004689042999338652}
   m_Layer: 10
   m_Name: WallDoorway1.Frame
-  m_TagString: Untagged
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17659,7 +17659,7 @@ GameObject:
   - component: {fileID: 7437060639821974754}
   m_Layer: 10
   m_Name: WallHalf.End (1)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25679,7 +25679,7 @@ GameObject:
   - component: {fileID: 604021967881361450}
   m_Layer: 10
   m_Name: WallHalf.End (5)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34257,7 +34257,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6194364816994805972}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -0.110000014, y: 0, z: 4.525}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -34266,7 +34266,7 @@ Transform:
   - {fileID: 7243618277349153992}
   - {fileID: 7547033687014255756}
   m_Father: {fileID: 5132194435185448356}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &3877249932209958304
 Animator:
   serializedVersion: 5
@@ -37893,7 +37893,7 @@ GameObject:
   - component: {fileID: 6308478370542543787}
   m_Layer: 10
   m_Name: WallHalf.End (2)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38389,7 +38389,7 @@ GameObject:
   - component: {fileID: 7540691275025521379}
   m_Layer: 10
   m_Name: WallHalf.End
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44510,7 +44510,7 @@ GameObject:
   - component: {fileID: 7091712745604674496}
   m_Layer: 10
   m_Name: WallDoorway1.Frame
-  m_TagString: Untagged
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50979,7 +50979,7 @@ GameObject:
   - component: {fileID: 3667954486563260431}
   m_Layer: 10
   m_Name: WallHalf.End (3)
-  m_TagString: Wall
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

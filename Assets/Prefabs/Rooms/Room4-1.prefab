@@ -25156,7 +25156,7 @@ Transform:
   m_GameObject: {fileID: 4417454379701749459}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 10.49, y: 0.547, z: -3.33}
+  m_LocalPosition: {x: 9.621, y: 0.547, z: -3.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25181,8 +25181,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.4500234, y: 2.1395252, z: 1.1560272}
-  m_Center: {x: 0.1503742, y: 0.56976247, z: -1.4508328}
+  m_Size: {x: 8.555225, y: 2.1395252, z: 1.1560272}
+  m_Center: {x: -2.402229, y: 0.56976247, z: -1.4508334}
 --- !u!114 &3454979689565681001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29074,7 +29074,7 @@ GameObject:
   - component: {fileID: 7959539616477346474}
   m_Layer: 10
   m_Name: WallDoorway1.Frame
-  m_TagString: Untagged
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31385,7 +31385,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5545333130851403876}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -0.110000014, y: 0, z: 4.525}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -31394,7 +31394,7 @@ Transform:
   - {fileID: 1284211561658989163}
   - {fileID: 1072781327416292588}
   m_Father: {fileID: 8639363526031139273}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &2600479379943094201
 Animator:
   serializedVersion: 5
@@ -43870,7 +43870,7 @@ GameObject:
   - component: {fileID: 819892219895277112}
   m_Layer: 10
   m_Name: WallDoorway1.Frame
-  m_TagString: Untagged
+  m_TagString: DontSpawnHere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

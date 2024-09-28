@@ -371,10 +371,12 @@ public class ObjectPlacementManager : MonoBehaviour
         float rayLengthX = (area.x * gridManager.cellSize) / 2f; // X dimension (width)
         float rayLengthZ = (area.y * gridManager.cellSize) / 2f; // Z dimension (length)
 
+
         // Perform raycast collision detection
         if (RaycastCollisionCheck(centeredPosition, rayLengthX, rayLengthZ))
         {
             Debug.Log("Collision detected, cannot place the object: " + decorationObj.prefab.name);
+            //Destroy(decoration, 2f);
             return; // Don't instantiate if there's a collision
         }
 
@@ -402,8 +404,11 @@ public class ObjectPlacementManager : MonoBehaviour
         // Define layer mask for wall detection
         int wallLayerMask = LayerMask.GetMask("Wall");
 
-        // Adjust the raycast origin to be 1 unit higher than the centered position
-        Vector3 raycastOrigin = centeredPosition + Vector3.up * 0.5f;
+        // Adjust the raycast origins to be 0.5 units higher than the centered position
+        Vector3 frontLeftOrigin = centeredPosition + new Vector3(-0.1f, 0.5f, 0.1f);  // Front-Left corner
+        Vector3 frontRightOrigin = centeredPosition + new Vector3(0.1f, 0.5f, 0.1f);  // Front-Right corner
+        Vector3 backLeftOrigin = centeredPosition + new Vector3(-0.1f, 0.5f, -0.1f);  // Back-Left corner
+        Vector3 backRightOrigin = centeredPosition + new Vector3(0.1f, 0.5f, -0.1f);  // Back-Right corner
 
         // Ray directions: forward (Z+), backward (Z-), right (X+), left (X-)
         Vector3[] rayDirections = {
@@ -413,161 +418,61 @@ public class ObjectPlacementManager : MonoBehaviour
         Vector3.left        // Left (negative X)
     };
 
-        // Halve the ray lengths corresponding to each direction
-        float[] rayLengths = { rayLengthZ / 2f, rayLengthZ / 2f, rayLengthX / 2f, rayLengthX / 2f };
+        // Front origins: the front and back rays (Z direction) are normal, the right ray is shorter for the left origins, and vice versa.
+        float[] rayLengthsFrontLeft = { rayLengthZ / 2f, rayLengthZ / 2f, rayLengthX / 4f, rayLengthX / 2f };   // Front-Left
+        float[] rayLengthsFrontRight = { rayLengthZ / 2f, rayLengthZ / 2f, rayLengthX / 2f, rayLengthX / 4f };  // Front-Right
 
+        // Back origins: similar logic but inverted for left and right rays.
+        float[] rayLengthsBackLeft = { rayLengthZ / 2f, rayLengthZ / 2f, rayLengthX / 4f, rayLengthX / 2f };    // Back-Left
+        float[] rayLengthsBackRight = { rayLengthZ / 2f, rayLengthZ / 2f, rayLengthX / 2f, rayLengthX / 4f };   // Back-Right
+
+        // Check for collisions from all four origins
+        if (CheckRaycasts(frontLeftOrigin, rayDirections, rayLengthsFrontLeft, wallLayerMask))
+        {
+            return true; // Collision detected from front-left origin
+        }
+
+        if (CheckRaycasts(frontRightOrigin, rayDirections, rayLengthsFrontRight, wallLayerMask))
+        {
+            return true; // Collision detected from front-right origin
+        }
+
+        if (CheckRaycasts(backLeftOrigin, rayDirections, rayLengthsBackLeft, wallLayerMask))
+        {
+            return true; // Collision detected from back-left origin
+        }
+
+        if (CheckRaycasts(backRightOrigin, rayDirections, rayLengthsBackRight, wallLayerMask))
+        {
+            return true; // Collision detected from back-right origin
+        }
+
+        return false; // No collision detected from any origin
+    }
+
+    // Helper method to cast rays from a given origin
+    bool CheckRaycasts(Vector3 origin, Vector3[] rayDirections, float[] rayLengths, int wallLayerMask)
+    {
         // Loop through each direction and cast the ray
         for (int i = 0; i < rayDirections.Length; i++)
         {
             Vector3 rayDirection = rayDirections[i];
             float rayLength = rayLengths[i];
 
-            // Perform the raycast from the raised position
-            if (Physics.Raycast(raycastOrigin, rayDirection, rayLength, wallLayerMask))
+            // Perform the raycast from the given origin
+            if (Physics.Raycast(origin, rayDirection, rayLength, wallLayerMask))
             {
-                Debug.DrawRay(raycastOrigin, rayDirection * rayLength, Color.red, 1.0f); // Visualize ray if collision
-                Debug.Log($"Ray hit detected in direction {rayDirection}");
+                Debug.DrawRay(origin, rayDirection * rayLength, Color.red, 1.0f); // Visualize ray if collision
+                Debug.Log($"Ray hit detected from origin {origin} in direction {rayDirection}");
                 return true; // Collision detected
             }
 
             // Visualize ray in case no collision is found (for debugging)
-            Debug.DrawRay(raycastOrigin, rayDirection * rayLength, Color.green, 1.0f);
+            Debug.DrawRay(origin, rayDirection * rayLength, Color.green, 1.0f);
         }
 
-        return false; // No collision
+        return false; // No collision found from this origin
     }
-
-    //bool CollisionCheck(GameObject decoration)
-    //{
-    //    // Initialize a list to hold all colliders
-    //    List<Collider> decorationColliders = new List<Collider>();
-
-    //    // Check if the decoration has any children
-    //    if (decoration.transform.childCount > 0)
-    //    {
-    //        // Get all colliders attached to the decoration object, including its own
-    //        decorationColliders.AddRange(decoration.GetComponents<Collider>()); // Get colliders on the decoration itself
-    //        decorationColliders.AddRange(decoration.GetComponentsInChildren<Collider>()); // Get colliders in children
-    //    }
-    //    else
-    //    {
-    //        // If no children, just get colliders from the decoration itself
-    //        decorationColliders.AddRange(decoration.GetComponents<Collider>());
-    //    }
-
-    //    bool collisionDetected = false;
-
-    //    // Check for collision for each collider in the object
-    //    foreach (var decorationCollider in decorationColliders)
-    //    {
-    //        // Calculate the center of the collider
-    //        Vector3 boxCenter = decorationCollider.bounds.center;
-
-    //        // Use the collider's bounds directly for precise sizing
-    //        Vector3 boxSize = decorationCollider.bounds.size; // Full size for OverlapBox
-
-
-    //        // Check for collision with Mesh Colliders more accurately
-    //        if (decorationCollider is MeshCollider)
-    //        {
-    //            // For Mesh Colliders, we will use the MeshCollider's sharedMesh and bounds
-    //            Collider[] hitColliders = Physics.OverlapBox(boxCenter, boxSize, decorationCollider.transform.rotation);
-
-    //            foreach (var hitCollider in hitColliders)
-    //            {
-    //                // Check if the hit collider has the "Wall" tag and is not the decoration itself
-    //                if (hitCollider.CompareTag("Wall") && hitCollider.gameObject != decoration)
-    //                {
-    //                    // Calculate if the collision is significant
-    //                    if (IsCollisionSignificant(decorationCollider, hitCollider))
-    //                    {
-    //                        VisualizeCollider(decorationCollider, Color.red);
-    //                        Debug.Log($"Collision detected with {hitCollider.gameObject.name}");
-    //                        collisionDetected = true; // Collision detected
-    //                        break;
-    //                    }
-    //                }
-    //                // Visualize the wall collider
-    //            }
-    //        }
-    //        else
-    //        {
-    //            // Use OverlapBox for other colliders (Box, Sphere, Capsule, etc.)
-    //            Collider[] hitColliders = Physics.OverlapBox(boxCenter, boxSize / 2f, decorationCollider.transform.rotation);
-
-    //            foreach (var hitCollider in hitColliders)
-    //            {
-    //                // Check if the hit collider has the "Wall" tag and is not the decoration itself
-    //                if (hitCollider.CompareTag("Wall") && hitCollider.gameObject != decoration)
-    //                {
-    //                    // Calculate if the collision is significant
-    //                    if (IsCollisionSignificant(decorationCollider, hitCollider))
-    //                    {
-    //                        VisualizeCollider(decorationCollider, Color.red);
-    //                        Debug.Log($"Collision detected with {hitCollider.gameObject.name}");
-    //                        collisionDetected = true; // Collision detected
-    //                        break;
-    //                    }
-    //                }
-    //            }
-    //        }
-
-    //        if (collisionDetected)
-    //            break;
-    //    }
-
-    //    return collisionDetected;
-    //}
-
-    //private void VisualizeCollider(Collider collider, Color color)
-    //{
-    //    // Get the bounds of the collider
-    //    Bounds bounds = collider.bounds;
-
-    //    // Draw the bounds of the collider
-    //    Debug.DrawLine(bounds.min, new Vector3(bounds.min.x, bounds.max.y, bounds.min.z), color, 1.0f); // Left
-    //    Debug.DrawLine(bounds.min, new Vector3(bounds.max.x, bounds.min.y, bounds.min.z), color, 1.0f); // Front
-    //    Debug.DrawLine(bounds.min, new Vector3(bounds.min.x, bounds.min.y, bounds.max.z), color, 1.0f); // Bottom
-
-    //    Debug.DrawLine(bounds.max, new Vector3(bounds.min.x, bounds.max.y, bounds.max.z), color, 1.0f); // Left
-    //    Debug.DrawLine(bounds.max, new Vector3(bounds.max.x, bounds.min.y, bounds.max.z), color, 1.0f); // Front
-    //    Debug.DrawLine(bounds.max, new Vector3(bounds.max.x, bounds.max.y, bounds.min.z), color, 1.0f); // Top
-
-    //    Debug.DrawLine(bounds.min, bounds.max, color, 1.0f); // Max connection
-    //}
-
-    //// Method to determine if the collision is significant enough
-    //private bool IsCollisionSignificant(Collider decorationCollider, Collider wallCollider)
-    //{
-    //    // Calculate intersection volume
-    //    Bounds decorationBounds = decorationCollider.bounds;
-    //    Bounds wallBounds = wallCollider.bounds;
-
-    //    // Calculate the intersection bounds
-    //    if (decorationBounds.Intersects(wallBounds))
-    //    {
-    //        Bounds intersection = new Bounds();
-    //        intersection.SetMinMax(
-    //            Vector3.Max(decorationBounds.min, wallBounds.min),
-    //            Vector3.Min(decorationBounds.max, wallBounds.max)
-    //        );
-
-    //        // Calculate intersection volume
-    //        Vector3 intersectionSize = intersection.size;
-
-    //        // Define a threshold for what constitutes a significant collision
-    //        float threshold = 0.1f; // 10% of decoration volume for example
-
-    //        // Calculate the volume of the decoration
-    //        float decorationVolume = decorationBounds.size.x * decorationBounds.size.y * decorationBounds.size.z;
-    //        float intersectionVolume = intersectionSize.x * intersectionSize.y * intersectionSize.z;
-
-    //        // Check if the intersection volume is a significant percentage of the decoration's volume
-    //        return (intersectionVolume / decorationVolume) > threshold;
-    //    }
-
-    //    return false; // No intersection
-    //}
 
     Vector2 AdjustAreaForRotation(Vector2 area, CellSideTag.Side side)
     {
