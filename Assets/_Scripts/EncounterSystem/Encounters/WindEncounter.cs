@@ -112,27 +112,6 @@ public class WindEncounter : Encounter
         }
     }
 
-    /*private void OnTriggerEnter(Collider other)
-    {
-        // Check if the object entering the area implements IPushable
-        IPhysics pushable = other.GetComponent<IPhysics>();
-        if (pushable != null)
-        {
-            Debug.Log("entered");
-            pushableObjectsInRoom.Add(pushable);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        // Remove the object from the list when it leaves the area
-        IPhysics pushable = other.GetComponent<IPhysics>();
-        if (pushable != null)
-        {
-            pushableObjectsInRoom.Remove(pushable);
-        }
-    }*/
-
     private void NewCurrentRoom(GameObject cr)
     {
         currentRoom = cr;

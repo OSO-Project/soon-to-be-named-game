@@ -110,19 +110,18 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
         }
         return 0f;
     }
-        public GameObject GetWindHitbox()
-        {
-            return windHitBox;
-        }
+    public GameObject GetWindHitbox()
+    {
+        return windHitBox;
+    }
 
-        private void OnDrawGizmos()
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        var area = windHitBox.GetComponent<Collider>();
+        if (isOpen)
         {
-            Gizmos.color = Color.red;
-            var area = windHitBox.GetComponent<Collider>();
-            if (isOpen)
-            {
-                Gizmos.DrawWireCube(area.bounds.center, area.bounds.size);
-            }
+            Gizmos.DrawWireCube(area.bounds.center, area.bounds.size);
         }
-    
+    }
 }
