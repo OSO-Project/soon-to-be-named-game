@@ -19,6 +19,7 @@ public class EncounterManager : MonoBehaviour
         _levelStartTime = Time.time;
         GameEventManager.Instance.OnEncounterEnd += StopEncounter;
         
+        
     }
 
     void Update()
@@ -60,6 +61,8 @@ public class EncounterManager : MonoBehaviour
                 // display notification
                 UIManager.Instance.DisplayEncounterNotification(_currentEncounter.encounterIcon, _currentEncounter.encounterText, startDelay);
                 _currentEncounter.StartEncounter();
+
+                // get current room
                 return true;
             }
         }

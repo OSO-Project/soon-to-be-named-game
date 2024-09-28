@@ -26,6 +26,7 @@ public class RoomManager : MonoBehaviour
     void SpawnInitialRoom()
     {
         currentRoom = Instantiate(roomPrefab, new Vector3(initSpawnPoint.transform.position.x, initSpawnPoint.transform.position.y, initSpawnPoint.transform.position.z), Quaternion.identity);
+        GameManager.Instance.ProceedToNextRoom();
     }
 
     public void SpawnNextRoom(Vector3 position, Quaternion rotation)
@@ -69,5 +70,10 @@ public class RoomManager : MonoBehaviour
 
         currentRoom = nextRoom;
         OnTransitionComplete?.Invoke();
+    }
+
+    public GameObject GetCurrentRoom()
+    {
+        return currentRoom;
     }
 }
