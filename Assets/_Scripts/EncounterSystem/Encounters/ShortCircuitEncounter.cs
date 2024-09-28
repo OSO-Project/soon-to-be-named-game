@@ -43,7 +43,7 @@ public class ShortCircuitEncounter : Encounter
         Debug.Log($"{gameObject.name} is stopped");
 
         // remove components from enders
-        if (encounterEnders.Count != 0)
+        /*if (encounterEnders.Count != 0)
         {
             foreach (GameObject ender in encounterEnders)
             {
@@ -53,7 +53,7 @@ public class ShortCircuitEncounter : Encounter
 
             // clear the enders list
             encounterEnders.Clear();
-        }
+        }*/
 
         IDisableChildren[] disableChildrenObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDisableChildren>().ToArray();
         foreach (IDisableChildren disableChildren in disableChildrenObjects)
