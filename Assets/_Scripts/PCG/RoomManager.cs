@@ -58,7 +58,7 @@ public class RoomManager : MonoBehaviour
         exitDoor.gameObject.GetComponentInChildren<OpenCloseDoor>().CloseAndLockDoor();
         exitDoor.parent.name = "EnterDoorLocked";
         exitDoor.parent.SetParent(nextRoom.transform.Find("RoomForRandomGen"));
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         //Destroy(currentRoom);
         Transform roomForRandomGen = currentRoom.transform.Find("RoomForRandomGen");
         if (roomForRandomGen != null)
