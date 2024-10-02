@@ -52,7 +52,7 @@ public class ProgressBarFillMechanic
     {
         while (_currentTime < _duration)
         {
-            if (InputManager.Instance.CleanAction.ReadValue<float>() == 0f)
+            if (!InputManager.Instance.UseToolAction.IsPressed())
             {
                 StopAndResetProgress();
                 yield break;

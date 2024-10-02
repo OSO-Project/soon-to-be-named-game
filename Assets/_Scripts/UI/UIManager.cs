@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     [Header("Progress Bar On Screen")]
     public Image ProgressBar; //Not required in Hold To Clean anymore. Progress Bar now on each object.
     public TMP_Text HintText;
+    public TMP_Text RequiresVacuum;
 
     [Header("Speed Display")]
     public TMP_Text SpeedText;
@@ -38,6 +39,7 @@ public class UIManager : MonoBehaviour
 
         ProgressBar.fillAmount = 0f; //- Progress Bar now on each object adjusted separately
         HintText.gameObject.SetActive(false);
+        RequiresVacuum.gameObject.SetActive(false);
         notificationPanel.SetActive(false);
         /*EncounterIcon.gameObject.SetActive(false);
         EncounterText.gameObject.SetActive(false);*/

@@ -6,6 +6,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
     private bool isUnlocked;
     private string state;
     public bool isOpen;
+    private bool isAnimating = false;
     private Animator windowAnimator;
     private OpenCloseWindow currentTarget = null;
     private MoveWindowHandle windowHandleStatus = null;
@@ -23,13 +24,6 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
         {
             Debug.LogError("No MoveWindowHandle script attached to the handle.");
         }
-
-        InputManager.Instance.OpenCloseAction.performed += OnPressInteract;
-    }
-
-    private void OnDestroy()
-    {
-        InputManager.Instance.OpenCloseAction.performed -= OnPressInteract;
     }
 
     public void OnBeginLooking()
@@ -48,7 +42,7 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
         isUnlocked = windowHandleStatus.isUnlocked;
         state = windowHandleStatus.state;
 
-        if (currentTarget == this)
+        if (currentTarget == this && !isAnimating)
         {
             if (!isUnlocked)
             {
@@ -84,8 +78,14 @@ public class OpenCloseWindow : MonoBehaviour, Interactable
                         windowAnimator.SetTrigger("CloseVertical");
                     }
                 }
+                isAnimating = true;
                 isOpen = !isOpen;
             }
         }
+    }
+
+    public void OnAnimationComplete()
+    {
+        isAnimating = false; // Reset the animating flag
     }
 }

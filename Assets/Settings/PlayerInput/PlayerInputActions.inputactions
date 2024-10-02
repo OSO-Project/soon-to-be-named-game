@@ -87,15 +87,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "OpenClose",
-                    "type": "Button",
-                    "id": "6fc1f55b-51f9-4a78-a705-17ae39bf105a",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "GrabDrop",
                     "type": "Button",
                     "id": "6dfb5915-93b7-4a90-9898-0c436d86815a",
@@ -439,17 +430,6 @@
                 },
                 {
                     "name": "",
-                    "id": "6a0354f9-1622-4830-ad77-6ffbe2aef7c2",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "OpenClose",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "afd7628d-6109-4db5-b741-79cb46fb607b",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -462,7 +442,7 @@
                 {
                     "name": "",
                     "id": "7d3d6c4a-4da0-473c-912f-7e6b47b0ca8b",
-                    "path": "<Keyboard>/t",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -3,9 +3,33 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+public enum CleanableType
+{
+    Wipable,
+    Vacuumable,
+}
 public class Cleanable : MonoBehaviour, Interactable
 {
-    public bool _isCleaned = false;
+    [SerializeField] private bool _isClean = false;
+    public CleanableType cleanableType = CleanableType.Wipable;
+
+    public bool IsClean
+    {
+        get => _isClean;
+        set
+        {
+            if (value == true)
+            {
+                _isClean = value;
+                _dustParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            }
+            else
+            {
+                _isClean = value;
+                _dustParticles.Play();
+            }
+        }
+    }
     
     [Header("Setup Object")]
     [SerializeField] private Mesh _cleanableMesh = null; 
@@ -13,7 +37,7 @@ public class Cleanable : MonoBehaviour, Interactable
     private Canvas _progressBarCanvas = null;
     private ParticleSystem _dustParticles = null;
 
-    private HighlightObject _highlight; //write so it adds script to the object when Cleanable is added.
+    private HighlightObject _highlight;
     private float _particleMultiplier = 2679.13f;
 
     [Header("CleaningMechanicVariables")]
@@ -24,8 +48,7 @@ public class Cleanable : MonoBehaviour, Interactable
 
     public Action cleanSuccesfull;
     public Action cleanUnSuccesfull;
-    
-    public Coroutine _cleanCoroutine;
+
     public Image _progressBar;
 
     private ProgressBarFillMechanic progressBarFill;
@@ -33,8 +56,6 @@ public class Cleanable : MonoBehaviour, Interactable
     void Start()
     {
         // Check if the tag is already set to "Interactable"
-        _highlight = gameObject.GetComponent<HighlightObject>(); // useless after validation soon
-        InputManager.Instance.CleanAction.performed += OnPressInteract;
         ToolsManager.toolSwap += OnToolSwap;
         _wipe = FindAnyObjectByType<Wipe>();
 
@@ -92,6 +113,7 @@ public class Cleanable : MonoBehaviour, Interactable
             {
                 Debug.LogError("Attach prefab ProgressBarCanvas to the main object and then link RadialBar.Foreground to the ProgressBar public variable");
             }
+        IsClean = _isClean;
     }
 
     private void OnDestroy()
@@ -106,9 +128,9 @@ public class Cleanable : MonoBehaviour, Interactable
         {
             if (ToolsManager.Instance._currentlyHeld is not Wipe)
             {
-                if (_isCleaned) return;
+                if (IsClean) return;
                 progressBarFill.StopAndResetProgress();
-                DisableObjectUI();
+                ToggleObjectUI(false, cleanableType);
             }
             else
             {
@@ -119,32 +141,93 @@ public class Cleanable : MonoBehaviour, Interactable
 
     public void OnBeginLooking()
     {
-        if (_isCleaned || ToolsManager.Instance._currentlyHeld is not Wipe) return;
-        EnableObjectUI();
+        if (IsClean || ToolsManager.Instance._currentlyHeld is not Wipe && ToolsManager.Instance._currentlyHeld is not Vacuum) return;
+        if (ToolsManager.Instance._currentlyHeld is Wipe)
+        {
+            ToggleObjectUI(true, cleanableType);
+        }
+
         
     }
 
     public void OnFinishLooking()
     {
-        if (_isCleaned) return;
-        DisableObjectUI();
-        
+        if (IsClean) return;
+        if (ToolsManager.Instance._currentlyHeld is Wipe)
+        {
+            ToggleObjectUI(false, cleanableType);
+        }
+    }
+
+    public void ToggleObjectUI(bool state, CleanableType type)
+    {
+        if (ToolsManager.Instance._currentlyHeld is Wipe)
+        {
+            _highlight.SetIsHighlighted(state);
+            if (state)
+            {
+                currentTarget = this;
+            }
+            else
+            {
+                currentTarget = null;
+            }
+            if (type == CleanableType.Wipable)
+            {
+                _progressBarCanvas.gameObject.SetActive(state);
+                UIManager.Instance.HintText.gameObject.SetActive(state);
+                _highlight.Highlight(Color.white);
+            }
+            else
+            {
+                UIManager.Instance.RequiresVacuum.gameObject.SetActive(state);
+                _highlight.Highlight(Color.red);
+            }
+            if (!state)
+            {
+                progressBarFill.StopAndResetProgress();
+            }
+        }
+        else if (ToolsManager.Instance._currentlyHeld is Vacuum)
+        {
+            _highlight.SetIsHighlighted(state);
+            _progressBarCanvas.gameObject.SetActive(state);
+            _highlight.Highlight(Color.white);
+            if (!state)
+            {
+                progressBarFill.StopAndResetProgress();
+            }
+        }
     }
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
     {
-        if (_isCleaned) return;
+        // if (IsClean) return;
+
+        // if (currentTarget == this)
+        // {
+        //     if (ctx.performed)
+        //     {
+        //         Debug.Log("cleaning started");
+        //         progressBarFill.StartProgress(OnCleaningComplete);
+        //     }
+        // }
+
+        // Cleaning process now triggered by the Wipe Tool.
+    }
+
+    public void HandleToolUse()
+    {
+        if (IsClean) return;
 
         if (currentTarget == this)
         {
-            if (ctx.performed)
-            {
-                Debug.Log("cleaning started");
-                if (_cleanCoroutine == null)
-                {
-                    progressBarFill.StartProgress(OnCleaningComplete);
-                }
-            }
+            Debug.Log("cleaning started");
+            progressBarFill.StartProgress(OnCleaningComplete);
+        }
+        if (ToolsManager.Instance._currentlyHeld is Vacuum)
+        {
+            progressBarFill.StartProgress(OnCleaningComplete);
         }
     }
 
@@ -152,39 +235,21 @@ public class Cleanable : MonoBehaviour, Interactable
     {
         if (_wipe.IsWipeSuccessful())
         {
-            _dustParticles.Stop();
-            _isCleaned = true;
-            DisableObjectUI();
-
+            IsClean = true;
+            ToggleObjectUI(false, cleanableType);
             cleanSuccesfull?.Invoke();
             Debug.Log("Wipe sucessful");
         }
         else
         {
+            IsClean = false;
             cleanUnSuccesfull?.Invoke();
             progressBarFill.StopAndResetProgress();
             Debug.Log("Wipe UNsucessful");
         }
     }
 
-    private void EnableObjectUI()
-    {
-        _highlight.SetIsHighlighted(true);
-        currentTarget = this;
-        _progressBarCanvas.gameObject.SetActive(true);
-        UIManager.Instance.HintText.gameObject.SetActive(true);
-        _highlight.Highlight();
-    }
-
-    private void DisableObjectUI()
-    {
-        _highlight.SetIsHighlighted(false);
-        currentTarget = null;
-        _progressBarCanvas.gameObject.SetActive(false);
-        UIManager.Instance.HintText.gameObject.SetActive(false);
-        progressBarFill.StopAndResetProgress();
-        _highlight.Highlight();
-    }
+    
 
     private float ComputeMeshSurfaceArea()
     {
@@ -236,7 +301,7 @@ public class Cleanable : MonoBehaviour, Interactable
             _dustParticles.transform.localPosition = Vector3.zero;
             _dustParticles.transform.localRotation = Quaternion.identity;
 
-            _isCleaned = false;
+            IsClean = false;
         }
     }
 

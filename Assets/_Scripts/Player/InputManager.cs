@@ -11,8 +11,8 @@ public class InputManager : MonoBehaviour
     public bool Run { get; private set; }
     public bool Jump { get; private set; }
     public bool Crouch { get; private set; }
+    public bool Interact { get; private set; }
     public bool Clean { get; private set; }
-    public bool OpenClose { get; private set; }
     public bool GrabDrop { get; private set; }
     public bool Throw { get; private set; }
     public bool UseTool { get; private set; }
@@ -26,10 +26,11 @@ public class InputManager : MonoBehaviour
     public InputAction RunAction;
     public InputAction CrouchAction;
 
+    public InputAction InteractAction;
+
     public InputAction CleanAction;
     public InputAction GrabDropAction;
     public InputAction ThrowAction;
-    public InputAction OpenCloseAction;
 
     public InputAction UseToolAction;
     public InputAction EquipWipeAction;
@@ -58,9 +59,9 @@ public class InputManager : MonoBehaviour
         JumpAction = _currentMap.FindAction("Jump");
         RunAction = _currentMap.FindAction("Run");
         CrouchAction = _currentMap.FindAction("Crouch");
+        InteractAction = _currentMap.FindAction("Interact");
         CleanAction = _currentMap.FindAction("Clean");
         ThrowAction = _currentMap.FindAction("Throw");
-        OpenCloseAction = _currentMap.FindAction("OpenClose");
         GrabDropAction = _currentMap.FindAction("GrabDrop");
         UseToolAction = _currentMap.FindAction("UseTool");
         EquipWipeAction = _currentMap.FindAction("EquipWipe");
@@ -75,12 +76,12 @@ public class InputManager : MonoBehaviour
         RunAction.canceled += OnRun;
         CrouchAction.performed += OnCrouch;
         CrouchAction.canceled += OnCrouch;
+        InteractAction.performed += ctx => InteractionManager.Instance.PressInteract(ctx);
+        InteractAction.canceled += ctx => InteractionManager.Instance.PressInteract(ctx);
         CleanAction.performed += OnClean;
         CleanAction.canceled += OnClean;
         ThrowAction.performed += OnThrow;
         ThrowAction.canceled += OnThrow;
-        OpenCloseAction.performed += OnOpenClose;
-        OpenCloseAction.canceled += OnOpenClose;
         GrabDropAction.performed += OnGrabDrop;
         GrabDropAction.canceled += OnGrabDrop;
         UseToolAction.performed += OnUseTool;
@@ -155,11 +156,6 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void OnOpenClose(InputAction.CallbackContext context)
-    {
-        OpenClose = context.ReadValueAsButton();
-    }
-
     private void OnEnable()
     {
         _currentMap.Enable();
@@ -175,16 +171,16 @@ public class InputManager : MonoBehaviour
         UseTool = context.ReadValueAsButton();
     }
 
-    private void UpdateInputs()
+    public void UpdateInputs()
     {
-        Move = MoveAction.ReadValue<Vector2>();
-        Jump = JumpAction.WasPressedThisFrame();
-        Run = RunAction.IsPressed();
-        Clean = CleanAction.IsPressed();
-        Crouch = CrouchAction.IsPressed();
-        Throw = ThrowAction.IsPressed();
-        OpenClose = OpenCloseAction.IsPressed();
-        GrabDrop = GrabDropAction.IsPressed();
-
+        // Move = MoveAction.ReadValue<Vector2>();
+        // Jump = JumpAction.WasPressedThisFrame();
+        Interact = InteractAction.IsPressed();
+        UseTool = UseToolAction.IsPressed();
+        // Run = RunAction.IsPressed();
+        // Clean = CleanAction.IsPressed();
+        // Crouch = CrouchAction.IsPressed();
+        // Throw = ThrowAction.IsPressed();
+        // GrabDrop = GrabDropAction.IsPressed();
     }
 }

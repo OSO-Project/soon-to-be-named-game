@@ -67,7 +67,7 @@ public class HoldToClean : MonoBehaviour, Interactable
         currentTarget = this;
         progressBarCanvas.SetActive(true);
         UIManager.Instance.HintText.gameObject.SetActive(true);
-        _highlight.Highlight();
+        _highlight.Highlight(Color.white);
     }
 
     public void OnFinishLooking()
@@ -78,7 +78,7 @@ public class HoldToClean : MonoBehaviour, Interactable
         progressBarCanvas.SetActive(false);
         UIManager.Instance.HintText.gameObject.SetActive(false);
         StopAndResetProgress();
-        _highlight.Highlight();
+        _highlight.Highlight(Color.white);
     }
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
@@ -149,7 +149,7 @@ public class HoldToClean : MonoBehaviour, Interactable
             _highlight.SetIsHighlighted(false);
             progressBarCanvas.SetActive(false);
             UIManager.Instance.HintText.gameObject.SetActive(false);
-            _highlight.Highlight();
+            _highlight.Highlight(Color.white);
         }
     }
 }

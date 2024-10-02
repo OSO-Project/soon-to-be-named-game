@@ -1,6 +1,5 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
-using Unity.VisualScripting;
 
 public class Wipe : Tool
 {
@@ -49,7 +48,17 @@ public class Wipe : Tool
     }
     public override void OnUse(InputAction.CallbackContext ctx)
     {
-        // Usage being handles by Interactable and Cleanable script
+        if (InteractionManager.Instance.GetCurrentInteractable() is Cleanable _cleanable)
+        {
+            if (_cleanable.cleanableType == CleanableType.Wipable)
+            {
+                _cleanable.HandleToolUse();
+            }
+        }
+        else if (InteractionManager.Instance.GetCurrentInteractable() is Water _water)
+        {
+            _water.HandleToolUse();
+        }
     }
 
     

@@ -74,7 +74,7 @@ public class LightControls : HoldToClean, Interactable
         {
             _highlight.SetIsHighlighted(false);
             UIManager.Instance.HintText.gameObject.SetActive(false);
-            _highlight.Highlight();
+            _highlight.Highlight(Color.white);
         }
     }
 

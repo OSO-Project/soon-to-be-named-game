@@ -13,6 +13,7 @@ public class OpenCloseDrawer : MonoBehaviour, Interactable
     //InteractionManager.cs script or the object with that script. If needed, i can change this.
     
     private bool isOpen = false;
+    private bool isAnimating = false;
     private Animator animator;
     private static OpenCloseDrawer currentTarget = null;
     private void Start()
@@ -22,12 +23,10 @@ public class OpenCloseDrawer : MonoBehaviour, Interactable
         {
             Debug.LogError("Animator component missing from drawer object.");
         }
-        InputManager.Instance.OpenCloseAction.performed += OnPressInteract;
     }
 
     private void OnDestroy()
     {
-        InputManager.Instance.OpenCloseAction.performed -= OnPressInteract;
     }
 
     public void OnBeginLooking()
@@ -43,7 +42,7 @@ public class OpenCloseDrawer : MonoBehaviour, Interactable
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
     {
-        if(currentTarget == this)
+        if(currentTarget == this && !isAnimating)
         {
             if (animator == null)
             {
@@ -59,8 +58,12 @@ public class OpenCloseDrawer : MonoBehaviour, Interactable
             {
                 animator.SetTrigger("open");
             }
-
+            isAnimating = true;
             isOpen = !isOpen;
         }
+    }
+    public void OnAnimationComplete()
+    {
+        isAnimating = false; // Reset the animating flag
     }
 }

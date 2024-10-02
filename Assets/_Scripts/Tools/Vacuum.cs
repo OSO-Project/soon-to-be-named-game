@@ -1,11 +1,12 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 
 public class Vacuum : Tool
 {
     public override string Name => "Vacuum";
 
+    private List<GameObject> touchedObjects = new List<GameObject>();
 
     void Start()
     {
@@ -16,11 +17,58 @@ public class Vacuum : Tool
         InputManager.Instance.UseToolAction.performed -= OnUse;
     }
 
-    public override void OnUse(InputAction.CallbackContext context)
+    void OnTriggerEnter(Collider other)
     {
-
+        if (ToolsManager.Instance._currentlyHeld is Vacuum)
+        {
+            Cleanable cleanable = other.gameObject.GetComponent<Cleanable>();
+            if (cleanable != null)
+            {
+                if (cleanable.IsClean == true)
+                {
+                    return;
+                }
+                if (ToolsManager.Instance._currentlyHeld is Vacuum)
+                {
+                    cleanable.ToggleObjectUI(true, CleanableType.Vacuumable);
+                }
+                touchedObjects.Add(other.gameObject);
+                if (touchedObjects.Count > 0)
+                {
+                    UIManager.Instance.HintText.gameObject.SetActive(true);
+                }
+            }
+        }  
     }
 
+    void OnTriggerExit(Collider other)
+    {
+        if (ToolsManager.Instance._currentlyHeld is Vacuum)
+        {
+            Cleanable cleanable = other.gameObject.GetComponent<Cleanable>();
+            if (cleanable != null)
+            {
+                if (ToolsManager.Instance._currentlyHeld is Vacuum)
+                {
+                    cleanable.ToggleObjectUI(false, CleanableType.Vacuumable);
+                }
+                touchedObjects.Remove(other.gameObject);
+                if (touchedObjects.Count == 0)
+                {
+                    UIManager.Instance.HintText.gameObject.SetActive(false);
+                }
+            }
+        }
+        
+    }
+
+    public override void OnUse(InputAction.CallbackContext context)
+    {
+        foreach (GameObject obj in touchedObjects)
+        {
+            obj.gameObject.GetComponent<Cleanable>().HandleToolUse();
+        }
+    }
     
     public override void Equip()
     {

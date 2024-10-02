@@ -15,6 +15,7 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
     [SerializeField]
     private bool isUnlocked = false;
     private bool isOpen = false;
+    private bool isAnimating = false;
     private Animator animator;
     private static OpenCloseDoor currentTarget = null;
 
@@ -25,12 +26,10 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
         {
             Debug.LogError("Animator component missing from drawer object.");
         }
-        InputManager.Instance.OpenCloseAction.performed += OnPressInteract;
     }
 
     private void OnDestroy()
     {
-        InputManager.Instance.OpenCloseAction.performed -= OnPressInteract;
     }
 
     public void OnBeginLooking()
@@ -48,7 +47,7 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
 
     public void OnPressInteract(InputAction.CallbackContext ctx)
     {
-        if (currentTarget == this)
+        if (currentTarget == this && !isAnimating)
         {
             if (!isUnlocked)
             {
@@ -58,7 +57,7 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
             {
                 if(GameManager.Instance.AttemptToLeaveRoom())
                 {
-                    if (animator == null)
+                    if (animator == null )
                     {
                         return;
                     }
@@ -71,7 +70,7 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
                     {
                         animator.SetTrigger("Open");
                     }
-
+                    isAnimating = true;
                     isOpen = !isOpen;
                 }
             }
@@ -83,5 +82,9 @@ public class OpenCloseDoor : MonoBehaviour, Interactable
         isUnlocked = false;
         isOpen = false;
         animator.SetTrigger("Close");
+    }
+    public void OnAnimationComplete()
+    {
+        isAnimating = false; // Reset the animating flag
     }
 }
