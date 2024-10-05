@@ -8,7 +8,7 @@ public class EncounterManager : MonoBehaviour
     private Encounter _currentEncounter;
 
     public float minTriggerTime;
-    //public float maxTriggerTime;    
+    public float maxTriggerTime;    
     [SerializeField] private float startDelay = 5f;
 
     private float _levelStartTime;
@@ -18,7 +18,6 @@ public class EncounterManager : MonoBehaviour
     {
         _levelStartTime = Time.time;
         GameEventManager.Instance.OnEncounterEnd += StopEncounter;
-        
         
     }
 

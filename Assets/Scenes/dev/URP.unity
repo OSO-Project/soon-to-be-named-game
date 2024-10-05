@@ -2236,11 +2236,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 225
+  lerpSpeed: 0
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
+  _pickUpSoundFX: {fileID: 0}
 --- !u!65 &324130737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6681,11 +6684,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 225
+  lerpSpeed: 0
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
+  _pickUpSoundFX: {fileID: 0}
 --- !u!65 &1278961012
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7384,11 +7390,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 225
+  lerpSpeed: 0
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
+  _pickUpSoundFX: {fileID: 0}
 --- !u!65 &1387426919
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10162,6 +10171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 6867983877484588162, guid: 692b2b3ad5eadf048996152d44b378fb, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7149259609161096292, guid: 692b2b3ad5eadf048996152d44b378fb, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -10496,11 +10509,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: -0.2
-  zOffset: 1
-  throwStrength: 225
+  lerpSpeed: 0
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
+  _pickUpSoundFX: {fileID: 0}
 --- !u!65 &2025098973
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11157,11 +11173,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54e80d46d058dff8c63424e4ae2e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isBeingCarried: 0
-  xOffset: 0
-  yOffset: 0
-  zOffset: 0
-  throwStrength: 0
+  lerpSpeed: 0
+  maxDistance: 5
+  angularDampingFactor: 0.95
+  playerCollider: {fileID: 0}
+  objCollider: {fileID: 0}
+  maxThrowChargeTime: 3
+  maxThrowStrength: 1000
+  _pickUpSoundFX: {fileID: 0}
 --- !u!54 &2136704329
 Rigidbody:
   m_ObjectHideFlags: 0

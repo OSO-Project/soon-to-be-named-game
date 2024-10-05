@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance;
+
     private Rigidbody _rb;
     private CapsuleCollider _capsule;
     private BoxCollider _ceilingChecker;
@@ -34,10 +37,23 @@ public class PlayerController : MonoBehaviour
     private Vector3 _uncrouchCenterVelocity = Vector3.zero;
     private float _uncrouchHeightVelocity = 0;
 
+    private bool _isBoosted;
+
     public bool CanMove;
 
     public event System.Action OnLand;
-
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
         CanMove = true;
@@ -265,6 +281,74 @@ public class PlayerController : MonoBehaviour
         horizontalVelocity.y = 0;
         return horizontalVelocity.magnitude;
     }
+
+    public void BoostSpeed(float duration, float speed)
+    {
+        StartCoroutine(BoostSpeedForDuration(duration, speed));
+    }
+
+    private IEnumerator BoostSpeedForDuration(float duration, float speed)
+    {
+        if (_isBoosted) { Debug.Log("Cannot boost, is boosted"); yield break; }
+        try
+        {
+            walkSpeed *= speed;
+            runSpeed *= speed;
+            crouchSpeed *= speed;
+            _isBoosted = true;
+        } catch (Exception e)
+        {
+            Debug.Log("BoostSpeedForDuration error: " + e.Message);
+        }
+        yield return new WaitForSeconds(duration);
+        
+        try
+        {
+            walkSpeed /= speed;
+            runSpeed /= speed;
+            crouchSpeed /= speed;
+            _isBoosted = false;
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Boost speed down: " + e.Message);
+        }
+    }
+
+    public void SlowSpeed(float duration, float speed)
+    {
+        StartCoroutine(SlowSpeedForDuration(duration, speed));
+    }
+
+    private IEnumerator SlowSpeedForDuration(float duration, float speed)
+    {
+        if (_isBoosted) { Debug.Log("Cannot boost, is boosted"); yield break; }
+        try
+        {
+            walkSpeed /= speed;
+            runSpeed /= speed;
+            crouchSpeed /=  speed;
+            _isBoosted = true;
+        }
+        catch (Exception e)
+        {
+            Debug.Log("SlowSpeedForDuration error: " + e.Message);
+        }
+        yield return new WaitForSeconds(duration);
+
+        try
+        {
+            walkSpeed *= speed;
+            runSpeed *= speed;
+            crouchSpeed *= speed;
+            _isBoosted = false;
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Boost speed up: " + e.Message);
+        }
+    }
+
 
     public bool IsGrounded()
     {

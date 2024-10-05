@@ -70,6 +70,7 @@ public class EndlessModeManager : MonoBehaviour
             selectedRoom = availableRooms[randomIndex];
         } while (selectedRoom == lastRoom);
 
+
         // Remove the selected room from the available list
         availableRooms.Remove(selectedRoom);
 

@@ -32,6 +32,7 @@ public class ItemsToClean : MonoBehaviour, IPhysics, IDirtyObject
     }
 
     void Start()
+    void Awake()
     {
         _rb = GetComponent<Rigidbody>();
     }
