@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public event Action<GameObject> OnNextRoom;
+
     private void Start()
     {
         GameEventManager.Instance.OnLevelEnd += EndLevel;
@@ -47,7 +50,7 @@ public class GameManager : MonoBehaviour
         ret.NextRoomEncounter();
         Score.Instance.ResetForNextRoom(); // Reset score for the new room
         //GameTimer.Instance.RestartTimer(); // Reset timer for the new room
-
+        OnNextRoom?.Invoke(emm.roomManager.GetCurrentRoom());
         Debug.Log("next room");
     }
 

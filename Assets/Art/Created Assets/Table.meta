@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Art/Created Assets/Table.meta
 guid: 9214e4d2426c36e47916d29c438cee2e
 folderAsset: yes
+========
+guid: a3b948b1df3e150458d0d435d9ab9b37
+>>>>>>>> soda_can_mechanic-+-lighting:Assets/Scenes/dev/Jan/PostFXTryout.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

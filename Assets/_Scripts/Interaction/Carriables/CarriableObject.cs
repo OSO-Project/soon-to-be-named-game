@@ -64,6 +64,7 @@ public class CarriableObject : MonoBehaviour
             // Re-enable collision between the player and the object
             Physics.IgnoreCollision(playerCollider, objCollider, false);
 
+        UIManager.Instance.ShowThisCrosshairAndHideOthers(UIManager.Instance.mainCrosshair);
         // Clear the playerCollider reference
         playerCollider = null;
     }
@@ -86,6 +87,10 @@ public class CarriableObject : MonoBehaviour
                 Drop();
                 return; // Exit early if the object is dropped
             }
+
+            //Manage the hand in UI
+            UIManager.Instance.mainCrosshair.gameObject.SetActive(false);
+            UIManager.Instance.handClosedCrosshair.gameObject.SetActive(true);
 
             Vector3 directionToTarget = (objectGrabPointTransform.position - transform.position).normalized;
             float distanceToTarget = Vector3.Distance(transform.position, objectGrabPointTransform.position);

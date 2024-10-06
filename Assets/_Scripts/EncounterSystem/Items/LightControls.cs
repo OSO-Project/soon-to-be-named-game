@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LightControls : HoldToClean, Interactable
+public class LightControls : CleanItem, Interactable
 {
     public void OnBeginLooking()
     {

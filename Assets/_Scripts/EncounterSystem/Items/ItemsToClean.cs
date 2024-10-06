@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof (Rigidbody))]
 public class ItemsToClean : MonoBehaviour, IPhysics, IDirtyObject
 {
     [Header("Cleaning")]
@@ -30,6 +31,7 @@ public class ItemsToClean : MonoBehaviour, IPhysics, IDirtyObject
         return isHidden;
     }
 
+    void Start()
     void Awake()
     {
         _rb = GetComponent<Rigidbody>();

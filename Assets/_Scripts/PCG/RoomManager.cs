@@ -26,6 +26,7 @@ public class RoomManager : MonoBehaviour
     void SpawnInitialRoom()
     {
         currentRoom = Instantiate(roomPrefab, new Vector3(initSpawnPoint.transform.position.x, initSpawnPoint.transform.position.y, initSpawnPoint.transform.position.z), Quaternion.identity);
+        GameManager.Instance.ProceedToNextRoom();
     }
 
     public void SpawnNextRoom(Vector3 position, Quaternion rotation)
@@ -58,7 +59,7 @@ public class RoomManager : MonoBehaviour
         exitDoor.gameObject.GetComponentInChildren<OpenCloseDoor>().CloseAndLockDoor();
         exitDoor.parent.name = "EnterDoorLocked";
         exitDoor.parent.SetParent(nextRoom.transform.Find("RoomForRandomGen"));
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         //Destroy(currentRoom);
         Transform roomForRandomGen = currentRoom.transform.Find("RoomForRandomGen");
         if (roomForRandomGen != null)
@@ -69,5 +70,10 @@ public class RoomManager : MonoBehaviour
 
         currentRoom = nextRoom;
         OnTransitionComplete?.Invoke();
+    }
+
+    public GameObject GetCurrentRoom()
+    {
+        return currentRoom;
     }
 }

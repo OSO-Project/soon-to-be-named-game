@@ -8,7 +8,7 @@ public class EncounterManager : MonoBehaviour
     private Encounter _currentEncounter;
 
     public float minTriggerTime;
-    //public float maxTriggerTime;    
+    public float maxTriggerTime;    
     [SerializeField] private float startDelay = 5f;
 
     private float _levelStartTime;
@@ -56,10 +56,13 @@ public class EncounterManager : MonoBehaviour
             {
                 Debug.Log($"{encounter.gameObject.name} is started");
                 _currentEncounter = encounter;
+                _currentEncounter.isActive = true;
 
                 // display notification
                 UIManager.Instance.DisplayEncounterNotification(_currentEncounter.encounterIcon, _currentEncounter.encounterText, startDelay);
                 _currentEncounter.StartEncounter();
+
+                // get current room
                 return true;
             }
         }
@@ -71,6 +74,7 @@ public class EncounterManager : MonoBehaviour
         Debug.Log("Current enc stop");
         if (_currentEncounter != null)
         {
+            _currentEncounter.isActive = false;
             _currentEncounter = null;
         }
     }
