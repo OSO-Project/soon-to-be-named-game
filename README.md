@@ -1,2 +1,1 @@
-# soon-to-be-named-game
-xdd
+# CTRL + ALT + CLEAN - Fun and disastrous room cleaning simulator
